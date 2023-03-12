@@ -2,7 +2,7 @@ import Link from "next/link"
 
 const TheMenu = () => {
   return (
-   <nav className='w-full h-14'>
+   <nav className='w-full h-14 fixed z-[999]'>
       <ul className='w-4/5 mx-auto flex gap-5 h-full items-center'>
          <li className='flex-auto'>
             <div className="flex items-center gap-10">
