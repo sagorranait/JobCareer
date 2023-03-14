@@ -1,6 +1,6 @@
-const HomeCard = ({ jobTitle, jobNumber, position }) => {
+const HomeCard = ({ jobTitle, jobNumber }) => {
   return (
-   <div className={`statCard rounded-3xl shadow-2xl p-7 bg-white relative left-[${position}%]`}>
+   <div className={`w-80 rounded-3xl shadow-2xl p-7 bg-white relative right-10`}>
       <div>
          <span className='text-2xl font-bold'>{jobNumber} </span>
          <span>Job offers</span>

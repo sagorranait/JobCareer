@@ -42,10 +42,14 @@ const Home = () => {
                 </div>
                 <HomeTag/>
               </div>
-              <div className='flex flex-col justify-between '>
-                <HomeCard jobTitle='Business Development' jobNumber='319' position='150' />
-                <HomeCard jobTitle='Marketing & Communication' jobNumber='275' position='130' />
-                <HomeCard jobTitle='Development & IT' jobNumber='325' position='105' />
+              <div className='flex flex-col justify-between w-2/4 items-end pr-20'>
+                <HomeCard jobTitle='Business Development' jobNumber='319' />
+                <div className='mr-10'>                  
+                  <HomeCard jobTitle='Marketing & Communication' jobNumber='275' />
+                </div>
+                <div className="mr-24">                  
+                  <HomeCard jobTitle='Development & IT' jobNumber='325' />
+                </div>
               </div>
             </div>
           </div>
