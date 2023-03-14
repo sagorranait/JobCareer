@@ -1,15 +1,70 @@
+import { useLayoutEffect, useRef } from 'react';
+import { gsap } from "gsap";
 import Head from 'next/head';
 import Image from 'next/image';
 import { BiSearchAlt } from "react-icons/bi";
 import HomeCard from '@/components/HomeCard';
+import HomeTag from '@/components/HomeTag';
 
 import hero1 from "../assets/hero-01.png";
 import hero2 from "../assets/hero-02.png";
 import hero3 from "../assets/hero-03.png";
-import HomeTag from '@/components/HomeTag';
 
 const Home = () => {
   
+  const el = useRef();
+  const tl = useRef();
+  const tl2 = useRef();
+
+  useLayoutEffect(() => {
+    let cards = gsap.utils.toArray(".statCard");
+
+    let ctx = gsap.context(() => {
+      tl.current = gsap
+        .timeline({ repeat: -1 })
+        .to("#hero1", { opacity: 1, duration: 3 })
+        .to("#hero1", { opacity: 0, display: "none", duration: 3, delay: 1 })
+        .to("#hero2", { opacity: 1, duration: 3 })
+        .to("#hero2", { opacity: 0, display: "none", duration: 3, delay: 1 })
+        .to("#hero3", { opacity: 1, duration: 3 })
+        .to("#hero3", { opacity: 0, display: "none", duration: 3, delay: 1 });
+
+      tl2.current = gsap
+        .timeline()
+        .from("#hero-title", { delay: 0.2, y: 50, opacity: 0, duration: 0.3 })
+        .from("#hero-subtitle", { y: 50, opacity: 0, duration: 0.3 })
+        .from("#search-container", { y: 50, opacity: 0, duration: 0.3 })
+        .from("#search-button", {
+          x: -100,
+          opacity: 0,
+          duration: 0.5,
+          ease: "power2",
+        })
+        .from(".badge-container", { opacity: 0 })
+        .from(".badge", { opacity: 0, y: 50, stagger: 0.1 });
+    }, el);
+
+    const movement = (e) => {
+      cards.forEach((card, index) => {
+        const depth = 90;
+        const moveX = (e.pageX - window.innerWidth / 2) / depth;
+        const moveY = (e.pageY - window.innerHeight / 2) / depth;
+        index++;
+        gsap.to(card, {
+          x: moveX * index,
+          y: moveY * index,
+        });
+      });
+    };
+
+    document.addEventListener("mousemove", movement);
+
+    return () => {
+      ctx.revert();
+
+      document.removeEventListener("mousemove", movement);
+    };
+  }, []);
 
   return (
     <>
@@ -17,7 +72,7 @@ const Home = () => {
         <title>JobCareer - The World’s Work Marketplace</title>
       </Head>
       <main>
-        <div className='w-4/5 mx-auto h-screen'>
+        <div ref={el} className='w-4/5 mx-auto h-screen'>
           <div className='max-w-2xl h-[80vh] rounded-b-full absolute top-0 left-[63.8%] -translate-x-1/2 overflow-hidden z-0'>
             <Image id='hero1' src={hero1} alt='hero1' className='object-cover h-full w-full' />
             <Image id='hero2' src={hero2} alt='hero2' className='object-cover h-full w-full'  />
