@@ -24,10 +24,10 @@ const TheMenu = () => {
             </div>
          </li>
          <li>
-            <Link href='/login'>Log In</Link>
+            <Link href='/login' className={router.pathname === "/login" ? "bg-primary text-white font-medium px-6 py-2 rounded-full" : ""}>Log In</Link>
          </li>
          <li>
-            <Link className='bg-primary text-white font-medium px-6 py-2 rounded-full'href='/signup' >Sign Up</Link>
+            <Link className={router.pathname === "/login" ? "" : "bg-primary text-white font-medium px-6 py-2 rounded-full"} href='/signup' >Sign Up</Link>
          </li>
       </ul>
    </nav>
