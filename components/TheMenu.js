@@ -15,9 +15,6 @@ const TheMenu = () => {
                      <Link className={router.pathname === "/works" ? "border-b-2 border-secondary" : "hover:border-b-2 duration-100"} href='/works'>Find Work</Link>
                   </li>
                   <li>
-                     <Link className={router.pathname === "/whyus" ? "border-b-2 border-secondary" : "hover:border-b-2 duration-100"} href='/whyus'>Why Us?</Link>
-                  </li>
-                  <li>
                      <Link className={router.pathname === "/enterprise" ? "border-b-2 border-secondary" : "hover:border-b-2 duration-100"} href='/enterprise'>Enterprise</Link>
                   </li>
                </ul>
