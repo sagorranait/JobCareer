@@ -1,6 +1,7 @@
 import Head from "next/head"
 import TheDivArea from "@/components/TheDivArea"
 import { BiSearchAlt } from "react-icons/bi"
+import Link from "next/link"
 
 const Work = () => {
   return (
@@ -11,7 +12,7 @@ const Work = () => {
       <main>
         <TheDivArea>
           <div className="work-area">          
-            <div className="w-full py-8">
+            <div className="w-full py-12">
               <form className="flex items-center justify-center">
                 <input 
                   type="text" 
@@ -35,7 +36,7 @@ const Work = () => {
                     </div>
                     <div className="action flex items-center flex-col gap-2">
                       <button className="bg-primary text-white font-medium px-6 py-2 rounded-full">Apply Now</button>
-                      <button className="bg-primary text-white font-medium px-6 py-2 rounded-full">See More</button>
+                      <Link href='/works/01' className="bg-primary text-white font-medium px-6 py-2 rounded-full">See More</Link>
                     </div>
                   </div>
                   <p>Skills Needed: - At least 3 years of Shopify experience building and customizing Shopify themes - Experience in building Shopify app is a big plus - Know how to work with Git...</p>
@@ -56,7 +57,7 @@ const Work = () => {
                     </div>
                     <div className="action flex items-center flex-col gap-2">
                       <button className="bg-primary text-white font-medium px-6 py-2 rounded-full">Apply Now</button>
-                      <button className="bg-primary text-white font-medium px-6 py-2 rounded-full">See More</button>
+                      <Link href='/works/01' className="bg-primary text-white font-medium px-6 py-2 rounded-full">See More</Link>
                     </div>
                   </div>
                   <p>Skills Needed: - At least 3 years of Shopify experience building and customizing Shopify themes - Experience in building Shopify app is a big plus - Know how to work with Git...</p>
@@ -113,7 +114,6 @@ const Work = () => {
                 </div>
               </div>
               <div className="text-center">
-
                 <button className="bg-primary text-white font-medium px-6 py-2 rounded-full mt-12">Load More Jobs</button>
               </div>
             </div>
