@@ -1,5 +1,6 @@
 import TheDivArea from "@/components/TheDivArea"
 import Head from "next/head"
+import Link from "next/link"
 
 const WorkDetails = () => {
   return (
@@ -42,7 +43,12 @@ const WorkDetails = () => {
                </div>
                <div className="rightArea">
                   <div className="workAction border-b border-silver p-6">
-                     <button className="bg-primary text-white font-medium px-6 py-2 rounded-full w-full mb-10">Apply Now</button>
+                     <Link
+                        href='/works/01/apply' 
+                        className="bg-primary text-white font-medium px-6 py-2 rounded-full w-full mb-10 inline-block text-center"
+                     >
+                           Apply Now
+                     </Link>
                      <p className="pb-2">Send a proposal for: 6 Connects</p>
                      <p>Available Connects: 52</p>
                   </div>
