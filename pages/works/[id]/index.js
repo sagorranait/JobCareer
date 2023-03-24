@@ -13,18 +13,17 @@ const WorkDetails = () => {
             <div className="details border border-silver rounded-lg flex items-start">
                <div className="leftArea flex-1 border-r border-silver">
                   <div className="titleArea border-b border-silver p-6">
-                     <h1 className="text-xl font-medium">Looking for an Experienced Shopify developer</h1>
-                     <p className="pt-5 text-axolotl text-sm"><b>Fixed Price</b> - Budget: $80 - Posted 4 minutes ago</p>
+                     <h1 className="text-xl font-medium text-black">Looking for an Experienced Shopify developer</h1>
+                     <p className="pt-5 text-[#5e6d55] text-sm"><b>Fixed Price</b> - Budget: $80 - Posted 4 minutes ago</p>
                   </div>
                   <div className="workDetails border-b border-silver p-6">
-                     <p>knowledgeable in WordPress platforms to build, customize, and maintain websites for clients. This may include tasks such as creating custom themes and plugins, optimizing site performance and security, integrating e-commerce functionality, and providing ongoing maintenance and support. Strong understanding of HTML, CSS, JavaScript, and PHP, as well as experience working with WordPress and related technologies.</p>
+                     <p className="text-black">knowledgeable in WordPress platforms to build, customize, and maintain websites for clients. This may include tasks such as creating custom themes and plugins, optimizing site performance and security, integrating e-commerce functionality, and providing ongoing maintenance and support. Strong understanding of HTML, CSS, JavaScript, and PHP, as well as experience working with WordPress and related technologies.</p>
                   </div>
-                  <div className="workInfo"></div>
                   <div className="workType border-b border-silver px-6 py-4">
-                     <p className="text-axolotl text-base"><strong>Project Type: </strong> Complex project</p>
+                     <p className="text-[#5e6d55] text-base"><strong>Project Type: </strong> Complex project</p>
                   </div>
                   <div className="wrokSkills border-b border-silver p-6">
-                     <h3 className="text-base font-medium">Skills and Expertise</h3>
+                     <h3 className="text-base font-medium text-black">Skills and Expertise</h3>
                      <ul className="flex items-center gap-3 pt-3 flex-wrap">
                         <li className="bg-[#f2f7f2] text-[#001e00] px-3 py-1">web design</li>
                         <li className="bg-[#f2f7f2] text-[#001e00] px-3 py-1">html</li>
@@ -34,11 +33,11 @@ const WorkDetails = () => {
                      </ul>
                   </div>
                   <div className="workActivity p-6">
-                     <h3 className="text-base font-medium pb-3">Activity on this job</h3>
-                     <p className="pb-2">Proposals:  Less than 5</p>
-                     <p className="pb-2">Interviewing: 0</p>
-                     <p className="pb-2">Invites sent: 0</p>
-                     <p>Unanswered invites: 0</p>
+                     <h3 className="text-base font-medium pb-3 text-black">Activity on this job</h3>
+                     <p className="pb-2 text-black">Proposals:  Less than 5</p>
+                     <p className="pb-2 text-black">Interviewing: 0</p>
+                     <p className="pb-2 text-black">Invites sent: 0</p>
+                     <p className="text-black">Unanswered invites: 0</p>
                   </div>
                </div>
                <div className="rightArea">
@@ -49,23 +48,23 @@ const WorkDetails = () => {
                      >
                            Apply Now
                      </Link>
-                     <p className="pb-2">Send a proposal for: 6 Connects</p>
-                     <p>Available Connects: 52</p>
+                     <p className="pb-2 text-black">Send a proposal for: 6 Connects</p>
+                     <p className="text-black">Available Connects: 52</p>
                   </div>
                   <div className="aboutClient border-b border-silver p-6">
-                     <h3 className="text-base font-medium pb-3">About the client</h3>
-                     <p className="pb-3">Payment method not verified</p>
-                     <p className="text-axolotl pb-3">
+                     <h3 className="text-base font-medium pb-3 text-black">About the client</h3>
+                     <p className="pb-3 text-[#5e6d55]">Payment method not verified</p>
+                     <p className="text-[#5e6d55] pb-3">
                         <span className="font-medium block text-black pb-1">1 job posted</span> 0% hire rate, 1 open job
                      </p>
-                     <p className="text-axolotl">
+                     <p className="text-[#5e6d55]">
                         <span className="font-medium block text-black pb-1">Tech & IT</span>Member since Sep 25, 2014
                      </p>
                   </div>
                   <div className="workLink p-6">
-                     <h3 className="text-base font-medium pb-3">Job link</h3>
+                     <h3 className="text-base font-medium pb-3 text-black">Job link</h3>
                      <input 
-                        className="block bg-[#e4ebe4] text-axolotl border border-[#e4ebe4] rounded-lg cursor-not-allowed"
+                        className="block bg-[#e4ebe4] text-[#5e6d55] border border-[#e4ebe4] p-2 rounded-lg cursor-not-allowed"
                         type="text" 
                         value='http://localhost:3000/works/01' 
                         readOnly

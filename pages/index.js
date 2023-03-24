@@ -81,11 +81,11 @@ const Home = () => {
           <div className='h-full w-full flex items-center z-10 relative'>
             <div className='flex w-full'>
               <div className='w-1/2 flex flex-col items-start'>
-                <h1 id='hero-title' className='heroElement font-bold text-7xl'>Find the perfect <br /> job for you.</h1>
-                <p id='hero-subtitle' className='mt-5 text-lg'>Search your career opportunity through 12,800 jobs.</p>
+                <h1 id='hero-title' className='heroElement font-bold text-7xl text-black'>Find the perfect <br /> job for you.</h1>
+                <p id='hero-subtitle' className='mt-5 text-lg text-black'>Search your career opportunity through 12,800 jobs.</p>
                 <div id='search-container' className='bg-white rounded-full p-3 flex w-full max-w-xl overflow-hidden mt-5  shadow-lg'>
                   <input
-                    className='flex-auto text-lg p-2 border-none outline-none focus:ring-0'
+                    className='flex-auto text-lg p-2 border-none outline-none focus:ring-0 text-black'
                     type='text'
                     name='search'
                     id='search'

@@ -18,7 +18,7 @@ const Work = () => {
                   type="text" 
                   name="search" 
                   id="search" 
-                  className="w-[950px] rounded-l-xl border border-[#e4ebe4] outline-none focus:ring-0 focus:border-primary border-r-0 p-3" 
+                  className="w-[950px] rounded-l-xl border border-[#e4ebe4] outline-none focus:ring-0 focus:border-primary border-r-0 p-3 text-black" 
                   placeholder="Search for job..." 
                 />
                 <button type="submit" className="bg-primary p-[13.5px] rounded-r-xl">
@@ -31,7 +31,7 @@ const Work = () => {
                 <div className="work border border-[#d5e0d5] p-5 rounded-xl">
                   <div className="title flex items-start justify-between pb-5">
                     <div className="text flex-1">
-                      <h3 className="text-lg font-medium">Looking for an Experienced Shopify developer</h3>
+                      <h3 className="text-lg font-medium text-black">Looking for an Experienced Shopify developer</h3>
                       <p className="text-[#5e6d55] text-sm pt-3"><b>Fixed Price</b> - Intermediate - Budget: $80</p>
                     </div>
                     <div className="action flex items-center flex-col gap-2">
@@ -39,7 +39,7 @@ const Work = () => {
                       <Link href='/works/01' className="bg-primary text-white font-medium px-6 py-2 rounded-full">See More</Link>
                     </div>
                   </div>
-                  <p>Skills Needed: - At least 3 years of Shopify experience building and customizing Shopify themes - Experience in building Shopify app is a big plus - Know how to work with Git...</p>
+                  <p className="text-black">Skills Needed: - At least 3 years of Shopify experience building and customizing Shopify themes - Experience in building Shopify app is a big plus - Know how to work with Git...</p>
                   <ul className="flex items-center gap-3 py-5 flex-wrap">
                     <li className="bg-[#f2f7f2] text-[#001e00] px-3 py-1">web design</li>
                     <li className="bg-[#f2f7f2] text-[#001e00] px-3 py-1">html</li>
@@ -52,7 +52,7 @@ const Work = () => {
                 <div className="work border border-[#d5e0d5] p-5 rounded-xl">
                   <div className="title flex items-start justify-between pb-5">
                     <div className="text flex-1">
-                      <h3 className="text-lg font-medium">Looking for an Experienced Shopify developer</h3>
+                      <h3 className="text-lg font-medium text-black">Looking for an Experienced Shopify developer</h3>
                       <p className="text-[#5e6d55] text-sm pt-3"><b>Fixed Price</b> - Intermediate - Budget: $80</p>
                     </div>
                     <div className="action flex items-center flex-col gap-2">
@@ -60,7 +60,7 @@ const Work = () => {
                       <Link href='/works/01' className="bg-primary text-white font-medium px-6 py-2 rounded-full">See More</Link>
                     </div>
                   </div>
-                  <p>Skills Needed: - At least 3 years of Shopify experience building and customizing Shopify themes - Experience in building Shopify app is a big plus - Know how to work with Git...</p>
+                  <p className="text-black">Skills Needed: - At least 3 years of Shopify experience building and customizing Shopify themes - Experience in building Shopify app is a big plus - Know how to work with Git...</p>
                   <ul className="flex items-center gap-3 py-5 flex-wrap">
                     <li className="bg-[#f2f7f2] text-[#001e00] px-3 py-1">web design</li>
                     <li className="bg-[#f2f7f2] text-[#001e00] px-3 py-1">html</li>
@@ -73,7 +73,7 @@ const Work = () => {
                 <div className="work border border-[#d5e0d5] p-5 rounded-xl">
                   <div className="title flex items-start justify-between pb-5">
                     <div className="text flex-1">
-                      <h3 className="text-lg font-medium">Looking for an Experienced Shopify developer</h3>
+                      <h3 className="text-lg font-medium text-black">Looking for an Experienced Shopify developer</h3>
                       <p className="text-[#5e6d55] text-sm pt-3"><b>Fixed Price</b> - Intermediate - Budget: $80</p>
                     </div>
                     <div className="action flex items-center flex-col gap-2">
@@ -81,7 +81,7 @@ const Work = () => {
                       <button className="bg-primary text-white font-medium px-6 py-2 rounded-full">See More</button>
                     </div>
                   </div>
-                  <p>Skills Needed: - At least 3 years of Shopify experience building and customizing Shopify themes - Experience in building Shopify app is a big plus - Know how to work with Git...</p>
+                  <p className="text-black">Skills Needed: - At least 3 years of Shopify experience building and customizing Shopify themes - Experience in building Shopify app is a big plus - Know how to work with Git...</p>
                   <ul className="flex items-center gap-3 py-5 flex-wrap">
                     <li className="bg-[#f2f7f2] text-[#001e00] px-3 py-1">web design</li>
                     <li className="bg-[#f2f7f2] text-[#001e00] px-3 py-1">html</li>
@@ -94,7 +94,7 @@ const Work = () => {
                 <div className="work border border-[#d5e0d5] p-5 rounded-xl">
                   <div className="title flex items-start justify-between pb-5">
                     <div className="text flex-1">
-                      <h3 className="text-lg font-medium">Looking for an Experienced Shopify developer</h3>
+                      <h3 className="text-lg font-medium text-black">Looking for an Experienced Shopify developer</h3>
                       <p className="text-[#5e6d55] text-sm pt-3"><b>Fixed Price</b> - Intermediate - Budget: $80</p>
                     </div>
                     <div className="action flex items-center flex-col gap-2">
@@ -102,7 +102,7 @@ const Work = () => {
                       <button className="bg-primary text-white font-medium px-6 py-2 rounded-full">See More</button>
                     </div>
                   </div>
-                  <p>Skills Needed: - At least 3 years of Shopify experience building and customizing Shopify themes - Experience in building Shopify app is a big plus - Know how to work with Git...</p>
+                  <p className="text-black">Skills Needed: - At least 3 years of Shopify experience building and customizing Shopify themes - Experience in building Shopify app is a big plus - Know how to work with Git...</p>
                   <ul className="flex items-center gap-3 py-5 flex-wrap">
                     <li className="bg-[#f2f7f2] text-[#001e00] px-3 py-1">web design</li>
                     <li className="bg-[#f2f7f2] text-[#001e00] px-3 py-1">html</li>

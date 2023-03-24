@@ -11,51 +11,11 @@ const jobs = () => {
       <main>
       <TheDivArea>
          <div className="w-9/12 p-5 border border-silver rounded-lg">
-            <h3 className="text-2xl font-semibold pb-8">Submitted Jobs (6)</h3>
+            <h3 className="text-2xl font-semibold pb-8 text-black">Submitted Jobs (6)</h3>
             <div className="flex items-center justify-between border-b border-silver pb-4 mb-4">
-               <p className="text-axolotl">Initiated Mar 20, 2023</p>
+               <p className="text-[#5e6d55]">Initiated Mar 20, 2023</p>
                <Link href='/works/01' className="text-primary hover:underline font-medium">Looking for an Experienced Shopify developer</Link>
-               <p className="text-sm text-axolotl">Budget: $80</p>
-               <div>
-                  <button className="bg-primary text-white font-medium px-6 py-2 rounded-full">Proposals (5)</button>
-               </div>
-            </div>
-            <div className="flex items-center justify-between border-b border-silver pb-4 mb-4">
-               <p className="text-axolotl">Initiated Mar 20, 2023</p>
-               <Link href='/works/01' className="text-primary hover:underline font-medium">Looking for an Experienced Shopify developer</Link>
-               <p className="text-sm text-axolotl">Budget: $80</p>
-               <div>
-                  <button className="bg-primary text-white font-medium px-6 py-2 rounded-full">Proposals (5)</button>
-               </div>
-            </div>
-            <div className="flex items-center justify-between border-b border-silver pb-4 mb-4">
-               <p className="text-axolotl">Initiated Mar 20, 2023</p>
-               <Link href='/works/01' className="text-primary hover:underline font-medium">Looking for an Experienced Shopify developer</Link>
-               <p className="text-sm text-axolotl">Budget: $80</p>
-               <div>
-                  <button className="bg-primary text-white font-medium px-6 py-2 rounded-full">Proposals (5)</button>
-               </div>
-            </div>
-            <div className="flex items-center justify-between border-b border-silver pb-4 mb-4">
-               <p className="text-axolotl">Initiated Mar 20, 2023</p>
-               <Link href='/works/01' className="text-primary hover:underline font-medium">Looking for an Experienced Shopify developer</Link>
-               <p className="text-sm text-axolotl">Budget: $80</p>
-               <div>
-                  <button className="bg-primary text-white font-medium px-6 py-2 rounded-full">Proposals (5)</button>
-               </div>
-            </div>
-            <div className="flex items-center justify-between border-b border-silver pb-4 mb-4">
-               <p className="text-axolotl">Initiated Mar 20, 2023</p>
-               <Link href='/works/01' className="text-primary hover:underline font-medium">Looking for an Experienced Shopify developer</Link>
-               <p className="text-sm text-axolotl">Budget: $80</p>
-               <div>
-                  <button className="bg-primary text-white font-medium px-6 py-2 rounded-full">Proposals (5)</button>
-               </div>
-            </div>
-            <div className="flex items-center justify-between pb-4 mb-4">
-               <p className="text-axolotl">Initiated Mar 20, 2023</p>
-               <Link href='/works/01' className="text-primary hover:underline font-medium">Looking for an Experienced Shopify developer</Link>
-               <p className="text-sm text-axolotl">Budget: $80</p>
+               <p className="text-sm text-[#5e6d55]">Budget: $80</p>
                <div>
                   <button className="bg-primary text-white font-medium px-6 py-2 rounded-full">Proposals (5)</button>
                </div>

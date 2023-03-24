@@ -12,9 +12,9 @@ const enterprise = () => {
       <main>
           <TheDivArea>
               <div className="w-1/2">
-                <h5 className="text-xl font-semibold">Enterprise Suite</h5>
-                <h2 className="text-6xl font-extrabold py-3">This is how we jetpack over the skills gap.</h2>
-                <p className="pt-2 pb-5">
+                <h5 className="text-xl font-semibold text-black/70">Enterprise Suite</h5>
+                <h2 className="text-6xl font-extrabold py-3 text-black">This is how we jetpack over the skills gap.</h2>
+                <p className="pt-2 pb-5 text-black">
                   Access the top 1% of talent on a full-service Enterprise platform, customized to meet your needs. This is how Flexibility works now.
                 </p>
                 <button className="bg-primary text-white font-medium px-6 py-2 rounded-full">Talk to an expert</button>
