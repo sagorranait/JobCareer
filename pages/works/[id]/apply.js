@@ -10,14 +10,14 @@ const Applied = () => {
       </Head>
       <main>
          <TheDivArea>
-            <form className="px-32">
+            <form className="w-3/4">
             <div className="py-5 mb-5 mt-8">
                <h3 className="text-xl font-medium mb-5">Proposal Settings</h3>
-               <label for="profile" class="mb-2 text-base font-medium pr-5">Propose with a Specialized profile</label>
+               <label htmlFor="profile" class="mb-2 text-base font-medium pr-5">Propose with a Specialized profile</label>
                <select 
                   id="profile" 
                   class="w-60 border border-silver text-base rounded-lg focus:ring-silver focus:border-silver p-2">
-                  <option selected value='id'>General Profile</option>
+                  <option defaultValue value='id'>General Profile</option>
                </select>
                <p className="py-3">This proposal requires 4 Connects. </p>
                <p>When you submit this proposal, you'll have 47 Connects remaining.</p>
@@ -91,7 +91,7 @@ const Applied = () => {
             <div className="py-3 mt-3">
                <h3 className="text-xl font-medium mb-5">Additional Details</h3>
                <div>
-                  <label for="coverLetter" class="block mb-2 text-base font-medium">Cover Letter</label>
+                  <label htmlFor="coverLetter" class="block mb-2 text-base font-medium">Cover Letter</label>
                   <textarea 
                      id="coverLetter" 
                      rows="4" 
