@@ -7,20 +7,14 @@ module.exports = {
     // Or if using `src` directory:
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  daisyui: {
-    themes: [
-      {
-        mytheme: {
-          primary: "#108a00",
-          secondary: "#14a800",
-          white: '#ffffff',
-          silver: '#d5e0d5',
-          axolotl: '#5e6d55'
-        },
-      },  
-    ],
+  theme:{
+    colors: {
+      'primary': "#108a00",
+      'secondary': "#14a800",
+      'white': '#ffffff',
+      'silver': '#d5e0d5',
+      'axolotl': '#5e6d55'
+    }
   },
-  plugins: [
-    require("daisyui")
-  ],
+  plugins: [],
 }

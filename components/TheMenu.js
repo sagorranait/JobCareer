@@ -9,11 +9,11 @@ const TheMenu = () => {
       <ul className='w-4/5 mx-auto flex gap-5 h-full items-center'>
          <li className='flex-auto'>
             <div className="flex items-center gap-10">
-               <Link href='/' className="font-bold text-2xl text-black">Job<span className='text-secondary'>Career</span></Link>
+               <Link href='/' className="font-bold text-2xl">Job<span className='text-secondary'>Career</span></Link>
                <ul className="left-menu flex items-center gap-8 pt-1">
                   <li>
                      <Link 
-                        className={router.pathname === "/works" ? "border-b-2 border-secondary text-black" : "text-black hover:border-b-2 duration-100"} 
+                        className={router.pathname === "/works" ? "border-b-2 border-secondary" : "text-black hover:border-b-2 duration-100"} 
                         href='/works'
                      >
                         Find Work
@@ -21,7 +21,7 @@ const TheMenu = () => {
                   </li>
                   <li>
                      <Link 
-                     className={router.pathname === "/enterprise" ? "border-b-2 border-secondary text-black" : " text-blackhover:border-b-2 duration-100 text-black"} 
+                     className={router.pathname === "/enterprise" ? "border-b-2 border-secondary" : "hover:border-b-2 duration-100"} 
                      href='/enterprise'
                      >
                         Enterprise
@@ -32,7 +32,7 @@ const TheMenu = () => {
          </li>
          <li>
             <Link 
-               className={router.pathname === "/proposals" ? "border-b-2 border-secondary text-black" : "hover:border-b-2 duration-100 text-black"} 
+               className={router.pathname === "/proposals" ? "border-b-2 border-secondary" : "hover:border-b-2 duration-100"} 
                href='/proposals' 
             >
                My Proposals
@@ -41,7 +41,7 @@ const TheMenu = () => {
          <li>
             <Link 
                href='/jobs' 
-               className={router.pathname === "/jobs" ? "border-b-2 border-secondary text-black" : "hover:border-b-2 duration-100 text-black"} 
+               className={router.pathname === "/jobs" ? "border-b-2 border-secondary" : "hover:border-b-2 duration-100"} 
             >
                My Jobs
             </Link>
@@ -49,7 +49,7 @@ const TheMenu = () => {
          <li>
             <Link 
                href='/profile' 
-               className={router.pathname === "/profile" ? "border-b-2 border-secondary text-black" : "hover:border-b-2 duration-100 text-black"} 
+               className={router.pathname === "/profile" ? "border-b-2 border-secondary" : "hover:border-b-2 duration-100"} 
             >
                Profile
             </Link>
@@ -57,7 +57,7 @@ const TheMenu = () => {
          <li>
             <Link 
                href='/login' 
-               className={router.pathname === "/login" ? "bg-primary text-white font-medium px-6 py-2 rounded-full" : " text-black"}
+               className={router.pathname === "/login" ? "bg-primary text-white font-medium px-6 py-2 rounded-full" : ""}
             >
                Log In
             </Link>
