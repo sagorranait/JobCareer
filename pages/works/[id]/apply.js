@@ -13,10 +13,10 @@ const Applied = () => {
             <form className="w-3/4">
             <div className="py-5 mb-5 mt-8">
                <h3 className="text-xl font-medium mb-5">Proposal Settings</h3>
-               <label htmlFor="profile" class="mb-2 text-base font-medium pr-5">Propose with a Specialized profile</label>
+               <label htmlFor="profile" className="mb-2 text-base font-medium pr-5">Propose with a Specialized profile</label>
                <select 
                   id="profile" 
-                  class="w-60 border border-silver text-base rounded-lg focus:ring-silver focus:border-silver p-2">
+                  className="w-60 border border-silver text-base rounded-lg focus:ring-silver focus:border-silver p-2">
                   <option defaultValue value='id'>General Profile</option>
                </select>
                <p className="py-3">This proposal requires 4 Connects. </p>
@@ -30,14 +30,14 @@ const Applied = () => {
                      <p className="text-[#5e6d55]">Total amount the client will see on your proposal</p>
                   </div>
                   <div>
-                     <div class="relative">
-                        <span class="absolute left-3 top-2.5 text-base font-medium">
+                     <div className="relative">
+                        <span className="absolute left-3 top-2.5 text-base font-medium">
                            $
                         </span>
                         <input 
                            type="text" 
                            id="website-admin" 
-                           class="border border-axolotl p-2 font-medium rounded-lg text-right" 
+                           className="border border-axolotl p-2 font-medium rounded-lg text-right" 
                            value='200.00'
                            onChange={()=>{}}
                         />
@@ -49,14 +49,14 @@ const Applied = () => {
                      <h4 className="text-base font-semibold"><span className="text-secondary">20%</span> JobCareer Service Fee</h4>
                   </div>
                   <div>
-                     <div class="relative">
-                        <span class="absolute left-3 top-2.5 text-base font-medium">
+                     <div className="relative">
+                        <span className="absolute left-3 top-2.5 text-base font-medium">
                            $
                         </span>
                         <input 
                            type="text" 
                            id="website-admin" 
-                           class="border-none text-right font-medium cursor-not-allowed bg-[#e4ebe44f] text-[#5e6d55] rounded-lg p-2" 
+                           className="border-none text-right font-medium cursor-not-allowed bg-[#e4ebe44f] text-[#5e6d55] rounded-lg p-2" 
                            disabled
                            readOnly
                            value='20.00'
@@ -71,14 +71,14 @@ const Applied = () => {
                      <p className="text-axolotl">The amount you'll receive after service fees</p>
                   </div>
                   <div>
-                     <div class="relative">
-                        <span class="absolute left-3 top-2.5 text-base font-medium">
+                     <div className="relative">
+                        <span className="absolute left-3 top-2.5 text-base font-medium">
                            $
                         </span>
                         <input 
                            type="text" 
                            id="website-admin" 
-                           class="border border-[#d5e0d5] p-2 font-medium rounded-lg text-right cursor-not-allowed" 
+                           className="border border-[#d5e0d5] p-2 font-medium rounded-lg text-right cursor-not-allowed" 
                            disabled
                            readOnly
                            value='180.00'
@@ -91,11 +91,11 @@ const Applied = () => {
             <div className="py-3 mt-3">
                <h3 className="text-xl font-medium mb-5">Additional Details</h3>
                <div>
-                  <label htmlFor="coverLetter" class="block mb-2 text-base font-medium">Cover Letter</label>
+                  <label htmlFor="coverLetter" className="block mb-2 text-base font-medium">Cover Letter</label>
                   <textarea 
                      id="coverLetter" 
                      rows="4" 
-                     class="block p-2.5 w-full rounded-lg border border-[#d5e0d5] focus:ring-[#d5e0d5] focus:border-[#d5e0d5]"
+                     className="block p-2.5 w-full rounded-lg border border-[#d5e0d5] focus:ring-[#d5e0d5] focus:border-[#d5e0d5]"
                   ></textarea>
                </div>
             </div>
