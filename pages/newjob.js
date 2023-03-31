@@ -5,14 +5,17 @@ import TheDivArea from "@/components/TheDivArea";
 const newjob = () => {
    const skillRef = useRef(null);
    const [skills, setSkills] = useState([]);
-   const [inputLength, setInputLength] = useState({title: '', description: '', skills: ''});
+   const [inputLength, setInputLength] = useState({title: '', description: '', skill: 0});
 
    const skillsHandler = (event) => {
       if (event.key === 'Tab') {
          event.preventDefault();
+         if (inputLength.skill > 4) return;
+
          const newSkill = event.target.value.trim();
          if (newSkill !== '') {
             setSkills(prevSkills => [...prevSkills, newSkill]);
+            setInputLength({ ...inputLength, skill: skills.length+1 });
          }
          event.target.value = '';
          skillRef.current;
@@ -20,13 +23,20 @@ const newjob = () => {
    }
 
    const titleHandler = (event) => {
-      if (inputLength.title.length > 50) {
-         return;
-      }
+      if (inputLength.title.length > 50) return;
       setInputLength({ ...inputLength, title: event.target.value });
    }
 
-   // console.log(inputLenght);
+   const descriptionHandler = (event) => {
+      if (inputLength.description.length > 500) return;
+      setInputLength({ ...inputLength, description: event.target.value });
+   }
+
+   const removeSkillHandler = (skill) => {
+      const fillterSkills = skills.filter(item => item !== skill);
+      setSkills(fillterSkills);
+      setInputLength({ ...inputLength, skill: fillterSkills.length });
+   }
 
   return (
    <>
@@ -84,12 +94,17 @@ const newjob = () => {
                      </div>
                   </div>
                   <div className="text-left mt-5">
-                     <label htmlFor="description" className="pl-1 mb-2 block">Description *</label>
+                     <label htmlFor="description" className="pl-1 mb-2 flex items-center justify-between">
+                        <span>Description *</span>
+                        <span className="pr-2 text-sm text-axolotl font-medium">{inputLength.description.length}/500</span>
+                     </label>
                      <textarea 
                         className="w-full border border-silver p-3 rounded-lg focus:ring-0 outline-none" 
                         name="description" 
                         id="description" 
                         rows="4"
+                        onChange={descriptionHandler}
+                        maxLength={500}
                      ></textarea>
                   </div>
                   <div className="text-left relative mt-3">
@@ -111,10 +126,30 @@ const newjob = () => {
                         </svg>
                   </div>
                   <div className="text-left mt-5">
-                     <label htmlFor="skills" className="pl-1 mb-2 block">Skills and Expertise *</label>
+                     <label htmlFor="description" className="pl-1 mb-2 flex items-center justify-between">
+                        <span>Skills and Expertise *</span>
+                        <span className="pr-2 text-sm text-axolotl font-medium">{inputLength.skill}/5</span>
+                     </label>
                      <div className="w-full border border-silver p-3 rounded-lg flex items-center gap-2 flex-wrap">
                         <ul className="flex items-center gap-2 flex-wrap">
-                           {skills.map(skill => <li className="bg-primary/10 font-medium w-fit px-2 py-1 rounded-full text-primary text-sm">{skill}</li>)}
+                           {skills.map((skill, index) => <li 
+                              key={index} 
+                              className="bg-primary/10 font-medium w-fit px-2 py-1 rounded-full text-primary text-sm flex items-center gap-2"
+                           >
+                              <span>{skill}</span>
+                              <span className="cursor-pointer font-semibold" onClick={()=>removeSkillHandler(skill)}>
+                                 <svg 
+                                    xmlns="http://www.w3.org/2000/svg" 
+                                    fill="none" 
+                                    viewBox="0 0 24 24" 
+                                    strokeWidth="1.5" 
+                                    stroke="currentColor" 
+                                    className="w-4 h-4"
+                                 >
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                 </svg>
+                              </span>
+                           </li>)}
                         </ul>
                         <div>
                            <input 
@@ -122,7 +157,7 @@ const newjob = () => {
                               type="text" 
                               id="skills" 
                               name="skills" 
-                              placeholder="Skills and Expertise" 
+                              placeholder="Press 'Tab' to add skill." 
                               onKeyDown={skillsHandler}
                               ref={skillRef}
                            />
