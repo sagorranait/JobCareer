@@ -157,7 +157,7 @@ const newjob = () => {
                               type="text" 
                               id="skills" 
                               name="skills" 
-                              placeholder="Press 'Tab' to add skill." 
+                              placeholder="Press 'Tab' to add a skill." 
                               onKeyDown={skillsHandler}
                               ref={skillRef}
                            />
