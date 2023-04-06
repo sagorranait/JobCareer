@@ -16,7 +16,7 @@ const ChangeTerms = () => {
       <button 
          type="button"
          onClick={openModal} 
-         className="bg-primary text-white font-medium px-6 py-2 rounded-full mr-3"
+         className="bg-primary text-white font-medium px-6 py-2 rounded-full mb-2 sm:mr-3 xl:mb-0 xl:mr-3"
       >
          Change Terms
       </button>
