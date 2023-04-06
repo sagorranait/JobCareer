@@ -7,11 +7,10 @@ import sagorrana from '../assets/sagorrana.png';
 
 const profile = () => {
    const [isOpen, setIsOpen] = useState(false);
-  const closeModal = () => setIsOpen(false);
-  const openModal = () => setIsOpen(true);
+   const [isShow, setIsShow] = useState(false)
 
   const updatePhotoHandler = () => {
-      console.log('changeTerms');
+      console.log('Upload New Photo.');
       setIsOpen(false)
   }
 
@@ -34,7 +33,7 @@ const profile = () => {
                      <div className="w-4 h-4 bg-primary border-[2px] border-white rounded-full absolute bottom-2 right-2"/>
                      <button  
                         type="button"
-                        onClick={openModal}  
+                        onClick={() => setIsOpen(true)}  
                         className="absolute top-0 left-0 border border-[#d5e0d5] p-1 rounded-full"
                      >
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#108a00" className="w-4 h-4">
@@ -42,31 +41,104 @@ const profile = () => {
                         </svg>
                      </button>
                   </div>
-                  <div className="flex-1">
+                  <form className="flex-1">
                      <div className='flex items-center justify-between pb-2.5'>
                         <h2 className='text-2xl font-medium'>Sagor Rana</h2>
-                        <button 
-                        className="text-white bg-primary focus:ring-0 focus:outline-none font-medium rounded-full text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
-                        >
-                           Edit Profile
-                        </button>
+                        <div>
+                           {isShow ? <button 
+                           className="text-white bg-primary focus:ring-0 focus:outline-none font-medium rounded-full text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
+                           type='submit'
+                           >
+                              Update Profile
+                           </button> : <span 
+                           className="text-white bg-primary focus:ring-0 focus:outline-none font-medium rounded-full text-sm inline-flex items-center px-5 py-2.5 text-center mr-2 cursor-pointer"
+                           onClick={()=> setIsShow(true)}
+                           >
+                              Edit Profile
+                           </span>}
+                        </div>
                      </div>
                      <div className='grid grid-cols-2 gap-2'>
-                        <p className='text-base'>MERN Developer</p>
-                        <p className='text-base'>$90.00/hr</p>
-                        <p className='text-base'>Narayanganj, Bangladesh</p>
-                        <p className='text-base'>
-                           <button 
-                              className='border border-silver p-1 px-3 rounded-full text-sm mr-2 disabled:bg-silver/20 disabled:text-[#d9d9d9]' 
-                              disabled
-                           >Available Now</button> 
-                           off
-                        </p>
+                        <div>
+                           { isShow ? 
+                           <input 
+                              type="text" 
+                              name='tagline' 
+                              value='MERN Developer' 
+                              placeholder='Tagline'
+                              onChange={()=>{}} 
+                              className="border border-silver text-base rounded-lg focus:outline-primary focus:ring-primary focus:border-primary p-1 px-2"
+                           /> :
+                           <p className='text-base'>MERN Developer</p>                           
+                           }
+                        </div>
+
+                        <div>
+                           { isShow ?  
+                           <p className='text-base'>$ <input 
+                              type="number" 
+                              name='hourlyrate' 
+                              placeholder='Hourly Rate'                              
+                              value='90.00' 
+                              onChange={()=>{}}
+                              className="w-32 border border-silver rounded-lg focus:outline-primary focus:ring-primary focus:border-primary p-1 px-2"
+                           />/hr</p> :
+                           <p className='text-base'>$ 90.00/hr</p>
+                           }
+                        </div>
+                        <div>
+                           { isShow ? 
+                           <input 
+                              type="text" 
+                              name='location' 
+                              value='Dhaka, Bangladesh' 
+                              placeholder='Location'
+                              onChange={()=>{}} 
+                              className="border border-silver text-base rounded-lg focus:outline-primary focus:ring-primary focus:border-primary p-1 px-2"
+                           /> :
+                           <p className='text-base'>Dhaka, Bangladesh</p>
+                           }
+                        </div>
+                        <div>
+                           { isShow ? 
+                           <p className='text-base'>
+                              <button 
+                                 className='border border-silver p-1 px-3 rounded-full text-sm mr-2 disabled:bg-silver/20 disabled:text-[#d9d9d9]' 
+                                 disabled
+                              >Available Now</button> 
+                              <select 
+                                 className="border border-silver rounded-lg focus:ring-0 outline-none" 
+                                 name="available"
+                              >
+                              <option value="true" defaultChecked>On</option>
+                              <option value="false">Off</option>
+                           </select>
+                           </p> :
+                           <p className='text-base'>
+                              <button 
+                                 className='border border-silver p-1 px-3 rounded-full text-sm mr-2 disabled:bg-silver/20 disabled:text-[#d9d9d9]' 
+                                 disabled
+                              >Available Now</button> 
+                              off
+                           </p>
+                           }
+                        </div>
                      </div>
                      <div className='pt-8'>
                         <h3 className='text-xl font-medium pb-1'>Overview</h3>
                         <p className='pb-4'>Use this space to show clients you have the skills and experience they're looking for:</p>
-                        <p>My Skills are: ✔ Comfortable: JavaScript, TypeScript, Reactjs, React-Router (6.4), Context API, React-Redux, Lazy Loading, Nextjs, Next-Auth, Styled-Components, Material UI, Ant Design, Bootstrap, TailwindCSS, MaterializeCSS, SCSS, HTML, CSS. ✔ Familiar: Nodejs, Expressjs, MongoDB, Firebase, MySQL ✔ Web Tools: Git, VS Code, Chrome Dev Tools, Netlify, Vercel. ✔ Design Tools: Figma, Adobe XD, Illustrator, Photoshop. ✔ Email Marketing Expert (MailChimp & Klaviyo). ✔ Email Signature Design (Gmail, Yahoo, Outlook, Hotmail & etc.) ✔ WordPress (Ecommerce, Theme Customizing, Elementor, Zion, Beaver Builder). ✔ Website Bug Fixing( CSS, JS, WordPress, Reactjs, etc ). Thank you.</p>
+                        { isShow ? 
+                        <textarea 
+                           className="w-full border border-silver p-3 rounded-lg focus:ring-0 outline-none" 
+                           name="description" 
+                           id="description" 
+                           rows="6"
+                           value='My Skills are: ✔ Comfortable: JavaScript, TypeScript, Reactjs, React-Router (6.4), Context API, React-Redux, Lazy Loading, Nextjs, Next-Auth, Styled-Components, Material UI, Ant Design, Bootstrap, TailwindCSS, MaterializeCSS, SCSS, HTML, CSS. ✔ Familiar: Nodejs, Expressjs, MongoDB, Firebase, MySQL ✔ Web Tools: Git, VS Code, Chrome Dev Tools, Netlify, Vercel. ✔ Design Tools: Figma, Adobe XD, Illustrator, Photoshop. ✔ Email Marketing Expert (MailChimp & Klaviyo). Thank you.'
+                           onChange={()=>{}}
+                           maxLength={500}
+                        ></textarea> : 
+                        <p>My Skills are: ✔ Comfortable: JavaScript, TypeScript, Reactjs, React-Router (6.4), Context API, React-Redux, Lazy Loading, Nextjs, Next-Auth, Styled-Components, Material UI, Ant Design, Bootstrap, TailwindCSS, MaterializeCSS, SCSS, HTML, CSS. ✔ Familiar: Nodejs, Expressjs, MongoDB, Firebase, MySQL ✔ Web Tools: Git, VS Code, Chrome Dev Tools, Netlify, Vercel. ✔ Design Tools: Figma, Adobe XD, Illustrator, Photoshop. ✔ Email Marketing Expert (MailChimp & Klaviyo). Thank you.</p> 
+                        }
                      </div>
                      <div className='pt-12 grid grid-cols-4 gap-3'>
                         <div>
@@ -86,13 +158,13 @@ const profile = () => {
                            <p>Completed</p>
                         </div>
                      </div>
-                  </div>
+                  </form>
                </div>
             </div>
          </TheDivArea>
       </main>
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+        <Dialog as="div" className="relative z-10" onClose={() => setIsOpen(false)}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -124,7 +196,7 @@ const profile = () => {
                   <button
                      type="button" 
                      className="absolute top-2.5 right-2.5 bg-primary/80 text-white rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" 
-                     onClick={closeModal}
+                     onClick={() => setIsOpen(false)}
                   >
                   <svg 
                      aria-hidden="true" 
@@ -171,7 +243,7 @@ const profile = () => {
                         </button>
                         <button 
                            data-modal-hide="popup-modal" 
-                           onClick={closeModal}
+                           onClick={() => setIsOpen(false)}
                            type="button"
                            className="focus:ring-0 focus:outline-none text-sm font-medium px-5 py-2.5">
                               No, cancel
