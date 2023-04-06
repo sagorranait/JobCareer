@@ -23,7 +23,7 @@ const profile = () => {
       <main>
          <TheDivArea>
             <div className="w-2/3 p-8 border border-silver rounded-xl">
-               <div className="flex items-center gap-8">
+               <div className="flex items-start gap-20">
                   <div className="relative">
                      <Image
                         alt="profile pic"
@@ -43,15 +43,48 @@ const profile = () => {
                      </button>
                   </div>
                   <div className="flex-1">
-                     <div>
-                        <h2>Sagor Rana</h2>
-                        <button>Edit Profile</button>
+                     <div className='flex items-center justify-between pb-2.5'>
+                        <h2 className='text-2xl font-medium'>Sagor Rana</h2>
+                        <button 
+                        className="text-white bg-primary focus:ring-0 focus:outline-none font-medium rounded-full text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
+                        >
+                           Edit Profile
+                        </button>
                      </div>
-                     <div>
-                        <p>MERN Developer</p>
-                        <p>$90.00/hr</p>
-                        <p>Narayanganj, Bangladesh</p>
-                        <p><span>Available Now</span> off</p>
+                     <div className='grid grid-cols-2 gap-2'>
+                        <p className='text-base'>MERN Developer</p>
+                        <p className='text-base'>$90.00/hr</p>
+                        <p className='text-base'>Narayanganj, Bangladesh</p>
+                        <p className='text-base'>
+                           <button 
+                              className='border border-silver p-1 px-3 rounded-full text-sm mr-2 disabled:bg-silver/20 disabled:text-[#d9d9d9]' 
+                              disabled
+                           >Available Now</button> 
+                           off
+                        </p>
+                     </div>
+                     <div className='pt-8'>
+                        <h3 className='text-xl font-medium pb-1'>Overview</h3>
+                        <p className='pb-4'>Use this space to show clients you have the skills and experience they're looking for:</p>
+                        <p>My Skills are: ✔ Comfortable: JavaScript, TypeScript, Reactjs, React-Router (6.4), Context API, React-Redux, Lazy Loading, Nextjs, Next-Auth, Styled-Components, Material UI, Ant Design, Bootstrap, TailwindCSS, MaterializeCSS, SCSS, HTML, CSS. ✔ Familiar: Nodejs, Expressjs, MongoDB, Firebase, MySQL ✔ Web Tools: Git, VS Code, Chrome Dev Tools, Netlify, Vercel. ✔ Design Tools: Figma, Adobe XD, Illustrator, Photoshop. ✔ Email Marketing Expert (MailChimp & Klaviyo). ✔ Email Signature Design (Gmail, Yahoo, Outlook, Hotmail & etc.) ✔ WordPress (Ecommerce, Theme Customizing, Elementor, Zion, Beaver Builder). ✔ Website Bug Fixing( CSS, JS, WordPress, Reactjs, etc ). Thank you.</p>
+                     </div>
+                     <div className='pt-12 grid grid-cols-4 gap-3'>
+                        <div>
+                           <h3 className='text-3xl text-primary font-semibold'>8</h3>
+                           <p>Proposals</p>
+                        </div>
+                        <div>
+                           <h3 className='text-3xl text-primary font-semibold'>5</h3>
+                           <p>Invited</p>
+                        </div>
+                        <div>
+                           <h3 className='text-3xl text-primary font-semibold'>4</h3>
+                           <p>Hired</p>
+                        </div>
+                        <div>
+                           <h3 className='text-3xl text-primary font-semibold'>2</h3>
+                           <p>Completed</p>
+                        </div>
                      </div>
                   </div>
                </div>
@@ -116,14 +149,15 @@ const profile = () => {
                            className="h-28 rounded-full object-cover object-top"
                         />
                      </div>
-                     <label className="block">
-                        <span className="sr-only">Choose profile photo</span>
+                     <label className="block cursor-pointer">
+                        <span className="sr-only cursor-pointer">Choose profile photo</span>
                         <input type="file" className="block w-full text-sm text-slate-500
                            file:mr-4 file:py-2 file:px-4
                            file:rounded-full file:border-0
                            file:text-sm file:font-semibold
                            file:bg-violet-50 file:text-violet-700
                            hover:file:bg-violet-100
+                           cursor-pointer
                         "/>
                      </label>
                      </div>
