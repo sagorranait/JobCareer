@@ -14,6 +14,10 @@ const profile = () => {
       setIsOpen(false)
   }
 
+  const profileUpdateHandler = (event) => {
+      event.preventDefault();
+  }
+
   return (
    <>
       <Head>
@@ -21,8 +25,8 @@ const profile = () => {
       </Head>
       <main>
          <TheDivArea>
-            <div className="w-2/3 p-8 border border-silver rounded-xl">
-               <div className="flex items-start gap-20">
+            <div className="w-11/12 mt-72 mb-3 p-3 md:mt-16 lg:mb-0 lg:mt-0 lg:w-10/12 lg:p-8 xl:w-2/3 border border-silver rounded-xl">
+               <div className="flex items-center flex-col justify-center gap-5 lg:items-start lg:justify-start lg:flex-row lg:gap-14 xl:gap-20">
                   <div className="relative">
                      <Image
                         alt="profile pic"
@@ -41,9 +45,9 @@ const profile = () => {
                         </svg>
                      </button>
                   </div>
-                  <form className="flex-1">
-                     <div className='flex items-center justify-between pb-2.5'>
-                        <h2 className='text-2xl font-medium'>Sagor Rana</h2>
+                  <form className="flex-1" onSubmit={profileUpdateHandler}>
+                     <div className='flex items-center justify-between pb-2.5 flex-col gap-3 md:flex-row md:px-20 lg:gap-0 lg:flex-row lg:px-0'>
+                        <h2 className='text-xl lg:text-2xl font-medium'>Sagor Rana</h2>
                         <div>
                            {isShow ? <button 
                            className="text-white bg-primary focus:ring-0 focus:outline-none font-medium rounded-full text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
@@ -58,7 +62,7 @@ const profile = () => {
                            </span>}
                         </div>
                      </div>
-                     <div className='grid grid-cols-2 gap-2'>
+                     <div className='grid grid-cols-1 justify-items-center md:grid-cols-2 md:justify-items-start md:px-20 lg:justify-items-start lg:grid-cols-2 gap-2 lg:px-0'>
                         <div>
                            { isShow ? 
                            <input 
@@ -124,12 +128,12 @@ const profile = () => {
                            }
                         </div>
                      </div>
-                     <div className='pt-8'>
+                     <div className='pt-5 lg:pt-8 text-center lg:text-left'>
                         <h3 className='text-xl font-medium pb-1'>Overview</h3>
-                        <p className='pb-4'>Use this space to show clients you have the skills and experience they're looking for:</p>
+                        <p className='pb-4 text-sm lg:text-base'>Use this space to show clients you have the skills and experience they're looking for:</p>
                         { isShow ? 
                         <textarea 
-                           className="w-full border border-silver p-3 rounded-lg focus:ring-0 outline-none" 
+                           className="w-full border border-silver p-3 rounded-lg focus:ring-0 outline-none text-sm lg:text-base" 
                            name="description" 
                            id="description" 
                            rows="6"
@@ -137,23 +141,23 @@ const profile = () => {
                            onChange={()=>{}}
                            maxLength={500}
                         ></textarea> : 
-                        <p>My Skills are: ✔ Comfortable: JavaScript, TypeScript, Reactjs, React-Router (6.4), Context API, React-Redux, Lazy Loading, Nextjs, Next-Auth, Styled-Components, Material UI, Ant Design, Bootstrap, TailwindCSS, MaterializeCSS, SCSS, HTML, CSS. ✔ Familiar: Nodejs, Expressjs, MongoDB, Firebase, MySQL ✔ Web Tools: Git, VS Code, Chrome Dev Tools, Netlify, Vercel. ✔ Design Tools: Figma, Adobe XD, Illustrator, Photoshop. ✔ Email Marketing Expert (MailChimp & Klaviyo). Thank you.</p> 
+                        <p className='text-sm md:text-base lg:text-base'>My Skills are: ✔ Comfortable: JavaScript, TypeScript, Reactjs, React-Router (6.4), Context API, React-Redux, Lazy Loading, Nextjs, Next-Auth, Styled-Components, Material UI, Ant Design, Bootstrap, TailwindCSS, MaterializeCSS, SCSS, HTML, CSS. ✔ Familiar: Nodejs, Expressjs, MongoDB, Firebase, MySQL ✔ Web Tools: Git, VS Code, Chrome Dev Tools, Netlify, Vercel. ✔ Design Tools: Figma, Adobe XD, Illustrator, Photoshop. ✔ Email Marketing Expert (MailChimp & Klaviyo). Thank you.</p> 
                         }
                      </div>
-                     <div className='pt-12 grid grid-cols-4 gap-3'>
-                        <div>
+                     <div className='pt-8 lg:pt-12 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-3'>
+                        <div className='text-center lg:text-left'>
                            <h3 className='text-3xl text-primary font-semibold'>8</h3>
                            <p>Proposals</p>
                         </div>
-                        <div>
+                        <div className='text-center lg:text-left'>
                            <h3 className='text-3xl text-primary font-semibold'>5</h3>
                            <p>Invited</p>
                         </div>
-                        <div>
+                        <div className='text-center lg:text-left'>
                            <h3 className='text-3xl text-primary font-semibold'>4</h3>
                            <p>Hired</p>
                         </div>
-                        <div>
+                        <div className='text-center lg:text-left'>
                            <h3 className='text-3xl text-primary font-semibold'>2</h3>
                            <p>Completed</p>
                         </div>
@@ -212,7 +216,7 @@ const profile = () => {
                   </Dialog.Title>
                   <div className="mt-5">
                   <form>
-                     <div className="flex items-center py-5 gap-5">
+                     <div className="flex items-center py-5 gap-5 flex-col lg:flex-row">
                      <div className="shrink-0">
                         <Image
                            alt="Current Profile Image"
@@ -246,7 +250,7 @@ const profile = () => {
                            onClick={() => setIsOpen(false)}
                            type="button"
                            className="focus:ring-0 focus:outline-none text-sm font-medium px-5 py-2.5">
-                              No, cancel
+                              Cancel
                            </button>
                      </div>
                   </form>
