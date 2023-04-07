@@ -20,14 +20,20 @@ const proposals = () => {
       </Head>
       <main>
          <TheDivArea>
-         <div className="w-9/12 p-5 border border-silver rounded-lg">
-            <h3 className="text-2xl font-semibold pb-8">Proposals (6)</h3>
-            <div className="flex items-center justify-between border-b border-silver pb-4 mb-4">
+         <div className="w-4/5 lg:w-9/12 p-5 border border-silver rounded-lg">
+            <h3 className="text-base font-semibold pb-5 text-center sm:text-center sm:text-xl md:text-center lg:text-left lg:pb-8 lg:text-2xl">
+               Proposals (6)
+            </h3>
+            <div className="flex items-center justify-center lg:justify-between border-b border-silver pb-4 mb-4 flex-wrap md:flex-col lg:flex-row lg:gap-4">
                <p className="text-axolotl">Sagor Rana</p>
-               <p className="font-medium">Looking for an Experienced Shopify developer...</p>
-               <p className="text-sm text-axolotl">Budget: $60</p>
-               <div>
-                  <button type="button" onClick={openModal}  className="bg-primary text-white font-medium px-6 py-2 rounded-full">See More</button>
+               <p className="font-medium text-center py-2 lg:text-left lg:py-0">Looking for an Experienced Shopify developer...</p>
+               <p className="text-sm text-axolotl mr-3 lg:mr-3">Budget: $60</p>
+               <div className="pt-2 pl-1 md:pt-3 lg:pt-0">
+                  <button 
+                     type="button" 
+                     onClick={openModal}  
+                     className="bg-primary text-white font-medium px-6 py-2 rounded-full block"
+                  >See More</button>
                </div>
             </div>
          </div>
@@ -62,7 +68,7 @@ const proposals = () => {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                  <h3 className='relative -top-2.5'>Proposal Details</h3>
+                  <p className='relative -top-2.5'>Proposal Details</p>
                   <button
                      type="button" 
                      className="absolute top-2.5 right-2.5 bg-primary/80 text-white rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" 
@@ -75,14 +81,14 @@ const proposals = () => {
                      viewBox="0 0 20 20" 
                      xmlns="http://www.w3.org/2000/svg"
                   >
-                     <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                     <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path>
                   </svg>
                      <span className="sr-only">Close modal</span>
                   </button>
                   </Dialog.Title>
                   <div className="mt-5">
                      <div className=''>
-                        <h3><b>Name:</b> Sagor Rana</h3>
+                        <p><b>Name:</b> Sagor Rana</p>
                         <p className='py-3'><b>Given Budget:</b> $60</p>
                         <p><b className='block pb-2'>Cover Letter:</b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse magni totam eligendi repellendus odit sapiente temporibus. Ipsam, minima qui ad cupiditate, mollitia quis voluptates at commodi quisquam doloremque dolore velit!</p>
                      </div>
