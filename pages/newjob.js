@@ -45,9 +45,9 @@ const newjob = () => {
       </Head>
       <main>
          <TheDivArea>
-            <div className="w-1/2 p-8 pt-6 border border-silver rounded-xl text-center mt-14">
-               <h2 className="text-3xl font-bold leading-relaxed">Provide a New Job</h2>
-               <p>Fill out all the fields with your dream project, <br /> and our freelancers will do the work.</p>
+            <div className="w-11/12 p-3 lg:w-3/5 xl:w-1/2 lg:p-8 lg:pt-6 border border-silver rounded-xl text-center mt-14">
+               <h2 className="text-2xl lg:text-3xl font-bold leading-relaxed">Provide a New Job</h2>
+               <p className="hidden md:block">Fill out all the fields with your dream project.</p>
                <form className="pt-6">
                   <div className="text-left">
                      <label htmlFor="title" className="pl-1 mb-2 flex items-center justify-between">
@@ -55,7 +55,7 @@ const newjob = () => {
                         <span className="pr-2 text-sm text-axolotl font-medium">{inputLength.title.length}/50</span>
                      </label>
                      <input 
-                        className="w-full border border-silver p-3 rounded-lg focus:ring-0 outline-none"
+                        className="w-full border border-silver px-3 py-2 lg:p-3 rounded-lg focus:ring-0 outline-none"
                         type="text" 
                         id="title" 
                         name="title" 
@@ -67,7 +67,11 @@ const newjob = () => {
                   <div className="flex items-center gap-5 mt-5">
                      <div className="text-left w-1/2 relative">
                         <label htmlFor="btype" className="pl-1 mb-2 block">Budget Type *</label>
-                        <select className="w-full border border-silver p-3 rounded-lg focus:ring-0 outline-none appearance-none" name="btype" id="btype">
+                        <select 
+                           className="w-full border border-silver px-3 py-2 lg:p-3 rounded-lg focus:ring-0 outline-none appearance-none" 
+                           name="btype" 
+                           id="btype"
+                        >
                            <option value="fixed" defaultChecked>Fixed Price</option>
                            <option value="hourly">Hourly Price</option>
                         </select>
@@ -77,7 +81,7 @@ const newjob = () => {
                            viewBox="0 0 24 24" 
                            strokeWidth="1.5" 
                            stroke="currentColor" 
-                           className="w-5 h-5 absolute right-3 top-12"
+                           className="w-5 h-5 absolute right-1 top-11 lg:right-3 lg:top-12"
                         >
                            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                         </svg>
@@ -85,7 +89,7 @@ const newjob = () => {
                      <div className="text-left w-1/2">
                         <label htmlFor="budget" className="pl-1 mb-2 block">Budget *</label>
                         <input 
-                           className="w-full border border-silver p-3 rounded-lg focus:ring-0 outline-none"
+                           className="w-full border border-silver px-3 py-2 lg:p-3 rounded-lg focus:ring-0 outline-none"
                            type="number" 
                            id="budget" 
                            name="budget" 
@@ -99,7 +103,7 @@ const newjob = () => {
                         <span className="pr-2 text-sm text-axolotl font-medium">{inputLength.description.length}/500</span>
                      </label>
                      <textarea 
-                        className="w-full border border-silver p-3 rounded-lg focus:ring-0 outline-none" 
+                        className="w-full border border-silver px-3 py-2 lg:p-3 rounded-lg focus:ring-0 outline-none" 
                         name="description" 
                         id="description" 
                         rows="4"
@@ -109,7 +113,11 @@ const newjob = () => {
                   </div>
                   <div className="text-left relative mt-3">
                         <label htmlFor="ptype" className="pl-1 mb-2 block">Project Type *</label>
-                        <select className="w-full border border-silver p-3 rounded-lg focus:ring-0 outline-none appearance-none" name="ptype" id="ptype">
+                        <select 
+                           className="w-full border border-silver px-3 py-2 lg:p-3 rounded-lg focus:ring-0 outline-none appearance-none" 
+                           name="ptype" 
+                           id="ptype"
+                        >
                            <option value="complex">Complex</option>
                            <option value="intermediate">Intermediate</option>
                            <option value="normal">Normal</option>
@@ -130,7 +138,7 @@ const newjob = () => {
                         <span>Skills and Expertise *</span>
                         <span className="pr-2 text-sm text-axolotl font-medium">{inputLength.skill}/5</span>
                      </label>
-                     <div className="w-full border border-silver p-3 rounded-lg flex items-center gap-2 flex-wrap">
+                     <div className="w-full border border-silver px-3 py-2 lg:p-3 rounded-lg flex items-center gap-2 flex-wrap">
                         <ul className="flex items-center gap-2 flex-wrap">
                            {skills.map((skill, index) => <li 
                               key={index} 
