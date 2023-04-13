@@ -11,7 +11,7 @@ const Work = () => {
       </Head>
       <main>
         <TheDivArea>
-          <div className="work-area mt-[1250px] w-11/12 md:mt-[350px] lg:w-11/12 lg:mt-[450px] xl:mt-28 2xl:mt-0 xl:w-auto">          
+          <div className="work-area mt-20 w-11/12 lg:w-11/12 xl:mt-40 2xl:mt-0 xl:w-auto">          
             <div className="w-full py-5 xl:py-12">
               <form className="flex items-center justify-center">
                 <input 
@@ -113,8 +113,10 @@ const Work = () => {
                   <p className="text-axolotl text-sm">Proposals: <strong>Less than 5</strong></p>
                 </div>
               </div>
-              <div className="text-center">
-                <button className="bg-primary text-white font-medium px-6 py-2 rounded-full my-5 lg:mb-0 lg:mt-12 xl:mb-5 2xl:mb-0">Load More Jobs</button>
+              <div className="text-center mb-5">
+                <button className="bg-primary text-white font-medium px-6 py-2 rounded-full my-5 lg:mb-0 lg:mt-12 xl:mb-5 2xl:mb-0">
+                  Load More Jobs
+                </button>
               </div>
             </div>
           </div>

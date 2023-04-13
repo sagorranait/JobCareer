@@ -10,7 +10,7 @@ const Applied = () => {
       </Head>
       <main>
          <TheDivArea>
-            <form className="w-11/12 lg:w-3/4 xl:w-2/4 mt-36 md:mt-0">
+            <form className="w-11/12 lg:w-3/4 xl:w-2/4 mt-8 xl:mt-0 ">
             <div className="py-5 mb-1 lg:mb-5 mt-8">
                <h3 className="text-xl font-medium mb-5 md:mb-2 lg:mb-5">Proposal Settings</h3>
                <label htmlFor="profile" className="text-sm md:text-base lg:mb-2 font-medium pr-5">Propose with a Specialized profile</label>

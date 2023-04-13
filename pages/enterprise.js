@@ -11,7 +11,7 @@ const enterprise = () => {
       </Head>
       <main>
           <TheDivArea>
-              <div className="flex items-center justify-between flex-col gap-8 lg:gap-0 lg:flex-row xl:gap-0 xl:flex-row">
+              <div className="flex items-center justify-between flex-col gap-8 lg:gap-0 lg:flex-row xl:gap-0 xl:flex-row mt-32 lg:mt-60 xl:mt-0">
                 <div className="w-11/12 text-center lg:text-left xl:text-left xl:w-1/2">
                   <h5 className="text-base lg:text-lg xl:text-xl font-semibold">Enterprise Suite</h5>
                   <h2 className="text-3xl xl:text-5xl 2xl:text-6xl font-extrabold py-3">This is how we jetpack over the skills gap.</h2>

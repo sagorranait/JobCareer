@@ -25,7 +25,7 @@ const profile = () => {
       </Head>
       <main>
          <TheDivArea>
-            <div className="w-11/12 mt-72 mb-3 p-3 md:mt-16 lg:mb-0 lg:mt-0 lg:w-10/12 lg:p-8 xl:w-2/3 border border-silver rounded-xl">
+            <div className="w-11/12 mt-24 mb-3 p-3 md:mt-32 lg:mb-0 lg:w-10/12 lg:p-8 xl:mt-0 xl:w-2/3 border border-silver rounded-xl">
                <div className="flex items-center flex-col justify-center gap-5 lg:items-start lg:justify-start lg:flex-row lg:gap-14 xl:gap-20">
                   <div className="relative">
                      <Image

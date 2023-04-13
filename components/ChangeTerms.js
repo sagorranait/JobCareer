@@ -82,7 +82,7 @@ const ChangeTerms = () => {
                            <div className="flex-1">
                               <h4 className="text-base font-semibold">Bid</h4>
                            </div>
-                           <div>
+                           <div className='w-[100px] md:w-auto'>
                               <div className="relative">
                                  <span className="absolute left-3 top-2.5 text-base font-medium">
                                     $
@@ -90,18 +90,20 @@ const ChangeTerms = () => {
                                  <input 
                                     type="text" 
                                     id="website-admin" 
-                                    className="border border-axolotl p-2 font-medium rounded-lg text-right" 
+                                    className="border border-axolotl p-2 font-medium rounded-lg text-right w-full" 
                                     value='200.00'
                                     onChange={()=>{}}
                                  />
                               </div>
                            </div>
                         </div>
-                        <div className="flex items-center justify-center gap-8 pb-5">
+                        <div className="flex items-center justify-center gap-3 md:gap-8 pb-5">
                            <div className="flex-1">
-                              <h4 className="text-base font-semibold"><span className="text-secondary">20%</span> Service Fee</h4>
+                              <h4 className="text-base font-semibold">
+                                 <span className="text-secondary hidden md:inline-block">20%</span> Service Fee
+                              </h4>
                            </div>
-                           <div>
+                           <div className='w-[100px] md:w-auto'>
                               <div className="relative">
                                  <span className="absolute left-3 top-2.5 text-base font-medium">
                                     $
@@ -109,7 +111,7 @@ const ChangeTerms = () => {
                                  <input 
                                     type="text" 
                                     id="website-admin" 
-                                    className="border-none text-right font-medium cursor-not-allowed bg-[#e4ebe44f] text-[#5e6d55] rounded-lg p-2" 
+                                    className="border-none text-right font-medium cursor-not-allowed bg-[#e4ebe44f] text-[#5e6d55] rounded-lg p-2 w-full" 
                                     disabled
                                     readOnly
                                     value='20.00'
@@ -118,11 +120,11 @@ const ChangeTerms = () => {
                               </div>
                            </div>
                         </div>
-                        <div className="flex items-center justify-center gap-8 pb-5">
+                        <div className="flex items-center justify-center gap-3 md:gap-8 pb-2 md:pb-5">
                            <div className="flex-1">
                               <h4 className="text-base font-semibold">You’ll Receive</h4>
                            </div>
-                           <div>
+                           <div className='w-[100px] md:w-auto'>
                               <div className="relative">
                                  <span className="absolute left-3 top-2.5 text-base font-medium">
                                     $
@@ -130,7 +132,7 @@ const ChangeTerms = () => {
                                  <input 
                                     type="text" 
                                     id="website-admin" 
-                                    className="border border-[#d5e0d5] p-2 font-medium rounded-lg text-right cursor-not-allowed" 
+                                    className="border border-[#d5e0d5] w-full p-2 font-medium rounded-lg text-right cursor-not-allowed" 
                                     disabled
                                     readOnly
                                     value='180.00'
@@ -162,7 +164,7 @@ const ChangeTerms = () => {
                            data-modal-hide="popup-modal" 
                            onClick={closeModal}
                            type="button"
-                           className="focus:ring-0 focus:outline-none text-sm font-medium px-5 py-2.5">
+                           className="focus:ring-0 focus:outline-none text-sm font-medium px-2 md:px-5 py-2.5">
                               No, cancel
                            </button>
                      </div>

@@ -45,7 +45,7 @@ const newjob = () => {
       </Head>
       <main>
          <TheDivArea>
-            <div className="w-11/12 p-3 lg:w-3/5 xl:w-1/2 lg:p-8 lg:pt-6 border border-silver rounded-xl text-center mt-14">
+            <div className="w-11/12 p-3 lg:w-3/5 xl:w-1/2 lg:p-8 lg:pt-6 border border-silver rounded-xl text-center mt-28 lg:mt-[68px]  xl:mt-14">
                <h2 className="text-2xl lg:text-3xl font-bold leading-relaxed">Provide a New Job</h2>
                <p className="hidden md:block">Fill out all the fields with your dream project.</p>
                <form className="pt-6">

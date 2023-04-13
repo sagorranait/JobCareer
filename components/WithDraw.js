@@ -90,7 +90,7 @@ const WithDraw = () => {
                         data-modal-hide="popup-modal" 
                         onClick={closeModal}
                         type="button"
-                        className="text-gray-500 bg-white focus:ring-0 focus:outline-none rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5">
+                        className="text-gray-500 bg-white focus:ring-0 focus:outline-none rounded-lg text-sm font-medium px-5 py-2.5">
                            No, cancel
                         </button>
                   </div>

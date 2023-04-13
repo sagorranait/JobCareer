@@ -10,7 +10,7 @@ const WorkDetails = () => {
       </Head>
       <main>
          <TheDivArea>
-            <div className="details border border-silver rounded-lg flex items-start flex-col mt-[590px] w-11/12 md:w-10/12 md:mt-[390px] lg:mt-12 lg:flex-row xl:mt-0 lg:w-auto">
+            <div className="details border border-silver rounded-lg flex items-start flex-col mt-20 w-11/12 md:w-10/12 lg:mt-20 lg:flex-row xl:mt-0 lg:w-auto">
                <div className="leftArea flex-1 border-r border-silver">
                   <div className="titleArea border-b border-silver p-3 lg:p-6">
                      <h1 className="text-lg lg:text-xl font-medium">Looking for an Experienced Shopify developer</h1>

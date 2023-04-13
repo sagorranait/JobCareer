@@ -20,7 +20,7 @@ const proposals = () => {
       </Head>
       <main>
          <TheDivArea>
-         <div className="w-4/5 lg:w-9/12 p-5 border border-silver rounded-lg">
+         <div className="w-4/5 lg:w-9/12 p-5 border border-silver rounded-lg mt-20 xl:mt-0">
             <h3 className="text-base font-semibold pb-5 text-center sm:text-center sm:text-xl md:text-center lg:text-left lg:pb-8 lg:text-2xl">
                Proposals (6)
             </h3>
