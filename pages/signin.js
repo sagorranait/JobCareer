@@ -1,7 +1,7 @@
 import Head from "next/head"
 import TheLoginDiv from "@/components/TheLoginDiv"
 
-const login = () => {
+const SignIn = () => {
   return (
    <>
       <Head>
@@ -36,4 +36,4 @@ const login = () => {
   )
 }
 
-export default login
+export default SignIn
