@@ -12,9 +12,9 @@ const TheLoginDiv = ({ title, subtitle, children }) => {
          {children}
 
          {
-            router.pathname === "/login" ? 
+            router.pathname === "/signin" ? 
             <p className="pb-2 text-sm md:text-base md:pb-4 pt-2">Don't have an JobCareer account? <Link href='/signup' className="text-primary font-semibold">Sign Up</Link></p> :
-            <p className="pb-2 text-sm md:text-base md:pb-4 pt-2">Already have an account? <Link href='/login' className="text-primary font-semibold">Log In</Link></p>
+            <p className="pb-2 text-sm md:text-base md:pb-4 pt-2">Already have an account? <Link href='/signin' className="text-primary font-semibold">Log In</Link></p>
          }
       </div>
    </div>
