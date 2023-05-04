@@ -14,7 +14,7 @@ const signup = () => {
          body: JSON.stringify(data)
      }
 
-     await fetch('http://localhost:3000/api/auth/signup', options)
+     await fetch('/api/auth/signup', options)
       .then(res => res.json())
       .then((result) => {
             if(result) router.push('/signin')

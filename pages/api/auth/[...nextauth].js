@@ -8,25 +8,24 @@ export default NextAuth({
        CredentialsProvider({
            name : "Credentials",
            async authorize(credentials, req){
-              DB.connect().catch(error => { error: "Connection Failed...!"})
+                await DB.connect().catch(error => { error: "Connection Failed...!"})
+                
+                // check user existance
+                const query = { email: credentials.email };
+                const result = await user.findOne(query);
 
-               // check user existance
-               const query = { email: credentials.email };
-               const result = await user.findOne(query);
+                if(!result){
+                    throw new Error("No user Found with Email Please Sign Up...!")
+                }
 
-               if(!result){
-                   throw new Error("No user Found with Email Please Sign Up...!")
-               }
-
-               // compare()
-               const checkPassword = await compare(credentials.password, result.password);
+                const checkPassword = await compare(credentials.password, result.hashPassword);
                
-               // incorrect password
-               if(!checkPassword || result.email !== credentials.email){
-                   throw new Error("Username or Password doesn't match");
-               }
+                // incorrect password
+                if(!checkPassword || result.email !== credentials.email){
+                    throw new Error("Username or Password doesn't match");
+                }
 
-               return result;
+                return result;
            }
        })
    ],
