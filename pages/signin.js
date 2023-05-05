@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import { signIn } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 import TheLoginDiv from "@/components/TheLoginDiv";
 
 const SignIn = () => {
@@ -64,5 +64,15 @@ const SignIn = () => {
    </>
   )
 }
+
+export async function getServerSideProps({ req }){
+   const session = await getSession({ req })
+ 
+   if(session) {
+     return { redirect : { destination: '/', permanent: false } }
+   }
+ 
+   return { props: { session } };
+ }
 
 export default SignIn
