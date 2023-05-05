@@ -1,8 +1,8 @@
-import Head from "next/head"
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import { signIn } from "next-auth/react"
-import TheLoginDiv from "@/components/TheLoginDiv"
+import { signIn } from "next-auth/react";
+import TheLoginDiv from "@/components/TheLoginDiv";
 
 const SignIn = () => {
    const router = useRouter();
@@ -14,8 +14,8 @@ const SignIn = () => {
          email: data.email,
          password: data.password,
          callbackUrl: "/"
-     })
-     
+     });
+
      if(status.ok) router.push(status.url)
    }
 

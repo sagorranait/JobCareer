@@ -1,13 +1,16 @@
 import '@/styles/globals.css';
-import TheHeader from '@/components/TheHeader';
 import { store } from '../store';
 import { Provider } from 'react-redux';
+import { SessionProvider } from 'next-auth/react'
+import TheHeader from '@/components/TheHeader';
 
 export default function App({ Component, pageProps }) {
   return (
     <Provider store={store}>
-      <TheHeader/>
-      <Component {...pageProps} />
-    </Provider>
+        <SessionProvider session={pageProps.session}>
+          <TheHeader/>
+          <Component {...pageProps} />
+        </SessionProvider>
+      </Provider>
   );
 }

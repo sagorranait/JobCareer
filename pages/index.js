@@ -11,11 +11,10 @@ import hero2 from "../assets/hero-02.png";
 import hero3 from "../assets/hero-03.png";
 
 const Home = () => {
-  
   const el = useRef();
   const tl = useRef();
   const tl2 = useRef();
-
+  
   useLayoutEffect(() => {
     let cards = gsap.utils.toArray(".statCard");
 
@@ -64,7 +63,7 @@ const Home = () => {
 
       document.removeEventListener("mousemove", movement);
     };
-  }, []);
+  }, []);  
 
   return (
     <>
@@ -74,9 +73,9 @@ const Home = () => {
       <main>
         <div ref={el} className='w-4/5 mx-auto h-auto xl:h-screen'>
           <div className='max-w-2xl h-[80vh] rounded-b-full absolute top-0 left-[63%] -translate-x-1/2 overflow-hidden z-0 hidden lg:block lg:h-[60vh] lg:left-[62%] xl:h-[80vh] xl:left-[59%] 2xl:h-[80vh] 2xl:left-[63%]'>
-            <Image id='hero1' src={hero1} alt='hero1' className='object-cover h-full w-full' />
-            <Image id='hero2' src={hero2} alt='hero2' className='object-cover h-full w-full'  />
-            <Image id='hero3' src={hero3} alt='hero3' className='object-cover h-full w-full' />
+            <Image priority id='hero1' src={hero1} alt='hero1' className='object-cover h-full w-full' />
+            <Image priority id='hero2' src={hero2} alt='hero2' className='object-cover h-full w-full'  />
+            <Image priority id='hero3' src={hero3} alt='hero3' className='object-cover h-full w-full' />
           </div>
           <div className='h-full w-full flex items-center z-10 relative'>
             <div className='flex w-full flex-col lg:flex-row lg:gap-10 xl:gap-0'>
