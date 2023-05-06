@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { getSession, signIn } from "next-auth/react";
 import TheLoginDiv from "@/components/TheLoginDiv";
+import { useEffect } from "react";
 
 const SignIn = () => {
    const router = useRouter();
@@ -16,7 +17,14 @@ const SignIn = () => {
          callbackUrl: "/"
      });
 
-     if(status.ok) router.push(status.url)
+      if(status.ok) {
+         const redirectUrl = window.sessionStorage.getItem('redirectUrl');
+         if (redirectUrl) {
+            router.push(redirectUrl);
+         } else {
+            router.push(status.url);
+         }
+      }
    }
 
   return (

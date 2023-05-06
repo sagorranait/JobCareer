@@ -2,6 +2,7 @@ import { useState, Fragment } from 'react';
 import Head from "next/head";
 import { Dialog, Transition } from '@headlessui/react';
 import TheDivArea from "@/components/TheDivArea";
+import { getSession } from 'next-auth/react';
 
 const proposals = () => {
    const [isOpen, setIsOpen] = useState(false);
@@ -117,6 +118,16 @@ const proposals = () => {
       </Transition>
    </>
   )
+}
+
+export async function getServerSideProps({ req }){
+   const session = await getSession({ req })
+ 
+   if(!session) {
+     return { redirect : { destination: '/signin', permanent: false } }
+   }
+ 
+   return { props: { session } }
 }
 
 export default proposals

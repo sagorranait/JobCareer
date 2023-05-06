@@ -1,6 +1,7 @@
-import Head from "next/head";
-import TheDivArea from "@/components/TheDivArea";
 import Link from "next/link";
+import Head from "next/head";
+import withAuth from "../../../withAuth";
+import TheDivArea from "@/components/TheDivArea";
 
 const Applied = () => {
   return (
@@ -108,4 +109,4 @@ const Applied = () => {
   )
 }
 
-export default Applied
+export default withAuth(Applied)

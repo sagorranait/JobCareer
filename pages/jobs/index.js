@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Head from "next/head";
 import TheDivArea from "@/components/TheDivArea";
+import { getSession } from "next-auth/react";
 
 const jobs = () => {
 
@@ -30,6 +31,16 @@ const jobs = () => {
       </main>
    </>
   )
+}
+
+export async function getServerSideProps({ req }){
+   const session = await getSession({ req })
+ 
+   if(!session) {
+     return { redirect : { destination: '/signin', permanent: false } }
+   }
+ 
+   return { props: { session } }
 }
 
 export default jobs

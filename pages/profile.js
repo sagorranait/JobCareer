@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Dialog, Transition } from '@headlessui/react';
 import TheDivArea from "@/components/TheDivArea";
 import sagorrana from '../assets/sagorrana.png';
+import { getSession } from 'next-auth/react';
 
 const profile = () => {
    const [isOpen, setIsOpen] = useState(false);
@@ -263,6 +264,16 @@ const profile = () => {
       </Transition>
    </>
   )
+}
+
+export async function getServerSideProps({ req }){
+   const session = await getSession({ req })
+ 
+   if(!session) {
+     return { redirect : { destination: '/signin', permanent: false } }
+   }
+ 
+   return { props: { session } }
 }
 
 export default profile

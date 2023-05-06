@@ -3,6 +3,7 @@ import Head from "next/head";
 import TheDivArea from "@/components/TheDivArea";
 import WithDraw from "@/components/WithDraw";
 import ChangeTerms from "@/components/ChangeTerms";
+import { getSession } from "next-auth/react";
 
 const proposals = () => {
   return (
@@ -34,6 +35,16 @@ const proposals = () => {
       </main>
    </>
   )
+}
+
+export async function getServerSideProps({ req }){
+   const session = await getSession({ req })
+ 
+   if(!session) {
+     return { redirect : { destination: '/signin', permanent: false } }
+   }
+ 
+   return { props: { session } }
 }
 
 export default proposals

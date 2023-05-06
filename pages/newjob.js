@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import Head from "next/head";
 import TheDivArea from "@/components/TheDivArea";
+import { getSession } from "next-auth/react";
 
 const newjob = () => {
    const skillRef = useRef(null);
@@ -192,6 +193,16 @@ const newjob = () => {
       </main>
    </>
   )
+}
+
+export async function getServerSideProps({ req }){
+   const session = await getSession({ req })
+ 
+   if(!session) {
+     return { redirect : { destination: '/signin', permanent: false } }
+   }
+ 
+   return { props: { session } }
 }
 
 export default newjob
