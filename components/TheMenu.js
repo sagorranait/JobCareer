@@ -1,17 +1,17 @@
 import { Fragment, useEffect } from 'react';
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { Menu, Transition  } from "@headlessui/react";
-import { useSession, signOut } from "next-auth/react"
-import { useDispatch, useSelector } from 'react-redux';
-import { getUser, storeUser } from '@/features';
 import Image from 'next/image';
+import { useRouter } from "next/router";
+import { getUser, storeUser } from '@/features';
+import { Menu, Transition  } from "@headlessui/react";
+import { useSession, signOut } from "next-auth/react";
+import { useDispatch, useSelector } from 'react-redux';
 
 const TheMenu = () => {
  const router = useRouter();
+ const dispatch = useDispatch();
  const user = useSelector(getUser);
-  const dispatch = useDispatch();
- const { data: session } = useSession();
+const { data: session, status: loading } = useSession();
 
  useEffect(() => {
    const fetchData = async () => {
@@ -70,28 +70,47 @@ const TheMenu = () => {
             <Menu as="div" className="relative text-left hidden lg:inline-block">
                <div>
                   <Menu.Button className="inline-flex items-center w-full justify-center py-2 focus:outline-none focus-visible:ring-0 focus-visible:ring-white focus-visible:ring-opacity-75">
-                     {user?.imgURL ? <Image
-                        src={user?.imgURL}
-                        alt={user?.username}
-                        width={38}
-                        height={38}
-                        className='border-[2px] border-primary rounded-full'
-                     /> : 
-                     <div className='w-[38px] h-[38px] bg-silver border-[1px] border-primary rounded-full flex items-center justify-center text-lg font-semibold'>
-                        {user?.username[0]}
-                     </div>
+                     {
+                        loading === 'loading' ? 
+                        <div className="animate-pulse flex space-x-2 items-center">
+                           <div className="rounded-full bg-silver h-[38px] w-[38px]"></div>
+                           <svg 
+                              xmlns="http://www.w3.org/2000/svg" 
+                              fill="none" 
+                              viewBox="0 0 24 24" 
+                              strokeWidth="1.5" 
+                              stroke="currentColor" 
+                              className="ml-1 mt-1 -mr-1 h-4 w-4 text-violet-200 hover:text-violet-100"
+                           >
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                           </svg>
+                        </div>
+                        :
+                        <>
+                           {user?.imgURL ? <Image
+                              src={user?.imgURL}
+                              alt={user?.username}
+                              width={38}
+                              height={38}
+                              className='border-[2px] border-primary rounded-full'
+                           /> : 
+                           <div className='w-[38px] h-[38px] bg-silver border-[1px] border-primary rounded-full flex items-center justify-center text-lg font-semibold'>
+                              {user?.username[0]}
+                           </div>
+                           }
+                           
+                           <svg 
+                              xmlns="http://www.w3.org/2000/svg" 
+                              fill="none" 
+                              viewBox="0 0 24 24" 
+                              strokeWidth="1.5" 
+                              stroke="currentColor" 
+                              className="ml-1 mt-1 -mr-1 h-4 w-4 text-violet-200 hover:text-violet-100"
+                           >
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                           </svg>
+                        </>
                      }
-                     
-                     <svg 
-                        xmlns="http://www.w3.org/2000/svg" 
-                        fill="none" 
-                        viewBox="0 0 24 24" 
-                        strokeWidth="1.5" 
-                        stroke="currentColor" 
-                        className="ml-1 mt-1 -mr-1 h-4 w-4 text-violet-200 hover:text-violet-100"
-                     >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                     </svg>
                   </Menu.Button>
                </div>
                <Transition
@@ -202,7 +221,7 @@ const TheMenu = () => {
                </Transition>
             </Menu>
          </>}
-          {!session && <>
+          {(!session && loading !== 'loading') && <>
             <li className='hidden lg:inline-block'>
                <Link 
                   href='/signin' 

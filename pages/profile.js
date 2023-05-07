@@ -1,14 +1,18 @@
 import { useState, Fragment } from 'react';
 import Head from "next/head";
 import Image from "next/image";
+import { getUser } from '@/features';
+import { useSelector } from 'react-redux';
+import { getSession } from 'next-auth/react';
+import sagorrana from '../assets/sagorrana.png';
 import { Dialog, Transition } from '@headlessui/react';
 import TheDivArea from "@/components/TheDivArea";
-import sagorrana from '../assets/sagorrana.png';
-import { getSession } from 'next-auth/react';
+import ProfileSkeleton from '@/components/skeleton/ProfileSkeleton';
 
 const profile = () => {
+   const user = useSelector(getUser);
    const [isOpen, setIsOpen] = useState(false);
-   const [isShow, setIsShow] = useState(false)
+   const [isShow, setIsShow] = useState(false);
 
   const updatePhotoHandler = () => {
       console.log('Upload New Photo.');
@@ -26,7 +30,7 @@ const profile = () => {
       </Head>
       <main>
          <TheDivArea>
-            <div className="w-11/12 mt-24 mb-3 p-3 md:mt-32 lg:mb-0 lg:w-10/12 lg:p-8 xl:mt-0 xl:w-2/3 border border-silver rounded-xl">
+            {/* <div className="w-11/12 mt-24 mb-3 p-3 md:mt-32 lg:mb-0 lg:w-10/12 lg:p-8 xl:mt-0 xl:w-2/3 border border-silver rounded-xl">
                <div className="flex items-center flex-col justify-center gap-5 lg:items-start lg:justify-start lg:flex-row lg:gap-14 xl:gap-20">
                   <div className="relative">
                      <Image
@@ -165,7 +169,8 @@ const profile = () => {
                      </div>
                   </form>
                </div>
-            </div>
+            </div> */}
+            <ProfileSkeleton/>
          </TheDivArea>
       </main>
       <Transition appear show={isOpen} as={Fragment}>

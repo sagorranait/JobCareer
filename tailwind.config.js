@@ -14,7 +14,7 @@ module.exports = {
       'white': '#ffffff',
       'silver': '#d5e0d5',
       'axolotl': '#5e6d55',
-      'red': '#FF0000'
+      'red': '#FF0000',
     }
   },
   plugins: [],
