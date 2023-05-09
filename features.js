@@ -7,7 +7,16 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     storeUser: (state, action) => {
-	  	state.user = action.payload.user
+      const { 
+        _id,
+        type, 
+        email, 
+        connects, 
+        username,
+        imgURL
+      } = action.payload?.user;
+      
+	  	state.user = { id: _id, type, email, connects, username, imgURL };
     }
   }
 });

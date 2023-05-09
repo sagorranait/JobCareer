@@ -1,18 +1,29 @@
-import { useState, Fragment } from 'react';
+import { useState, Fragment, useEffect } from 'react';
 import Head from "next/head";
 import Image from "next/image";
-import { getUser } from '@/features';
-import { useSelector } from 'react-redux';
 import { getSession } from 'next-auth/react';
-import sagorrana from '../assets/sagorrana.png';
 import { Dialog, Transition } from '@headlessui/react';
 import TheDivArea from "@/components/TheDivArea";
 import ProfileSkeleton from '@/components/skeleton/ProfileSkeleton';
 
-const profile = () => {
-   const user = useSelector(getUser);
+const profile = ({ data, plength }) => {
+   const { 
+      type,
+      about, 
+      hourly, 
+      imgURL, 
+      address, 
+      available,
+      username,
+      designation
+   } = data;
    const [isOpen, setIsOpen] = useState(false);
    const [isShow, setIsShow] = useState(false);
+   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
   const updatePhotoHandler = () => {
       console.log('Upload New Photo.');
@@ -30,147 +41,153 @@ const profile = () => {
       </Head>
       <main>
          <TheDivArea>
-            {/* <div className="w-11/12 mt-24 mb-3 p-3 md:mt-32 lg:mb-0 lg:w-10/12 lg:p-8 xl:mt-0 xl:w-2/3 border border-silver rounded-xl">
-               <div className="flex items-center flex-col justify-center gap-5 lg:items-start lg:justify-start lg:flex-row lg:gap-14 xl:gap-20">
-                  <div className="relative">
-                     <Image
-                        alt="profile pic"
-                        src={sagorrana}
-                        width={112}
-                        className="h-28 rounded-full object-cover object-top"
-                     />
-                     <div className="w-4 h-4 bg-primary border-[2px] border-white rounded-full absolute bottom-2 right-2"/>
-                     <button  
-                        type="button"
-                        onClick={() => setIsOpen(true)}  
-                        className="absolute top-0 left-0 border border-[#d5e0d5] p-1 rounded-full"
-                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#108a00" className="w-4 h-4">
-                           <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z" />
-                        </svg>
-                     </button>
-                  </div>
-                  <form className="flex-1" onSubmit={profileUpdateHandler}>
-                     <div className='flex items-center justify-between pb-2.5 flex-col gap-3 md:flex-row md:px-20 lg:gap-0 lg:flex-row lg:px-0'>
-                        <h2 className='text-xl lg:text-2xl font-medium'>Sagor Rana</h2>
-                        <div>
-                           {isShow ? <button 
-                           className="text-white bg-primary focus:ring-0 focus:outline-none font-medium rounded-full text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
-                           type='submit'
-                           >
-                              Update Profile
-                           </button> : <span 
-                           className="text-white bg-primary focus:ring-0 focus:outline-none font-medium rounded-full text-sm inline-flex items-center px-5 py-2.5 text-center mr-2 cursor-pointer"
-                           onClick={()=> setIsShow(true)}
-                           >
-                              Edit Profile
-                           </span>}
-                        </div>
-                     </div>
-                     <div className='grid grid-cols-1 justify-items-center md:grid-cols-2 md:justify-items-start md:px-20 lg:justify-items-start lg:grid-cols-2 gap-2 lg:px-0'>
-                        <div>
-                           { isShow ? 
-                           <input 
-                              type="text" 
-                              name='tagline' 
-                              value='MERN Developer' 
-                              placeholder='Tagline'
-                              onChange={()=>{}} 
-                              className="border border-silver text-base rounded-lg focus:outline-primary focus:ring-primary focus:border-primary p-1 px-2"
-                           /> :
-                           <p className='text-base'>MERN Developer</p>                           
-                           }
-                        </div>
-
-                        <div>
-                           { isShow ?  
-                           <p className='text-base'>$ <input 
-                              type="number" 
-                              name='hourlyrate' 
-                              placeholder='Hourly Rate'                              
-                              value='90.00' 
-                              onChange={()=>{}}
-                              className="w-32 border border-silver rounded-lg focus:outline-primary focus:ring-primary focus:border-primary p-1 px-2"
-                           />/hr</p> :
-                           <p className='text-base'>$ 90.00/hr</p>
-                           }
-                        </div>
-                        <div>
-                           { isShow ? 
-                           <input 
-                              type="text" 
-                              name='location' 
-                              value='Dhaka, Bangladesh' 
-                              placeholder='Location'
-                              onChange={()=>{}} 
-                              className="border border-silver text-base rounded-lg focus:outline-primary focus:ring-primary focus:border-primary p-1 px-2"
-                           /> :
-                           <p className='text-base'>Dhaka, Bangladesh</p>
-                           }
-                        </div>
-                        <div>
-                           { isShow ? 
-                           <p className='text-base'>
-                              <button 
-                                 className='border border-silver p-1 px-3 rounded-full text-sm mr-2 disabled:bg-silver/20 disabled:text-[#d9d9d9]' 
-                                 disabled
-                              >Available Now</button> 
-                              <select 
-                                 className="border border-silver rounded-lg focus:ring-0 outline-none" 
-                                 name="available"
-                              >
-                              <option value="true" defaultChecked>On</option>
-                              <option value="false">Off</option>
-                           </select>
-                           </p> :
-                           <p className='text-base'>
-                              <button 
-                                 className='border border-silver p-1 px-3 rounded-full text-sm mr-2 disabled:bg-silver/20 disabled:text-[#d9d9d9]' 
-                                 disabled
-                              >Available Now</button> 
-                              off
-                           </p>
-                           }
-                        </div>
-                     </div>
-                     <div className='pt-5 lg:pt-8 text-center lg:text-left'>
-                        <h3 className='text-xl font-medium pb-1'>Overview</h3>
-                        <p className='pb-4 text-sm lg:text-base'>Use this space to show clients you have the skills and experience they're looking for:</p>
-                        { isShow ? 
-                        <textarea 
-                           className="w-full border border-silver p-3 rounded-lg focus:ring-0 outline-none text-sm lg:text-base" 
-                           name="description" 
-                           id="description" 
-                           rows="6"
-                           value='My Skills are: ✔ Comfortable: JavaScript, TypeScript, Reactjs, React-Router (6.4), Context API, React-Redux, Lazy Loading, Nextjs, Next-Auth, Styled-Components, Material UI, Ant Design, Bootstrap, TailwindCSS, MaterializeCSS, SCSS, HTML, CSS. ✔ Familiar: Nodejs, Expressjs, MongoDB, Firebase, MySQL ✔ Web Tools: Git, VS Code, Chrome Dev Tools, Netlify, Vercel. ✔ Design Tools: Figma, Adobe XD, Illustrator, Photoshop. ✔ Email Marketing Expert (MailChimp & Klaviyo). Thank you.'
-                           onChange={()=>{}}
-                           maxLength={500}
-                        ></textarea> : 
-                        <p className='text-sm md:text-base lg:text-base'>My Skills are: ✔ Comfortable: JavaScript, TypeScript, Reactjs, React-Router (6.4), Context API, React-Redux, Lazy Loading, Nextjs, Next-Auth, Styled-Components, Material UI, Ant Design, Bootstrap, TailwindCSS, MaterializeCSS, SCSS, HTML, CSS. ✔ Familiar: Nodejs, Expressjs, MongoDB, Firebase, MySQL ✔ Web Tools: Git, VS Code, Chrome Dev Tools, Netlify, Vercel. ✔ Design Tools: Figma, Adobe XD, Illustrator, Photoshop. ✔ Email Marketing Expert (MailChimp & Klaviyo). Thank you.</p> 
+            { !loading ? 
+               <div className="w-11/12 mt-24 mb-3 p-3 md:mt-32 lg:mb-0 lg:w-10/12 lg:p-8 xl:mt-0 xl:w-2/3 border border-silver rounded-xl">
+                  <div className="flex items-center flex-col justify-center gap-5 lg:items-start lg:justify-start lg:flex-row lg:gap-14 xl:gap-20">
+                     <div className="relative">
+                        {  imgURL ? <div>
+                        
+                        </div> : 
+                           <Image
+                              alt={username}
+                              src={imgURL}
+                              width={112}
+                              height={112}
+                              className="rounded-full object-cover object-top"
+                           />
                         }
+                        <div className="w-4 h-4 bg-primary border-[2px] border-white rounded-full absolute bottom-2 right-2"/>
+                        <button  
+                           type="button"
+                           onClick={() => setIsOpen(true)}  
+                           className="absolute top-0 left-0 border border-[#d5e0d5] p-1 rounded-full"
+                        >
+                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#108a00" className="w-4 h-4">
+                              <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z" />
+                           </svg>
+                        </button>
                      </div>
-                     <div className='pt-8 lg:pt-12 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-3'>
-                        <div className='text-center lg:text-left'>
-                           <h3 className='text-3xl text-primary font-semibold'>8</h3>
-                           <p>Proposals</p>
+                     <form className="flex-1" onSubmit={profileUpdateHandler}>
+                        <div className='flex items-center justify-between pb-2.5 flex-col gap-3 md:flex-row md:px-20 lg:gap-0 lg:flex-row lg:px-0'>
+                           <h2 className='text-xl lg:text-2xl font-medium'>{username}</h2>
+                           <div>
+                              {isShow ? <button 
+                              className="text-white bg-primary focus:ring-0 focus:outline-none font-medium rounded-full text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
+                              type='submit'
+                              >
+                                 Update Profile
+                              </button> : <span 
+                              className="text-white bg-primary focus:ring-0 focus:outline-none font-medium rounded-full text-sm inline-flex items-center px-5 py-2.5 text-center mr-2 cursor-pointer"
+                              onClick={()=> setIsShow(true)}
+                              >
+                                 Edit Profile
+                              </span>}
+                           </div>
                         </div>
-                        <div className='text-center lg:text-left'>
-                           <h3 className='text-3xl text-primary font-semibold'>5</h3>
-                           <p>Invited</p>
+                        <div className='grid grid-cols-1 justify-items-center md:grid-cols-2 md:justify-items-start md:px-20 lg:justify-items-start lg:grid-cols-2 gap-2 lg:px-0'>
+                           <div>
+                              { isShow ? 
+                              <input 
+                                 type="text" 
+                                 name='tagline' 
+                                 value={designation} 
+                                 placeholder='Tagline'
+                                 onChange={()=>{}} 
+                                 className="border border-silver text-base rounded-lg focus:outline-primary focus:ring-primary focus:border-primary p-1 px-2"
+                              /> :
+                              <p className='text-base'>{designation}</p>                           
+                              }
+                           </div>
+                           <div>
+                              { isShow ?  
+                              <p className='text-base'>$ <input 
+                                 type="number" 
+                                 name='hourlyrate' 
+                                 placeholder='Hourly Rate'                              
+                                 value={hourly}
+                                 onChange={()=>{}}
+                                 className="w-32 border border-silver rounded-lg focus:outline-primary focus:ring-primary focus:border-primary p-1 px-2"
+                              /> .00/hr</p> :
+                              <p className='text-base'>$ {hourly}.00/hr</p>
+                              }
+                           </div>
+                           <div>
+                              { isShow ? 
+                              <input 
+                                 type="text" 
+                                 name='location' 
+                                 value={address}
+                                 placeholder='Location'
+                                 onChange={()=>{}} 
+                                 className="border border-silver text-base rounded-lg focus:outline-primary focus:ring-primary focus:border-primary p-1 px-2"
+                              /> :
+                              <p className='text-base'>{address}</p>
+                              }
+                           </div>
+                           <div>
+                              { isShow ? 
+                              <p className='text-base'>
+                                 <button 
+                                    className='border border-silver p-1 px-3 rounded-full text-sm mr-2 disabled:bg-silver/20 disabled:text-[#d9d9d9]' 
+                                    disabled
+                                 >Available Now</button> 
+                                 <select 
+                                    className="border border-silver rounded-lg focus:ring-0 outline-none" 
+                                    name="available"
+                                 >
+                                 <option value="true" defaultChecked>On</option>
+                                 <option value="false">Off</option>
+                              </select>
+                              </p> :
+                              <p className='text-base'>
+                                 <button 
+                                    className='border border-silver p-1 px-3 rounded-full text-sm mr-2 disabled:bg-silver/20 disabled:text-[#d9d9d9]' 
+                                    disabled={!available}
+                                 >Available Now</button> 
+                                 {available ? '' : 'off'}
+                              </p>
+                              }
+                           </div>
                         </div>
-                        <div className='text-center lg:text-left'>
-                           <h3 className='text-3xl text-primary font-semibold'>4</h3>
-                           <p>Hired</p>
+                        <div className='pt-5 lg:pt-8 text-center lg:text-left'>
+                           <h3 className='text-xl font-medium pb-1'>Overview</h3>
+                           <p className='pb-4 text-sm lg:text-base'>Use this space to show clients you have the skills and experience they're looking for:</p>
+                           { isShow ? 
+                           <textarea 
+                              className="w-full border border-silver p-3 rounded-lg focus:ring-0 outline-none text-sm lg:text-base" 
+                              name="description" 
+                              id="description" 
+                              rows="6"
+                              value={about}
+                              onChange={()=>{}}
+                              maxLength={500}
+                           ></textarea> : 
+                           <p className='text-sm md:text-base lg:text-base'>{about}</p> 
+                           }
                         </div>
-                        <div className='text-center lg:text-left'>
-                           <h3 className='text-3xl text-primary font-semibold'>2</h3>
-                           <p>Completed</p>
+                        <div className='pt-8 lg:pt-12 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-3'>
+                           <div className='text-center lg:text-left'>
+                              <h3 className='text-3xl text-primary font-semibold'>{plength}</h3>
+                              <p>{type === 'client' ? 'Job' : 'Proposals'}</p>
+                           </div>
+                           <div className='text-center lg:text-left'>
+                              <h3 className='text-3xl text-primary font-semibold'>5</h3>
+                              <p>Invited</p>
+                           </div>
+                           <div className='text-center lg:text-left'>
+                              <h3 className='text-3xl text-primary font-semibold'>2</h3>
+                              <p>Hired</p>
+                           </div>
+                           <div className='text-center lg:text-left'>
+                              <h3 className='text-3xl text-primary font-semibold'>2</h3>
+                              <p>Completed</p>
+                           </div>
                         </div>
-                     </div>
-                  </form>
-               </div>
-            </div> */}
-            <ProfileSkeleton/>
+                     </form>
+                  </div>
+               </div> :
+               <ProfileSkeleton/> 
+            }
          </TheDivArea>
       </main>
       <Transition appear show={isOpen} as={Fragment}>
@@ -226,7 +243,7 @@ const profile = () => {
                      <div className="shrink-0">
                         <Image
                            alt="Current Profile Image"
-                           src={sagorrana}
+                           src={imgURL}
                            width={112}
                            className="h-28 rounded-full object-cover object-top"
                         />
@@ -273,12 +290,27 @@ const profile = () => {
 
 export async function getServerSideProps({ req }){
    const session = await getSession({ req })
+   const email = session.user?.email;
  
    if(!session) {
      return { redirect : { destination: '/signin', permanent: false } }
    }
+
+   if (email) {
+      const baseUrl = req.headers.host;
+      const res = await fetch(`http://${baseUrl}/api/user/${email}`);
+      const data = await res.json();
+      if (data._id) {
+         const res = await fetch(`http://${baseUrl}/api/proposals/${data._id}`);
+         const proposals = await res.json();
  
-   return { props: { session } }
+         return { props: { data, plength: proposals.length } }
+      }
+   } else {
+      console.error('Email not found in session');
+      return { props: { session } }
+   }
+ 
 }
 
 export default profile
