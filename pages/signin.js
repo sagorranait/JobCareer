@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { getSession, signIn } from "next-auth/react";
 import TheLoginDiv from "@/components/TheLoginDiv";
-import { useEffect } from "react";
 
 const SignIn = () => {
    const router = useRouter();

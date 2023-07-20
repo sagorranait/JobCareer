@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { gsap } from "gsap";
 import Head from 'next/head';
 import Image from 'next/image';

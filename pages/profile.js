@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import Head from "next/head";
 import { getSession } from 'next-auth/react';
+
+import { useForm } from "react-hook-form";
 import TheDivArea from "@/components/TheDivArea";
 import ProfileSkeleton from '@/components/skeleton/ProfileSkeleton';
 import UserImage from '@/components/profile/UserImage';
 import UserStatus from '@/components/profile/UserStatus';
 
-const profile = ({ data, plength }) => {
+const profile = ({ data, plength, url }) => {
    const { 
       _id,
       type,
@@ -20,13 +22,30 @@ const profile = ({ data, plength }) => {
    } = data;
    const [isShow, setIsShow] = useState(false);
    const [loading, setLoading] = useState(true);
+   const { register, handleSubmit } = useForm();
 
   useEffect(() => {
     setLoading(false);
   }, []);
 
-  const profileUpdateHandler = (event) => {
-      event.preventDefault();
+  const profileUpdateHandler = async (data) => {
+      await fetch(`http://${url}/api/user/update?id=${_id}`, {
+         method: 'PATCH', 
+         body: JSON.stringify(data),
+         headers: {
+            "Content-Type": "application/json",
+         },
+      })
+      .then(res => {
+         if (res.ok) {
+            toast.success('Successfully Updated!')
+            setIsShow(true);
+         }
+      })
+      .catch(error => {
+         console.log(error);
+         toast.error(`${error}`)
+      });
   }
 
   return (
@@ -39,8 +58,8 @@ const profile = ({ data, plength }) => {
             { !loading ? 
                <div className="w-11/12 mt-24 mb-3 p-3 md:mt-32 lg:mb-0 lg:w-10/12 lg:p-8 xl:mt-0 xl:w-2/3 border border-silver rounded-xl">
                   <div className="flex items-center flex-col justify-center gap-5 lg:items-start lg:justify-start lg:flex-row lg:gap-14 xl:gap-20">
-                     <UserImage id={_id} name={username} url={imgURL}/>
-                     <form className="flex-1" onSubmit={profileUpdateHandler}>
+                     <UserImage id={_id} name={username} url={imgURL} edited={isShow}/>
+                     <form className="flex-1" onSubmit={handleSubmit(profileUpdateHandler)}>
                         <div className='flex items-center justify-between pb-2.5 flex-col gap-3 md:flex-row md:px-20 lg:gap-0 lg:flex-row lg:px-0'>
                            <h2 className='text-xl lg:text-2xl font-medium'>{username}</h2>
                            <div>
@@ -63,9 +82,9 @@ const profile = ({ data, plength }) => {
                               <input 
                                  type="text" 
                                  name='tagline' 
-                                 value={designation} 
                                  placeholder='Tagline'
-                                 onChange={()=>{}} 
+                                 {...register("tagline")}
+                                 defaultValue={designation || ''}
                                  className="border border-silver text-base rounded-lg focus:outline-primary focus:ring-primary focus:border-primary p-1 px-2"
                               /> :
                               designation === null ? 
@@ -78,9 +97,9 @@ const profile = ({ data, plength }) => {
                               <p className='text-base'>$ <input 
                                  type="number" 
                                  name='hourlyrate' 
-                                 placeholder='Hourly Rate'                              
-                                 value={hourly}
-                                 onChange={()=>{}}
+                                 placeholder='Hourly Rate' 
+                                 {...register("hourlyrate")}
+                                 defaultValue={hourly || ''}
                                  className="w-32 border border-silver rounded-lg focus:outline-primary focus:ring-primary focus:border-primary p-1 px-2"
                               /> .00/hr</p> :
                               hourly === null ?
@@ -93,9 +112,9 @@ const profile = ({ data, plength }) => {
                               <input 
                                  type="text" 
                                  name='location' 
-                                 value={address}
                                  placeholder='Location'
-                                 onChange={()=>{}} 
+                                 defaultValue={address || ''}
+                                 {...register("location")}
                                  className="border border-silver text-base rounded-lg focus:outline-primary focus:ring-primary focus:border-primary p-1 px-2"
                               /> :
                               address === null ?
@@ -113,6 +132,7 @@ const profile = ({ data, plength }) => {
                                  <select 
                                     className="border border-silver rounded-lg focus:ring-0 outline-none" 
                                     name="available"
+                                    {...register("available")}
                                  >
                                  <option value="true" defaultChecked>On</option>
                                  <option value="false">Off</option>
@@ -137,12 +157,12 @@ const profile = ({ data, plength }) => {
                               name="description" 
                               id="description" 
                               rows="6"
-                              value={about}
-                              onChange={()=>{}}
+                              {...register("description")}
+                              defaultValue={about || ''}
                               maxLength={500}
                            ></textarea> : 
                            about === null ?
-                           <p className='text-sm md:text-base lg:text-base'>Tell about you shortly...</p> :
+                           <p className='text-sm md:text-base lg:text-base'>Tell us about you shortly...</p> :
                            <p className='text-sm md:text-base lg:text-base'>{about}</p> 
                            }
                         </div>
@@ -182,7 +202,7 @@ export async function getServerSideProps({ req }){
          const res = await fetch(`http://${baseUrl}/api/proposals/${data._id}`);
          const proposals = await res.json();
  
-         return { props: { data, plength: proposals.length } }
+         return { props: { data, plength: proposals.length, url: baseUrl } }
       }
    } else {
       console.error('Email not found in session');

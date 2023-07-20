@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Dialog, Transition } from '@headlessui/react';
 import { useForm } from 'react-hook-form';
 
-function UserImage({ id, name, url }) {
+function UserImage({ id, name, url, edited }) {
    const [photo, setPhoto] = useState(null);
    const [isOpen, setIsOpen] = useState(false);
    const [loading, setLoading] = useState(false);
@@ -15,37 +15,52 @@ function UserImage({ id, name, url }) {
    }
 
    const updatePhotoHandler = async () => {
-      const formData = new FormData();
+      let formData = new FormData();
       formData.append('image', photo);
-      setLoading(true);
+      console.log(formData, photo);
+      // setLoading(true);
+
+      // await fetch(`https://api.imgbb.com/1/upload?key=8bc71f5c88870561f133c9caf6282517`, {
+      //    method: 'POST',
+      //    body: formData
+      // })
+      // .then(res => res.json())
+      // .then(data => {
+      //    console.log(data);
+      // })
+      // const imgbbData = await imgbbResponse.json();
+      // console.log(imgbbData);
+      // const imgUrl = imgbbData.data?.url;
+
+
     
-      try {
-        const imgbbResponse = await fetch(`https://api.imgbb.com/1/upload?key=d5c8e8f3eec3f693976a3381572c9846`, {
-          method: 'POST',
-          body: formData
-        });
-        const imgbbData = await imgbbResponse.json();
-        const imgUrl = imgbbData.data.url;
+      // try {
+      //   const imgbbResponse = await fetch(`https://api.imgbb.com/1/upload?key=d5c8e8f3eec3f693976a3381572c9846`, {
+      //     method: 'POST',
+      //     body: formData
+      //   });
+      //   const imgbbData = await imgbbResponse.json();
+      //   const imgUrl = imgbbData.data?.url;
     
-        const response = await fetch(`/api/user/update?id=${id}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            imgURL: imgUrl,
-          }),
-        });
+      //   const response = await fetch(`/api/user/update?id=${id}`, {
+      //     method: 'PATCH',
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //     },
+      //     body: JSON.stringify({
+      //       imgURL: imgUrl,
+      //     }),
+      //   });
     
-        if (response.status === 200) {
-          // handle success
-          setLoading(false);
-        } else {
-          // handle error
-        }
-      } catch (error) {
-        console.log(error);
-      }
+      //   if (response.status === 200) {
+      //     // handle success
+      //     setLoading(false);
+      //   } else {
+      //     // handle error
+      //   }
+      // } catch (error) {
+      //   console.log(error);
+      // }
     
       setIsOpen(false);
       setPhoto(null);
@@ -70,15 +85,17 @@ function UserImage({ id, name, url }) {
                />
             }
             <div className="w-4 h-4 bg-primary border-[2px] border-white rounded-full absolute bottom-2 right-2"/>
-            <button  
-               type="button"
-               onClick={() => setIsOpen(true)}  
-               className="absolute top-0 left-0 border-[2px] border-white bg-silver p-1 rounded-full"
-            >
-               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#108a00" className="w-4 h-4">
-                  <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z" />
-               </svg>
-            </button>
+            {edited && 
+               <button  
+                  type="button"
+                  onClick={() => setIsOpen(true)}  
+                  className="absolute top-0 left-0 border-[2px] border-white bg-silver p-1 rounded-full"
+               >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#108a00" className="w-4 h-4">
+                     <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z" />
+                  </svg>
+               </button>
+            }
          </div>
          <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={() => setIsOpen(false)}>
