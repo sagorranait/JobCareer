@@ -11,7 +11,7 @@ const TheMenu = () => {
  const router = useRouter();
  const dispatch = useDispatch();
  const user = useSelector(getUser);
-const { data: session, status: loading } = useSession();
+ const { data: session, status: loading } = useSession();
 
  useEffect(() => {
    const fetchData = async () => {
@@ -31,7 +31,7 @@ const { data: session, status: loading } = useSession();
  }, [session]); 
 
   return (
-   <nav className='w-full h-14 fixed z-[999]'>
+   <nav className='w-full fixed z-[999] bg-white shadow-sm h-16 xl:h-14 xl:shadow-none'>
       <ul className='w-4/5 mx-auto flex gap-5 h-full items-center'>
          <li className='flex-auto'>
             <div className="flex items-center gap-10">
