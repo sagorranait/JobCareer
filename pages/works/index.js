@@ -1,14 +1,23 @@
 import Head from "next/head";
 import Link from "next/link";
+import { useState } from "react";
 import TheDivArea from "@/components/TheDivArea";
 
-const Work = ({ workData, page, totalPages }) => {
+const Work = ({ jobData, perPage }) => {
+  const [workData, setWorkData] = useState(jobData);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const handlePageChange = (newPageNumber) => {
-    page = newPageNumber;
+  const handleLoadMore = async () => {
+    const newPageNumber = currentPage + 1;
+    const res = await fetch(`/api/jobs`);
+    const data = await res.json();
+    const newData = data.slice((newPageNumber - 1) * perPage, newPageNumber * perPage);
+
+    setWorkData([...workData, ...newData]);
+    setCurrentPage(newPageNumber);
   };
 
-  function truncateText(text, maxLength, ending) {
+  const truncateText = (text, maxLength, ending) => {
     if (maxLength == null) { maxLength = 100; }
     if (ending == null) { ending = "..."; }
 
@@ -26,10 +35,10 @@ const Work = ({ workData, page, totalPages }) => {
       </Head>
       <main>
         <TheDivArea>
-          <div className="work-area mt-20 w-11/12 lg:w-11/12 xl:mt-40 2xl:mt-0 xl:w-auto">   
+          <div className="work-area mt-20 w-11/12 lg:w-11/12 xl:mt-40 2xl:mt-10 xl:w-auto">   
             <div className="w-full">
               <div className="works grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-6">
-                {workData.slice((page - 1) * 4, page * 4).map(({
+                {workData.map(({
                   _id,
                   title, 
                   skills,
@@ -41,7 +50,7 @@ const Work = ({ workData, page, totalPages }) => {
                   <div key={_id} className="work border border-silver p-5 rounded-xl">
                     <div className="title flex items-start justify-between pb-3 lg:pb-5 flex-col xl:flex-row">
                       <div className="text flex-1">
-                        <h3 className="text-lg font-medium ">{title}</h3>
+                        <h3 className="text-xl font-medium ">{title}</h3>
                         <p className="text-axolotl text-xs lg:text-sm pt-3 capitalize">
                           <b>{budgetType} Price</b> - {projectType} - Budget: ${budget}.00
                         </p>
@@ -98,7 +107,7 @@ const Work = ({ workData, page, totalPages }) => {
               </nav> */}
               </div>
               <div className="text-center mb-5">
-                <button className="bg-primary text-white font-medium px-6 py-2 rounded-full my-5 lg:mb-0 lg:mt-12 xl:mb-5 2xl:mb-0">
+                <button onClick={handleLoadMore} className="bg-primary text-white font-medium px-6 py-2 rounded-full my-5 lg:mb-0 lg:mt-12 xl:mb-5 2xl:mb-0">
                   Load More Jobs
                 </button>
               </div>
@@ -110,19 +119,19 @@ const Work = ({ workData, page, totalPages }) => {
   )
 }
 
-export async function getServerSideProps({ req, page = 1 }) {
+export async function getServerSideProps({ req }) {
+  const perPage = 4;
   const baseUrl = req.headers.host;
-  const res = await fetch(`http://${baseUrl}/api/jobs`);
-  const data = await res.json();
+  const jobRes = await fetch(`http://${baseUrl}/api/jobs`);
+  const data = await jobRes.json();
 
-  const totalPages = Math.ceil(data.length / 10);
   return {
     props: {
-      workData: data.slice((page - 1) * 4, page * 4),
-      page,
-      totalPages,
+      jobData: data.slice(0, perPage),
+      perPage,
     },
   };
 }
+
 
 export default Work

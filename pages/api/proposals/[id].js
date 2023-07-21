@@ -1,6 +1,6 @@
 import DB, { proposals } from '@/database/connection';
 
-export default async function userEmailHandler(req, res) {
+export default async function proposalIdHandler(req, res) {
    const { id } = req.query;
 
    try {
