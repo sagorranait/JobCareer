@@ -3,16 +3,19 @@ import Link from "next/link";
 import { useState } from "react";
 import TheDivArea from "@/components/TheDivArea";
 
-const Work = ({ jobData, perPage }) => {
+const Work = ({ jobData, perPage, totalPages }) => {
   const [workData, setWorkData] = useState(jobData);
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   const handleLoadMore = async () => {
     const newPageNumber = currentPage + 1;
-    const res = await fetch(`/api/jobs`);
+    setLoading(true);
+    const res = await fetch(`http://localhost:3000/api/jobs`);
     const data = await res.json();
     const newData = data.slice((newPageNumber - 1) * perPage, newPageNumber * perPage);
-
+    
+    setLoading(false);
     setWorkData([...workData, ...newData]);
     setCurrentPage(newPageNumber);
   };
@@ -28,6 +31,8 @@ const Work = ({ jobData, perPage }) => {
     }
   }
 
+  const isLoadMoreDisabled = currentPage >= totalPages;
+
   return (
     <>
       <Head>
@@ -35,7 +40,7 @@ const Work = ({ jobData, perPage }) => {
       </Head>
       <main>
         <TheDivArea>
-          <div className="work-area mt-20 w-11/12 lg:w-11/12 xl:mt-40 2xl:mt-10 xl:w-auto">   
+          <div className="work-area mt-20 p-4 w-11/12 lg:w-11/12 xl:mt-40 xl:h-[780px] xl:w-auto xl:overflow-auto 2xl:mt-20 2xl:h-[780px] 2xl:overflow-auto">   
             <div className="w-full">
               <div className="works grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-6">
                 {workData.map(({
@@ -73,42 +78,10 @@ const Work = ({ jobData, perPage }) => {
                     <p className="text-axolotl text-sm">Proposals: <strong>Less than 5</strong></p>
                   </div>
                 ))}
-              {/* <nav aria-label="Page navigation">
-                <ul class="pagination">
-                  <li>
-                    <button
-                      disabled={page === 1}
-                      onClick={() => handlePageChange(page - 1)}
-                      class="page-link"
-                    >
-                      Previous
-                    </button>
-                  </li>
-                  {Array(totalPages).fill().map((_, index) => (
-                    <li key={index}>
-                      <button
-                        onClick={() => handlePageChange(index + 1)}
-                        class={`page-link ${page === index + 1 ? "active" : ""}`}
-                      >
-                        {index + 1}
-                      </button>
-                    </li>
-                  ))}
-                  <li>
-                    <button
-                      disabled={page === totalPages}
-                      onClick={() => handlePageChange(page + 1)}
-                      class="page-link"
-                    >
-                      Next
-                    </button>
-                  </li>
-                </ul>
-              </nav> */}
               </div>
               <div className="text-center mb-5">
-                <button onClick={handleLoadMore} className="bg-primary text-white font-medium px-6 py-2 rounded-full my-5 lg:mb-0 lg:mt-12 xl:mb-5 2xl:mb-0">
-                  Load More Jobs
+                <button onClick={handleLoadMore} disabled={isLoadMoreDisabled} className="bg-primary text-white disabled:opacity-60 font-medium px-6 py-2 rounded-full my-5 lg:mb-0 lg:mt-12 xl:mb-5 2xl:mb-0">
+                  {loading ? 'Loading...' : 'Load More Jobs'}
                 </button>
               </div>
             </div>
@@ -125,10 +98,13 @@ export async function getServerSideProps({ req }) {
   const jobRes = await fetch(`http://${baseUrl}/api/jobs`);
   const data = await jobRes.json();
 
+  const totalPages = Math.ceil(data.length / perPage);
+
   return {
     props: {
       jobData: data.slice(0, perPage),
       perPage,
+      totalPages
     },
   };
 }
