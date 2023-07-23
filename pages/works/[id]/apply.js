@@ -1,16 +1,21 @@
+import axios from "axios";
 import Link from "next/link";
 import Head from "next/head";
-import withAuth from "../../../withAuth";
-import TheDivArea from "@/components/TheDivArea";
-import { useSelector } from "react-redux";
 import { getUser } from "@/features";
+import { useRouter } from "next/router";
+import withAuth from "../../../withAuth";
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import TheDivArea from "@/components/TheDivArea";
 
 const Applied = ({ jobBudget }) => {
+   const router = useRouter();
    const user = useSelector(getUser);
-   const [jobBidPrice, setJobBidPrice] = useState(jobBudget);
    const [serviceFee, setServiceFee] = useState();
    const [receivedPrice, setReceivedPrice] = useState();
+   const [jobBidPrice, setJobBidPrice] = useState(jobBudget);
+   const { register, formState: { errors }, handleSubmit } = useForm();
 
    useEffect(() => {
       const fee = jobBidPrice * 0.2;
@@ -18,9 +23,21 @@ const Applied = ({ jobBudget }) => {
       
       setServiceFee(fee);
       setReceivedPrice(received)
-   }, [jobBidPrice])
-   
+   }, [jobBidPrice]);
 
+   const onProposal = async (data) => {
+      console.log(data);
+
+      await axios.post('/api/proposals/apply', data)
+      .then(res => {
+         if (res.statusText === "OK") {            
+            router.push('/proposals')
+         }
+      })
+      .catch(error => {
+       console.log(error);
+      })
+   }
 
   return (
    <>
@@ -29,12 +46,13 @@ const Applied = ({ jobBudget }) => {
       </Head>
       <main>
          <TheDivArea>
-            <form className="w-11/12 lg:w-3/4 xl:w-2/4 mt-8 xl:mt-0 ">
+            <form onSubmit={handleSubmit(onProposal)} className="w-11/12 lg:w-3/4 xl:w-2/4 mt-8 xl:mt-0 ">
             <div className="py-5 mb-1 lg:mb-5 mt-8">
                <h3 className="text-xl font-medium mb-5 md:mb-2 lg:mb-5">Proposal Settings</h3>
                <label htmlFor="profile" className="text-sm md:text-base lg:mb-2 font-medium pr-5">Propose with a Specialized profile</label>
                <select 
                   id="profile" 
+                  {...register("userId", { required: true })}
                   className="w-full md:w-60 border border-silver text-base rounded-lg focus:ring-silver focus:border-silver focus:outline-0 p-2 mt-3 lg:mt-0">
                   <option defaultValue value={user?.id}>General Profile</option>
                </select>
@@ -54,8 +72,10 @@ const Applied = ({ jobBudget }) => {
                         </span>
                         <input 
                            type="text" 
-                           id="website-admin" 
-                           className="border border-axolotl p-2 font-medium rounded-lg text-right w-full md:w-auto" 
+                           id="website-admin"
+                           placeholder={errors.amount?.type !== 'required' ? 'Enter your Bid amount' : 'Amount is required !'}
+                           {...register("amount", { required: true })}
+                           className={`border border-axolotl ${errors.amount?.type !== 'required' ? 'focus:outline-axolotl focus:ring-axolotl focus:border-axolotl' : 'focus:outline-red focus:ring-red focus:border-red'} p-2 font-medium rounded-lg text-right w-full md:w-auto`}
                            value={`${jobBidPrice}`}
                            onChange={(e)=>setJobBidPrice(e.target.value)}
                         />
@@ -110,8 +130,10 @@ const Applied = ({ jobBudget }) => {
                   <label htmlFor="coverLetter" className="block mb-2 text-base font-medium">Cover Letter</label>
                   <textarea 
                      id="coverLetter" 
+                     placeholder={errors.coverLetter?.type !== 'required' ? '' : 'Cover Letter is required !'}
+                     {...register("coverLetter", { required: true })}
                      rows="4" 
-                     className="block p-2.5 w-full rounded-lg border border-[#d5e0d5] focus:ring-[#d5e0d5] focus:border-[#d5e0d5]"
+                     className={`block p-2.5 w-full rounded-lg border border-[#d5e0d5] ${errors.coverLetter?.type !== 'required' ? 'focus:outline-[#d5e0d5] focus:ring-[#d5e0d5] focus:border-[#d5e0d5]' : 'focus:outline-red focus:ring-red focus:border-red'}`}
                   ></textarea>
                </div>
             </div>
