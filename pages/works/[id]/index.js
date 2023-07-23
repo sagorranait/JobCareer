@@ -1,6 +1,8 @@
-import TheDivArea from "@/components/TheDivArea"
-import Head from "next/head"
-import Link from "next/link"
+import Head from "next/head";
+import Link from "next/link";
+import copy from 'copy-to-clipboard';
+import { toast } from "react-hot-toast";
+import TheDivArea from "@/components/TheDivArea";
 
 const WorkDetails = ({ jobData }) => {
    const {
@@ -12,8 +14,6 @@ const WorkDetails = ({ jobData }) => {
       description,
       projectType,
    } = jobData;
-
-   console.log(jobData);
    
   return (
    <>
@@ -81,12 +81,20 @@ const WorkDetails = ({ jobData }) => {
                      <h3 className="text-base font-medium pb-3">Job link</h3>
                      <input 
                         className="block bg-[#e4ebe4] text-[#5e6d55] border border-[#e4ebe4] p-2 rounded-lg cursor-not-allowed"
-                        type="text" 
+                        type="text"
+                        name="jobLink"
                         value={`http://localhost:3000/works/${_id}`} 
                         readOnly
                         disabled
                      />
-                     <button className="pt-2 text-primary hover:underline">Copy link</button>
+                     <button
+                        onClick={()=>{
+                           copy(`http://localhost:3000/works/${_id}`);
+                           toast.success('Copied.');
+                        }}
+                        className="pt-2 text-primary hover:underline">
+                           Copy link
+                     </button>
                   </div>
                </div>
             </div>
