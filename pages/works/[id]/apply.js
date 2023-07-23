@@ -2,8 +2,26 @@ import Link from "next/link";
 import Head from "next/head";
 import withAuth from "../../../withAuth";
 import TheDivArea from "@/components/TheDivArea";
+import { useSelector } from "react-redux";
+import { getUser } from "@/features";
+import { useEffect, useState } from "react";
 
-const Applied = () => {
+const Applied = ({ jobBudget }) => {
+   const user = useSelector(getUser);
+   const [jobBidPrice, setJobBidPrice] = useState(jobBudget);
+   const [serviceFee, setServiceFee] = useState();
+   const [receivedPrice, setReceivedPrice] = useState();
+
+   useEffect(() => {
+      const fee = jobBidPrice * 0.2;
+      const received = jobBidPrice - fee;
+      
+      setServiceFee(fee);
+      setReceivedPrice(received)
+   }, [jobBidPrice])
+   
+
+
   return (
    <>
       <Head>
@@ -18,7 +36,7 @@ const Applied = () => {
                <select 
                   id="profile" 
                   className="w-full md:w-60 border border-silver text-base rounded-lg focus:ring-silver focus:border-silver focus:outline-0 p-2 mt-3 lg:mt-0">
-                  <option defaultValue value='id'>General Profile</option>
+                  <option defaultValue value={user?.id}>General Profile</option>
                </select>
                <p className="py-2 text-sm md:text-base lg:py-3">This proposal requires 4 Connects. </p>
                <p className="text-sm md:text-base">When you submit this proposal, you'll have 47 Connects remaining.</p>
@@ -38,8 +56,8 @@ const Applied = () => {
                            type="text" 
                            id="website-admin" 
                            className="border border-axolotl p-2 font-medium rounded-lg text-right w-full md:w-auto" 
-                           value='200.00'
-                           onChange={()=>{}}
+                           value={`${jobBidPrice}`}
+                           onChange={(e)=>setJobBidPrice(e.target.value)}
                         />
                      </div>
                   </div>
@@ -59,8 +77,7 @@ const Applied = () => {
                            className="w-full lg:w-auto border-none text-right font-medium cursor-not-allowed bg-[#e4ebe44f] text-[#5e6d55] rounded-lg p-2" 
                            disabled
                            readOnly
-                           value='20.00'
-                           onChange={()=>{}}
+                           value={serviceFee}
                         />
                      </div>
                   </div>
@@ -81,7 +98,7 @@ const Applied = () => {
                            className="w-full lg:w-auto border border-[#d5e0d5] p-2 font-medium rounded-lg text-right cursor-not-allowed" 
                            disabled
                            readOnly
-                           value='180.00'
+                           value={receivedPrice}
                            onChange={()=>{}}
                         />
                      </div>
@@ -109,4 +126,17 @@ const Applied = () => {
   )
 }
 
-export default withAuth(Applied)
+export default withAuth(Applied);
+
+export async function getServerSideProps({ req, query }) {
+   const { id } = query;
+   const baseUrl = req.headers.host;
+   const singleJob = await fetch(`http://${baseUrl}/api/jobs/${id}`);
+   const data = await singleJob.json();
+
+   return {
+      props: {
+         jobBudget: data[0].budget
+      },
+    };
+}
