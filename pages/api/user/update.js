@@ -1,28 +1,24 @@
 import DB, { user } from '@/database/connection';
-const { ObjectId } = require('mongodb');
 
-export default async function userPhotoHandler(req, res) {
-   const { id } = req.query;
-   const { description, hourlyrate, tagline, available, location   } = req.body;
+export default async function userUpdateHandler(req, res) {
+  const { userId } = req.query;
+  const data = req.body;
 
-   try {
-     await DB.connect().catch((error) => res.json({ error: 'Server Connection Failed...!' }));
+  try {
+    await DB.connect().catch((error) => res.json({ error: 'Server Connection Failed...!' }));
 
-     const query = { _id: ObjectId(id) }
-     const updatedDoc = {
-        $set:{        
-           "about": description,
-           "address": location,
-           "available": available,
-           "designation": tagline,
-           "hourly": hourlyrate,
-        }
-     }
+    const query = { _id: userId };
+    const updatedDoc = { $set: data };
+
+    console.log(updatedDoc);
 
     const result = await user.updateOne( query, updatedDoc);
-    console.log(result);
-     res.status(200).json({ message: 'Updated successfully!' });
-   } catch (error) {
-     res.status(500).json({ error: 'Connection Failed...!' });
-   }
+    if (result.acknowledged) {
+      res.status(200).json({ result, message: 'Updated successfully!' });
+    } else {
+      res.status(500).json({ error: 'Update Failed...!' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Connection Failed...!' });
+  }
  }

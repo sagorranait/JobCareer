@@ -1,37 +1,56 @@
 import axios from "axios";
 import Link from "next/link";
 import Head from "next/head";
-import { getUser } from "@/features";
+import { getUser, storeNewConnect } from "@/features";
 import { useRouter } from "next/router";
 import withAuth from "../../../withAuth";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import TheDivArea from "@/components/TheDivArea";
 
 const Applied = ({ jobBudget }) => {
    const router = useRouter();
+   const dispatch = useDispatch();
    const user = useSelector(getUser);
+   const [loading, setLoading] = useState(false);
    const [serviceFee, setServiceFee] = useState();
    const [receivedPrice, setReceivedPrice] = useState();
    const [jobBidPrice, setJobBidPrice] = useState(jobBudget);
+   const [proposalConnect, setProposalConnect] = useState(user?.connects);
    const { register, formState: { errors }, handleSubmit } = useForm();
 
+   const perProposalConnects = 4;
+   
    useEffect(() => {
       const fee = jobBidPrice * 0.2;
       const received = jobBidPrice - fee;
-      
+      const remainingConnects = proposalConnect - perProposalConnects;
+
       setServiceFee(fee);
-      setReceivedPrice(received)
+      setReceivedPrice(received);
+      setProposalConnect(remainingConnects);
    }, [jobBidPrice]);
 
    const onProposal = async (data) => {
-      console.log(data);
+      setLoading(true);
+      const proposalData = {
+         ...data,
+         jobId: router.query.id
+      }
 
-      await axios.post('/api/proposals/apply', data)
-      .then(res => {
-         if (res.statusText === "OK") {            
-            router.push('/proposals')
+      await axios.post('/api/proposals/apply', proposalData)
+      .then( async (res) => {
+         if (res.statusText === "OK") { 
+            await axios.put(`/api/user/update?userId=${user?.id}`, { connects: `${proposalConnect}` })
+            .then((res)=>{
+               dispatch(storeNewConnect({ connects: proposalConnect }));   
+               router.push('/proposals');
+               setLoading(false);
+            })
+            .catch(error => {
+               console.log(error);
+            });  
          }
       })
       .catch(error => {
@@ -57,7 +76,7 @@ const Applied = ({ jobBudget }) => {
                   <option defaultValue value={user?.id}>General Profile</option>
                </select>
                <p className="py-2 text-sm md:text-base lg:py-3">This proposal requires 4 Connects. </p>
-               <p className="text-sm md:text-base">When you submit this proposal, you'll have 47 Connects remaining.</p>
+               <p className="text-sm md:text-base">When you submit this proposal, you'll have {proposalConnect} Connects remaining.</p>
             </div>
             <div className="py-2">
                <div className="flex items-start lg:items-center justify-center gap-3 lg:gap-8 pb-5 flex-col md:flex-row">
@@ -98,6 +117,7 @@ const Applied = ({ jobBudget }) => {
                            disabled
                            readOnly
                            value={serviceFee}
+                           onChange={()=>{}}
                         />
                      </div>
                   </div>
@@ -138,7 +158,9 @@ const Applied = ({ jobBudget }) => {
                </div>
             </div>
             <div className="pt-3 mb-5 lg:mb-0">
-               <button type="submit" className="bg-primary text-white font-medium px-6 py-2 rounded-full" >Send for 4 Connects</button>
+               <button type="submit" className="bg-primary text-white font-medium px-6 py-2 rounded-full" >
+                  {loading ? 'Sending Proposal...' : 'Send for 4 Connects'}
+               </button>
                <Link href='/works' className="text-primary font-medium pl-5 hover:underline">Cancel</Link>
             </div>
             </form>

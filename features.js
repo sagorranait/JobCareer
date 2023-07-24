@@ -17,10 +17,13 @@ const userSlice = createSlice({
       } = action.payload?.user;
       
 	  	state.user = { id: _id, type, email, connects, username, imgURL };
+    },
+    storeNewConnect: (state, action) => {
+      state.user = { ...state.user, connects: action.payload?.connect };
     }
   }
 });
 
-export const { storeUser } = userSlice.actions;
+export const { storeUser, storeNewConnect } = userSlice.actions;
 export const getUser = state => state.users.user;
 export default userSlice.reducer;
