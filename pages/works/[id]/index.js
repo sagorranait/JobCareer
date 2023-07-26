@@ -1,10 +1,13 @@
 import Head from "next/head";
 import Link from "next/link";
 import copy from 'copy-to-clipboard';
+import { getUser } from "@/features";
 import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
 import TheDivArea from "@/components/TheDivArea";
 
 const WorkDetails = ({ jobData }) => {
+   const user = useSelector(getUser);
    const {
       _id,
       title,
@@ -58,14 +61,21 @@ const WorkDetails = ({ jobData }) => {
                </div>
                <div className="rightArea w-full lg:w-auto">
                   <div className="workAction border-b border-silver p-3 lg:p-6">
-                     <Link
-                        href={`/works/${_id}/apply`} 
-                        className="bg-primary text-white font-medium px-6 py-2 rounded-full w-full mb-5 lg:mb-10 inline-block text-center"
-                     >
+                     { user?.connects === '0' ? 
+                        <button 
+                           onClick={()=>toast.error("You don't have enough coins to apply.")} 
+                           className="bg-primary text-white font-medium px-6 py-2 rounded-full w-full mb-5 lg:mb-10 inline-block text-center">
                            Apply Now
-                     </Link>
-                     <p className="pb-2">Send a proposal for: 6 Connects</p>
-                     <p className="text-black">Available Connects: 52</p>
+                        </button> : 
+                        <Link
+                           href={`/works/${_id}/apply`} 
+                           className="bg-primary text-white font-medium px-6 py-2 rounded-full w-full mb-5 lg:mb-10 inline-block text-center"
+                        >
+                           Apply Now
+                        </Link>
+                     }                                          
+                     <p className="pb-2">Send a proposal for: 4 Connects</p>
+                     <p className="text-black">Available Connects: {user?.connects}</p>
                   </div>
                   <div className="aboutClient border-b border-silver p-3 lg:p-6">
                      <h3 className="text-base font-medium pb-3">About the client</h3>

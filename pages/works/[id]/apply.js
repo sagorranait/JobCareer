@@ -1,13 +1,13 @@
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 import Head from "next/head";
-import { getUser, storeNewConnect } from "@/features";
 import { useRouter } from "next/router";
 import withAuth from "../../../withAuth";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import TheDivArea from "@/components/TheDivArea";
+import { getUser, storeNewConnect } from "@/features";
+import { useDispatch, useSelector } from "react-redux";
 
 const Applied = ({ jobBudget }) => {
    const router = useRouter();
@@ -21,11 +21,11 @@ const Applied = ({ jobBudget }) => {
    const { register, formState: { errors }, handleSubmit } = useForm();
 
    const perProposalConnects = 4;
+   const remainingConnects = proposalConnect - perProposalConnects;
    
    useEffect(() => {
       const fee = jobBidPrice * 0.2;
       const received = jobBidPrice - fee;
-      const remainingConnects = proposalConnect - perProposalConnects;
 
       setServiceFee(fee);
       setReceivedPrice(received);
@@ -43,11 +43,10 @@ const Applied = ({ jobBudget }) => {
       .then( async (res) => {
          if (res.statusText === "OK") { 
             await axios.put(`/api/user/update?userId=${user?.id}`, { connects: `${proposalConnect}` })
-            .then((res)=>{
-               console.log(res);
-               // dispatch(storeNewConnect({ connects: proposalConnect }));   
-               // router.push('/proposals');
-               // setLoading(false);
+            .then((_)=>{
+               dispatch(storeNewConnect({ connects: proposalConnect }));
+               router.push('/proposals');
+               setLoading(false);
             })
             .catch(error => {
                console.log(error);

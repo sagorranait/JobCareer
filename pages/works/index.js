@@ -1,9 +1,13 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
+import { getUser } from "@/features";
+import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
 import TheDivArea from "@/components/TheDivArea";
 
 const Work = ({ jobData, perPage, totalPages }) => {
+  const user = useSelector(getUser);
   const [workData, setWorkData] = useState(jobData);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -61,9 +65,17 @@ const Work = ({ jobData, perPage, totalPages }) => {
                         </p>
                       </div>
                       <div className="action flex items-center flex-row xl:flex-col gap-2 mt-3 xl:mt-0">
-                        <Link href={`/works/${_id}/apply`} className="bg-primary text-white font-medium px-4 lg:px-6 py-2 rounded-full">
-                          Apply Now
-                        </Link>
+                        { user?.connects === '0' ? 
+                          <button onClick={()=>toast.error("You don't have enough coins to apply.")} className="bg-primary text-white font-medium px-4 lg:px-6 py-2 rounded-full">
+                            Apply Now
+                          </button> : 
+                          <Link 
+                            href={`/works/${_id}/apply`} 
+                            className="bg-primary text-white font-medium px-4 lg:px-6 py-2 rounded-full"
+                          >
+                            Apply Now
+                          </Link>
+                        }
                         <Link href={`/works/${_id}`} className="bg-primary text-white font-medium px-4 lg:px-6 py-2 rounded-full">
                           See More
                         </Link>

@@ -7,6 +7,8 @@ import { Menu, Transition  } from "@headlessui/react";
 import { useSession, signOut } from "next-auth/react";
 import { useDispatch, useSelector } from 'react-redux';
 
+import Coins from '../assets/coins.png';
+
 const TheMenu = () => {
  const router = useRouter();
  const dispatch = useDispatch();
@@ -68,8 +70,12 @@ const TheMenu = () => {
                </li>
             }
             <Menu as="div" className="relative text-left hidden lg:inline-block">
-               <div>
-                  <Menu.Button className="inline-flex items-center w-full justify-center py-2 focus:outline-none focus-visible:ring-0 focus-visible:ring-white focus-visible:ring-opacity-75">
+               <div className='flex items-center gap-3'>
+                  <div className='coins bg-primary flex items-center w-20 p-1 rounded-full gap-3'>
+                     <Image src={Coins} alt='Coins' className='w-6 pl-1' />
+                     <span className='text-white font-bold text-lg'>{user?.connects}</span>
+                  </div>
+                  <Menu.Button className="inline-flex items-center w-14 justify-center py-2 focus:outline-none focus-visible:ring-0 focus-visible:ring-white focus-visible:ring-opacity-75">
                      {
                         loading === 'loading' ? 
                         <div className="animate-pulse flex space-x-2 items-center">
@@ -241,8 +247,12 @@ const TheMenu = () => {
           </>}
          {/* Responsive Menu */}
          <Menu as="div" className="relative inline-block text-left lg:hidden">
-            <div>
-               <Menu.Button className="inline-flex w-full justify-center py-2 focus:outline-none focus-visible:ring-0 focus-visible:ring-white focus-visible:ring-opacity-75">
+            <div className='flex items-center gap-1'>
+               <div className='coins bg-primary flex items-center w-16 p-1 rounded-full gap-2'>
+                  <Image src={Coins} alt='Coins' className='w-5' />
+                  <span className='text-white font-bold text-base'>{user?.connects}</span>
+               </div>
+               <Menu.Button className="inline-flex w-8 justify-center py-2 focus:outline-none focus-visible:ring-0 focus-visible:ring-white focus-visible:ring-opacity-75">
                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                 </svg>

@@ -19,7 +19,7 @@ const userSlice = createSlice({
 	  	state.user = { id: _id, type, email, connects, username, imgURL };
     },
     storeNewConnect: (state, action) => {
-      state.user = { ...state.user, connects: action.payload?.connect };
+      state.user = { ...state.user, connects: action.payload.connects };
     }
   }
 });

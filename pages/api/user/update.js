@@ -11,8 +11,6 @@ export default async function userUpdateHandler(req, res) {
     const query = { _id: new ObjectId(userId) };
     const updatedDoc = { $set: data };
 
-    console.log(updatedDoc);
-
     const result = await user.updateOne( query, updatedDoc, {new: true});
     if (result.acknowledged) {
       res.status(200).json({ result, message: 'Updated successfully!' });
