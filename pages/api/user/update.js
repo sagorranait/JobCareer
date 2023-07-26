@@ -1,4 +1,5 @@
 import DB, { user } from '@/database/connection';
+import { ObjectId } from 'mongodb';
 
 export default async function userUpdateHandler(req, res) {
   const { userId } = req.query;
@@ -7,12 +8,12 @@ export default async function userUpdateHandler(req, res) {
   try {
     await DB.connect().catch((error) => res.json({ error: 'Server Connection Failed...!' }));
 
-    const query = { _id: userId };
+    const query = { _id: new ObjectId(userId) };
     const updatedDoc = { $set: data };
 
     console.log(updatedDoc);
 
-    const result = await user.updateOne( query, updatedDoc);
+    const result = await user.updateOne( query, updatedDoc, {new: true});
     if (result.acknowledged) {
       res.status(200).json({ result, message: 'Updated successfully!' });
     } else {

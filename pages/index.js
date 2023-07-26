@@ -75,6 +75,7 @@ const Home = () => {
                     name='search'
                     id='search'
                     placeholder='Job title or Keyword'
+                    onChange={()=>{}}
                   />
                   <button id='search-button' className='p-2 rounded-full bg-primary h-12 xl:h-14 w-14 grid place-items-center'>
                     <BiSearchAlt size='23' color='white' />

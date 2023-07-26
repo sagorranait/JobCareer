@@ -44,9 +44,10 @@ const Applied = ({ jobBudget }) => {
          if (res.statusText === "OK") { 
             await axios.put(`/api/user/update?userId=${user?.id}`, { connects: `${proposalConnect}` })
             .then((res)=>{
-               dispatch(storeNewConnect({ connects: proposalConnect }));   
-               router.push('/proposals');
-               setLoading(false);
+               console.log(res);
+               // dispatch(storeNewConnect({ connects: proposalConnect }));   
+               // router.push('/proposals');
+               // setLoading(false);
             })
             .catch(error => {
                console.log(error);
