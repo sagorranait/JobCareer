@@ -70,7 +70,11 @@ const proposals = () => {
                            </Link>
                            <p className="w-28 lg:text-left text-sm text-axolotl">Bid Price : ${proposal.amount}</p>
                            <div className="text-center pt-3 lg:pt-0 lg:text-left">
-                              <ChangeTerms/>
+                              <ChangeTerms
+                                 data={proposal}
+                                 matchedJob={matchedJob._id}
+                                 updatedProposal= {setProposals}
+                              />
                               <WithDraw 
                                  proposalId= {proposal?._id}
                                  updatedProposal= {setProposals}

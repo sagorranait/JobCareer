@@ -14,7 +14,7 @@ const WithDraw = ({ proposalId, updatedProposal }) => {
      await axios.delete(`/api/proposals/delete?id=${proposalId}`)
      .then((res) => {
       if (res.statusText === "OK") {
-         toast.success('Successfully Withdrew!')
+         toast.success('Successfully Withdrew!');
          updatedProposal((preProposals)=> preProposals.filter(proposal => proposal._id !== proposalId));
          setLoading(false);
          closeModal();
