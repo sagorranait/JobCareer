@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Dialog, Transition } from '@headlessui/react';
 import { useForm } from 'react-hook-form';
 
-function UserImage({ id, name, url, edited }) {
+function UserImage({ id, name, url, available, edited }) {
    const [photo, setPhoto] = useState(null);
    const [isOpen, setIsOpen] = useState(false);
    const [loading, setLoading] = useState(false);
@@ -74,7 +74,7 @@ function UserImage({ id, name, url, edited }) {
             <div 
                className='w-[112px] h-[112px] bg-silver border-[1px] border-primary rounded-full flex items-center justify-center text-5xl font-semibold' 
             >
-               {name[0]}
+               S
             </div> : 
                <Image
                   alt={name}
@@ -84,7 +84,10 @@ function UserImage({ id, name, url, edited }) {
                   className="rounded-full object-cover object-top border-[1px] border-primary"
                />
             }
+            {available === 'false' ? 
+            <div className="w-4 h-4 bg-silver border-[2px] border-white rounded-full absolute bottom-2 right-2"/>:
             <div className="w-4 h-4 bg-primary border-[2px] border-white rounded-full absolute bottom-2 right-2"/>
+            }
             {edited && 
                <button  
                   type="button"

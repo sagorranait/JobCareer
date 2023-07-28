@@ -10,52 +10,33 @@ import UserImage from '@/components/profile/UserImage';
 import UserStatus from '@/components/profile/UserStatus';
 import { toast } from 'react-hot-toast';
 
-const profile = ({ data, plength, url, loading }) => {
-   const { 
-      _id,
-      type,
-      about, 
-      hourly, 
-      imgURL, 
-      address, 
-      available,
-      username,
-      designation
-   } = data;
+const profile = ({ data, plength, loading }) => {
    const [isShow, setIsShow] = useState(false);
+   const [userData, setUserData] = useState(data);
    const { register, handleSubmit } = useForm();
 
-  const profileUpdateHandler = async (data) => {
-      axios.patch(`/api/user/update?userId=${_id}`, data)
-      .then(res => {
-         console.log(res);
-         if (res.statusText === "OK") {
-            toast.success('Successfully Updated!');
-            setIsShow(!isShow);
-         }
-      })
-      .catch(error => {
-         console.log(error);
-         toast.error(`${error}`)
-       });
-
-      // await fetch(`http://${url}/api/user/update?id=${_id}`, {
-      //    method: 'PATCH', 
-      //    body: JSON.stringify(data),
-      //    headers: {
-      //       "Content-Type": "application/json",
-      //    },
-      // })
-      // .then(res => {
-      //    if (res.ok) {
-      //       toast.success('Successfully Updated!')
-      //       setIsShow(true);
-      //    }
-      // })
-      // .catch(error => {
-      //    console.log(error);
-      //    toast.error(`${error}`)
-      // });
+  const profileUpdateHandler = async (data) => {  
+   axios.patch(`/api/user/update?userId=${userData?._id}`, data)
+   .then(res => {
+      if (res.statusText === "OK") {
+         setUserData(preData =>{
+            return { 
+               ...preData, 
+               about: data.about,
+               hourly: data.hourly,
+               address: data.address,
+               available: data.available,
+               designation: data.designation,
+            }
+         });
+         toast.success('Successfully Updated!');
+         setIsShow(!isShow);
+      }
+   })
+   .catch(error => {
+      console.log(error);
+      toast.error(`${error}`)
+   });
   }
 
   return (
@@ -68,10 +49,10 @@ const profile = ({ data, plength, url, loading }) => {
             { !loading ? 
                <div className="w-11/12 mt-24 mb-3 p-3 md:mt-32 lg:mb-0 lg:w-10/12 lg:p-8 xl:mt-0 xl:w-2/3 border border-silver rounded-xl">
                   <div className="flex items-center flex-col justify-center gap-5 lg:items-start lg:justify-start lg:flex-row lg:gap-14 xl:gap-20">
-                     <UserImage id={_id} name={username} url={imgURL} edited={isShow}/>
+                     <UserImage id={userData?._id} name={userData?.username} url={userData?.imgURL} available={userData?.available} edited={isShow}/>
                      <form className="flex-1" onSubmit={handleSubmit(profileUpdateHandler)}>
                         <div className='flex items-center justify-between pb-2.5 flex-col gap-3 md:flex-row md:px-20 lg:gap-0 lg:flex-row lg:px-0'>
-                           <h2 className='text-xl lg:text-2xl font-medium'>{username}</h2>
+                           <h2 className='text-xl lg:text-2xl font-medium'>{userData?.username}</h2>
                            <div>
                               {isShow ? <button 
                               className="text-white bg-primary focus:ring-0 focus:outline-none font-medium rounded-full text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
@@ -94,12 +75,12 @@ const profile = ({ data, plength, url, loading }) => {
                                  name='designation' 
                                  placeholder='Tagline'
                                  {...register("designation")}
-                                 defaultValue={designation || ''}
+                                 defaultValue={userData?.designation || ''}
                                  className="border border-silver text-base rounded-lg focus:outline-primary focus:ring-primary focus:border-primary p-1 px-2"
                               /> :
-                              designation === null ? 
+                              userData?.designation === null ? 
                               <p className='text-base'>Add your designation</p> :
-                              <p className='text-base'>{designation}</p>                           
+                              <p className='text-base'>{userData?.designation}</p>                           
                               }
                            </div>
                            <div>
@@ -109,12 +90,12 @@ const profile = ({ data, plength, url, loading }) => {
                                  name='hourly' 
                                  placeholder='Hourly Rate' 
                                  {...register("hourly")}
-                                 defaultValue={hourly || ''}
+                                 defaultValue={userData?.hourly || ''}
                                  className="w-32 border border-silver rounded-lg focus:outline-primary focus:ring-primary focus:border-primary p-1 px-2"
                               /> .00/hr</p> :
-                              hourly === null ?
+                              userData?.hourly === null ?
                               <p className='text-base'>Add your hourly price</p> :
-                              <p className='text-base'>$ {hourly}.00/hr</p>
+                              <p className='text-base'>$ {userData?.hourly}.00/hr</p>
                               }
                            </div>
                            <div>
@@ -123,13 +104,13 @@ const profile = ({ data, plength, url, loading }) => {
                                  type="text" 
                                  name='address' 
                                  placeholder='Location'
-                                 defaultValue={address || ''}
+                                 defaultValue={userData?.address || ''}
                                  {...register("address")}
                                  className="border border-silver text-base rounded-lg focus:outline-primary focus:ring-primary focus:border-primary p-1 px-2"
                               /> :
-                              address === null ?
+                              userData?.address === null ?
                               <p className='text-base'>Add your  address</p> :
-                              <p className='text-base'>{address}</p>
+                              <p className='text-base'>{userData?.address}</p>
                               }
                            </div>
                            <div>
@@ -137,8 +118,8 @@ const profile = ({ data, plength, url, loading }) => {
                               <p className='text-base'>
                                  <span 
                                     className='border border-silver p-1 px-3 rounded-full text-sm mr-2 disabled:bg-silver/20 disabled:text-[#d9d9d9]' 
-                                    disabled={!available}
-                                 >Available Now</span> 
+                                    disabled={!userData?.available}
+                                 >{userData?.available === 'false' ? 'Unavailable' : 'Available Now'}</span> 
                                  <select 
                                     className="border border-silver rounded-lg focus:ring-0 outline-none" 
                                     name="available"
@@ -151,9 +132,9 @@ const profile = ({ data, plength, url, loading }) => {
                               <p className='text-base'>
                                  <span 
                                     className='border border-silver p-1 px-3 rounded-full text-sm mr-2 disabled:bg-silver/20 disabled:text-[#d9d9d9]' 
-                                    disabled={!available}
-                                 >Available Now</span> 
-                                 {available ? '' : 'off'}
+                                    disabled={!userData?.available}
+                                 >{userData?.available === 'false' ? 'Unavailable' : 'Available Now'}</span> 
+                                 {userData?.available === 'false' ? '' : 'off'}
                               </p>
                               }
                            </div>
@@ -168,16 +149,16 @@ const profile = ({ data, plength, url, loading }) => {
                               id="description" 
                               rows="6"
                               {...register("about")}
-                              defaultValue={about || ''}
+                              defaultValue={userData?.about || ''}
                               maxLength={500}
                            ></textarea> : 
-                           about === null ?
+                           userData?.about === null ?
                            <p className='text-sm md:text-base lg:text-base'>Tell us about you shortly...</p> :
-                           <p className='text-sm md:text-base lg:text-base'>{about}</p> 
+                           <p className='text-sm md:text-base lg:text-base'>{userData?.about}</p> 
                            }
                         </div>
                         <div className='pt-8 lg:pt-12 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-3'>
-                           {type === 'client' ? 
+                           {userData?.type === 'client' ? 
                            <UserStatus title='Job' value='2'/> :
                            <UserStatus title='Proposals' value={plength}/>
                            }
@@ -215,7 +196,7 @@ export async function getServerSideProps({ req }){
           const res = await fetch(`http://${baseUrl}/api/proposals/${data._id}`);
           const proposals = await res.json();
           loading = false;
-          return { props: { data, plength: proposals.length, url: baseUrl, loading } };
+          return { props: { data, plength: proposals.length, loading } };
         }
       } catch (error) {
         console.error(error);
