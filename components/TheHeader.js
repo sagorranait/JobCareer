@@ -5,6 +5,7 @@ const TheHeader = () => {
   return (
     <>
       <Head>
+        <title>JobCareer - The World’s Work Marketplace</title>
         <meta name="description" content="The World’s Work Marketplace." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.png" />

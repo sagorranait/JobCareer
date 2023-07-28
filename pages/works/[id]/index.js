@@ -5,8 +5,10 @@ import { getUser } from "@/features";
 import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import TheDivArea from "@/components/TheDivArea";
+import { BsCheckAll } from "react-icons/bs";
 
-const WorkDetails = ({ jobData }) => {
+
+const WorkDetails = ({ jobData, jobId }) => {
    const user = useSelector(getUser);
    const {
       _id,
@@ -61,12 +63,24 @@ const WorkDetails = ({ jobData }) => {
                </div>
                <div className="rightArea w-full lg:w-auto">
                   <div className="workAction border-b border-silver p-3 lg:p-6">
-                     { user?.connects === '0' ? 
-                        <button 
-                           onClick={()=>toast.error("You don't have enough coins to apply.")} 
-                           className="bg-primary text-white font-medium px-6 py-2 rounded-full w-full mb-5 lg:mb-10 inline-block text-center">
-                           Apply Now
-                        </button> : 
+                     { (user?.connects === '0' || jobId === _id) ? 
+                        <>
+                           <button 
+                              onClick={()=>{
+                                 if (jobId === _id) {
+                                    toast.success("Already applied.");               
+                                 }else{
+                                    toast.error("You don't have enough coins to apply.");
+                                 }
+                              }} 
+                              className="bg-primary text-white font-medium px-6 py-2 rounded-full w-full mb-4 lg:mb-4 inline-block text-center">
+                              Apply Now
+                           </button>
+                           { jobId === _id && <p className="flex items-center gap-1 mb-2">
+                              <BsCheckAll className="text-xl text-[#49e1fb]"/>
+                              <span className="font-medium text-[#49e1fb]">Applied</span>
+                           </p> }                           
+                        </>:
                         <Link
                            href={`/works/${_id}/apply`} 
                            className="bg-primary text-white font-medium px-6 py-2 rounded-full w-full mb-5 lg:mb-10 inline-block text-center"
@@ -121,10 +135,14 @@ export async function getServerSideProps({ req, query }) {
    const baseUrl = req.headers.host;
    const singleJob = await fetch(`http://${baseUrl}/api/jobs/${id}`);
    const data = await singleJob.json();
+   // Get Proposals by the JobId
+   const jobId = await fetch(`http://${baseUrl}/api/proposals?jobId=${id}`);
+   const result = await jobId.json();
 
    return {
       props: {
-         jobData: data[0]
+         jobData: data[0],
+         jobId: result[0]?.jobId || 0,
       },
     };
 }
