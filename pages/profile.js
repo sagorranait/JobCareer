@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import axios from 'axios';
 import Head from "next/head";
+import { useState } from 'react';
 import { getSession } from 'next-auth/react';
 
 import { useForm } from "react-hook-form";
@@ -7,8 +8,9 @@ import TheDivArea from "@/components/TheDivArea";
 import ProfileSkeleton from '@/components/skeleton/ProfileSkeleton';
 import UserImage from '@/components/profile/UserImage';
 import UserStatus from '@/components/profile/UserStatus';
+import { toast } from 'react-hot-toast';
 
-const profile = ({ data, plength, url }) => {
+const profile = ({ data, plength, url, loading }) => {
    const { 
       _id,
       type,
@@ -21,31 +23,39 @@ const profile = ({ data, plength, url }) => {
       designation
    } = data;
    const [isShow, setIsShow] = useState(false);
-   const [loading, setLoading] = useState(true);
    const { register, handleSubmit } = useForm();
 
-  useEffect(() => {
-    setLoading(false);
-  }, []);
-
   const profileUpdateHandler = async (data) => {
-      await fetch(`http://${url}/api/user/update?id=${_id}`, {
-         method: 'PATCH', 
-         body: JSON.stringify(data),
-         headers: {
-            "Content-Type": "application/json",
-         },
-      })
+      axios.patch(`/api/user/update?userId=${_id}`, data)
       .then(res => {
-         if (res.ok) {
-            toast.success('Successfully Updated!')
-            setIsShow(true);
+         console.log(res);
+         if (res.statusText === "OK") {
+            toast.success('Successfully Updated!');
+            setIsShow(!isShow);
          }
       })
       .catch(error => {
          console.log(error);
          toast.error(`${error}`)
-      });
+       });
+
+      // await fetch(`http://${url}/api/user/update?id=${_id}`, {
+      //    method: 'PATCH', 
+      //    body: JSON.stringify(data),
+      //    headers: {
+      //       "Content-Type": "application/json",
+      //    },
+      // })
+      // .then(res => {
+      //    if (res.ok) {
+      //       toast.success('Successfully Updated!')
+      //       setIsShow(true);
+      //    }
+      // })
+      // .catch(error => {
+      //    console.log(error);
+      //    toast.error(`${error}`)
+      // });
   }
 
   return (
@@ -81,9 +91,9 @@ const profile = ({ data, plength, url }) => {
                               { isShow ? 
                               <input 
                                  type="text" 
-                                 name='tagline' 
+                                 name='designation' 
                                  placeholder='Tagline'
-                                 {...register("tagline")}
+                                 {...register("designation")}
                                  defaultValue={designation || ''}
                                  className="border border-silver text-base rounded-lg focus:outline-primary focus:ring-primary focus:border-primary p-1 px-2"
                               /> :
@@ -96,9 +106,9 @@ const profile = ({ data, plength, url }) => {
                               { isShow ?  
                               <p className='text-base'>$ <input 
                                  type="number" 
-                                 name='hourlyrate' 
+                                 name='hourly' 
                                  placeholder='Hourly Rate' 
-                                 {...register("hourlyrate")}
+                                 {...register("hourly")}
                                  defaultValue={hourly || ''}
                                  className="w-32 border border-silver rounded-lg focus:outline-primary focus:ring-primary focus:border-primary p-1 px-2"
                               /> .00/hr</p> :
@@ -111,10 +121,10 @@ const profile = ({ data, plength, url }) => {
                               { isShow ? 
                               <input 
                                  type="text" 
-                                 name='location' 
+                                 name='address' 
                                  placeholder='Location'
                                  defaultValue={address || ''}
-                                 {...register("location")}
+                                 {...register("address")}
                                  className="border border-silver text-base rounded-lg focus:outline-primary focus:ring-primary focus:border-primary p-1 px-2"
                               /> :
                               address === null ?
@@ -125,10 +135,10 @@ const profile = ({ data, plength, url }) => {
                            <div>
                               { isShow ? 
                               <p className='text-base'>
-                                 <button 
+                                 <span 
                                     className='border border-silver p-1 px-3 rounded-full text-sm mr-2 disabled:bg-silver/20 disabled:text-[#d9d9d9]' 
-                                    disabled
-                                 >Available Now</button> 
+                                    disabled={!available}
+                                 >Available Now</span> 
                                  <select 
                                     className="border border-silver rounded-lg focus:ring-0 outline-none" 
                                     name="available"
@@ -139,10 +149,10 @@ const profile = ({ data, plength, url }) => {
                               </select>
                               </p> :
                               <p className='text-base'>
-                                 <button 
+                                 <span 
                                     className='border border-silver p-1 px-3 rounded-full text-sm mr-2 disabled:bg-silver/20 disabled:text-[#d9d9d9]' 
                                     disabled={!available}
-                                 >Available Now</button> 
+                                 >Available Now</span> 
                                  {available ? '' : 'off'}
                               </p>
                               }
@@ -154,10 +164,10 @@ const profile = ({ data, plength, url }) => {
                            { isShow ? 
                            <textarea 
                               className="w-full border border-silver p-3 rounded-lg focus:ring-0 outline-none text-sm lg:text-base" 
-                              name="description" 
+                              name="about" 
                               id="description" 
                               rows="6"
-                              {...register("description")}
+                              {...register("about")}
                               defaultValue={about || ''}
                               maxLength={500}
                            ></textarea> : 
@@ -187,6 +197,7 @@ const profile = ({ data, plength, url }) => {
 }
 
 export async function getServerSideProps({ req }){
+   let loading = false;
    const session = await getSession({ req })
    const email = session.user?.email;
  
@@ -196,19 +207,24 @@ export async function getServerSideProps({ req }){
 
    if (email) {
       const baseUrl = req.headers.host;
-      const res = await fetch(`http://${baseUrl}/api/user/${email}`);
-      const data = await res.json();
-      if (data._id) {
-         const res = await fetch(`http://${baseUrl}/api/proposals/${data._id}`);
-         const proposals = await res.json();
- 
-         return { props: { data, plength: proposals.length, url: baseUrl } }
+      loading = true;
+      try {
+        const response = await fetch(`http://${baseUrl}/api/user/${email}`);
+        const data = await response.json();
+        if (data._id) {
+          const res = await fetch(`http://${baseUrl}/api/proposals/${data._id}`);
+          const proposals = await res.json();
+          loading = false;
+          return { props: { data, plength: proposals.length, url: baseUrl, loading } };
+        }
+      } catch (error) {
+        console.error(error);
       }
-   } else {
+    } else {
       console.error('Email not found in session');
-      return { props: { session } }
-   }
- 
+    }
+  
+    return { props: { session, loading } };
 }
 
 export default profile
