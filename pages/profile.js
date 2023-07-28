@@ -13,7 +13,7 @@ import { toast } from 'react-hot-toast';
 const profile = ({ data, plength, loading }) => {
    const [isShow, setIsShow] = useState(false);
    const [userData, setUserData] = useState(data);
-   const { register, handleSubmit } = useForm();
+   const { register, formState: { errors }, handleSubmit } = useForm();
 
   const profileUpdateHandler = async (data) => {  
    axios.patch(`/api/user/update?userId=${userData?._id}`, data)
@@ -72,11 +72,11 @@ const profile = ({ data, plength, loading }) => {
                               { isShow ? 
                               <input 
                                  type="text" 
-                                 name='designation' 
-                                 placeholder='Tagline'
-                                 {...register("designation")}
+                                 name='designation'
+                                 placeholder={errors.designation?.type !== 'required' ? 'Tagline' : 'Tagline is required !'}
+                                 {...register("designation", { required: true })}
                                  defaultValue={userData?.designation || ''}
-                                 className="border border-silver text-base rounded-lg focus:outline-primary focus:ring-primary focus:border-primary p-1 px-2"
+                                 className={`border border-silver text-base ${errors.designation?.type !== 'required' ? 'focus:outline-primary focus:ring-primary focus:border-primary' : 'focus:outline-red focus:ring-red focus:border-red'} rounded-lg p-1 px-2`}
                               /> :
                               userData?.designation === null ? 
                               <p className='text-base'>Add your designation</p> :
@@ -87,11 +87,11 @@ const profile = ({ data, plength, loading }) => {
                               { isShow ?  
                               <p className='text-base'>$ <input 
                                  type="number" 
-                                 name='hourly' 
-                                 placeholder='Hourly Rate' 
-                                 {...register("hourly")}
+                                 name='hourly'
+                                 placeholder={errors.hourly?.type !== 'required' ? 'Hourly Rate' : 'Hourly Rate is required !'}
+                                 {...register("hourly", { required: true })}
                                  defaultValue={userData?.hourly || ''}
-                                 className="w-32 border border-silver rounded-lg focus:outline-primary focus:ring-primary focus:border-primary p-1 px-2"
+                                 className={`w-32 border border-silver rounded-lg ${errors.hourly?.type !== 'required' ? 'focus:outline-primary focus:ring-primary focus:border-primary' : 'focus:outline-red focus:ring-red focus:border-red'} p-1 px-2`}
                               /> .00/hr</p> :
                               userData?.hourly === null ?
                               <p className='text-base'>Add your hourly price</p> :
@@ -102,11 +102,11 @@ const profile = ({ data, plength, loading }) => {
                               { isShow ? 
                               <input 
                                  type="text" 
-                                 name='address' 
-                                 placeholder='Location'
+                                 name='address'
+                                 placeholder={errors.address?.type !== 'required' ? 'Location' : 'Location is required !'}
                                  defaultValue={userData?.address || ''}
-                                 {...register("address")}
-                                 className="border border-silver text-base rounded-lg focus:outline-primary focus:ring-primary focus:border-primary p-1 px-2"
+                                 {...register("address", { required: true })}
+                                 className={`border border-silver text-base rounded-lg ${errors.address?.type !== 'required' ? 'focus:outline-primary focus:ring-primary focus:border-primary' : 'focus:outline-red focus:ring-red focus:border-red'} p-1 px-2`}
                               /> :
                               userData?.address === null ?
                               <p className='text-base'>Add your  address</p> :
@@ -148,7 +148,8 @@ const profile = ({ data, plength, loading }) => {
                               name="about" 
                               id="description" 
                               rows="6"
-                              {...register("about")}
+                              placeholder={errors.about?.type !== 'required' ? 'Description' : 'Description is required !'}
+                              {...register("about", { required: true })}
                               defaultValue={userData?.about || ''}
                               maxLength={500}
                            ></textarea> : 
