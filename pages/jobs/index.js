@@ -1,18 +1,17 @@
+import axios from "axios";
 import Link from "next/link";
 import Head from "next/head";
-import TheDivArea from "@/components/TheDivArea";
-import { getSession } from "next-auth/react";
-import { useSelector } from "react-redux";
 import { getUser } from "@/features";
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { getSession } from "next-auth/react";
+import TheDivArea from "@/components/TheDivArea";
 import ProposalSkleton from "@/components/skeleton/ProposalSkleton";
 
 const jobs = () => {
   const user = useSelector(getUser);
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [proposals, setProposals] = useState();
 
   useEffect(() => {
    const getProposal = async () => {
@@ -45,29 +44,29 @@ const jobs = () => {
                </h3>
             }
             {
-                  loading ? 
-                  <>
-                     <ProposalSkleton />
-                     <ProposalSkleton />
-                     <ProposalSkleton />
-                     <ProposalSkleton />
-                  </>
-                  :
-                  jobs.map((job) => 
-                  <div className="flex items-center justify-center lg:justify-between border-b border-silver pb-4 mb-4 flex-wrap md:flex-col lg:flex-row lg:gap-4">
-                     <p className="text-axolotl">Initiated {job?.date}</p>
-                     <Link href={`/works/${job?._id}`} className="w-96 text-primary hover:underline font-medium text-center py-2 lg:text-left lg:py-0">
-                        {job?.title}
+               loading ? 
+               <>
+                  <ProposalSkleton />
+                  <ProposalSkleton />
+                  <ProposalSkleton />
+                  <ProposalSkleton />
+               </>
+               :
+               jobs.map((job) => 
+               <div key={job?._id} className="flex items-center justify-center lg:justify-between border-b border-silver pb-4 mb-4 flex-wrap md:flex-col lg:flex-row lg:gap-4">
+                  <p className="text-axolotl">Initiated {job?.date}</p>
+                  <Link href={`/works/${job?._id}`} className="w-96 text-primary hover:underline font-medium text-center py-2 lg:text-left lg:py-0">
+                     {job?.title}
+                  </Link>
+                  <p className="w-28 text-sm text-axolotl">Budget: ${job?.budget}</p>
+                  <div className="pt-1 pl-1 md:pt-3 lg:pt-0">
+                     <Link 
+                        href={`/jobs/proposals/${job?._id}`} 
+                        className="bg-primary text-white font-medium px-6 py-2 rounded-full block">
+                           Proposals
                      </Link>
-                     <p className="w-28 text-sm text-axolotl">Budget: ${job?.budget}</p>
-                     <div className="pt-1 pl-1 md:pt-3 lg:pt-0">
-                        <Link 
-                           href={`/jobs/proposals/${job?._id}`} 
-                           className="bg-primary text-white font-medium px-6 py-2 rounded-full block">
-                              Proposals
-                        </Link>
-                     </div>
                   </div>
+               </div>
             )}
          </div>
          </TheDivArea>
