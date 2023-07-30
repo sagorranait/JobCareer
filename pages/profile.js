@@ -10,7 +10,7 @@ import UserImage from '@/components/profile/UserImage';
 import UserStatus from '@/components/profile/UserStatus';
 import { toast } from 'react-hot-toast';
 
-const profile = ({ data, plength, loading }) => {
+const profile = ({ data, plength, loading, jobLenght }) => {
    const [isShow, setIsShow] = useState(false);
    const [userData, setUserData] = useState(data);
    const { register, formState: { errors }, handleSubmit } = useForm();
@@ -95,7 +95,7 @@ const profile = ({ data, plength, loading }) => {
                               /> .00/hr</p> :
                               userData?.hourly === null ?
                               <p className='text-base'>Add your hourly price</p> :
-                              <p className='text-base'>$ {userData?.hourly}.00/hr</p>
+                              <p className='text-base'>$ {userData?.hourly ? userData?.hourly : '0'}.00/hr</p>
                               }
                            </div>
                            <div>
@@ -153,14 +153,16 @@ const profile = ({ data, plength, loading }) => {
                               defaultValue={userData?.about || ''}
                               maxLength={500}
                            ></textarea> : 
-                           userData?.about === null ?
-                           <p className='text-sm md:text-base lg:text-base'>Tell us about you shortly...</p> :
+                           !userData?.about ?
+                           <p className='text-sm md:text-base lg:text-base text-axolotl'>
+                              Tell us about you shortly, By edit your profile.
+                           </p> :
                            <p className='text-sm md:text-base lg:text-base'>{userData?.about}</p> 
                            }
                         </div>
                         <div className='pt-8 lg:pt-12 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-3'>
                            {userData?.type === 'client' ? 
-                           <UserStatus title='Job' value='2'/> :
+                           <UserStatus title='Jobs' value={jobLenght}/> :
                            <UserStatus title='Proposals' value={plength}/>
                            }
                            <UserStatus title='Invited' value='5'/>
@@ -181,7 +183,7 @@ const profile = ({ data, plength, loading }) => {
 export async function getServerSideProps({ req }){
    let loading = false;
    const session = await getSession({ req })
-   const email = session.user?.email;
+   const email = session?.user?.email;
  
    if(!session) {
      return { redirect : { destination: '/signin', permanent: false } }
@@ -194,10 +196,17 @@ export async function getServerSideProps({ req }){
         const response = await fetch(`http://${baseUrl}/api/user/${email}`);
         const data = await response.json();
         if (data._id) {
-          const res = await fetch(`http://${baseUrl}/api/proposals/${data._id}`);
-          const proposals = await res.json();
-          loading = false;
-          return { props: { data, plength: proposals.length, loading } };
+         if (data.type === 'client') {
+            const res = await fetch(`http://${baseUrl}/api/jobs?userId=${data._id}`);
+            const jobs = await res.json();
+            loading = false;
+            return { props: { data, jobLenght: jobs.length, loading } };            
+         }else{
+            const res = await fetch(`http://${baseUrl}/api/proposals/${data._id}`);
+            const proposals = await res.json();
+            loading = false;
+            return { props: { data, plength: proposals.length, loading } };
+         }
         }
       } catch (error) {
         console.error(error);

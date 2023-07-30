@@ -18,7 +18,7 @@ const TheMenu = () => {
  useEffect(() => {
    const fetchData = async () => {
      if (session) {
-       const email = session.user?.email;
+       const email = session?.user?.email;
        if (email) {
          await fetch(`/api/user/${email}`)
          .then((res) => res.json())
@@ -71,10 +71,12 @@ const TheMenu = () => {
             }
             <Menu as="div" className="relative text-left hidden lg:inline-block">
                <div className='flex items-center gap-3'>
+                  {!user?.type === 'client' &&
                   <div className='coins bg-primary flex items-center w-20 p-1 rounded-full gap-3'>
                      <Image src={Coins} alt='Coins' className='w-6 pl-1' />
                      <span className='text-white font-bold text-lg'>{user?.connects}</span>
                   </div>
+                  }
                   <Menu.Button className="inline-flex items-center w-14 justify-center py-2 focus:outline-none focus-visible:ring-0 focus-visible:ring-white focus-visible:ring-opacity-75">
                      {
                         loading === 'loading' ? 
