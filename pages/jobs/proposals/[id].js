@@ -6,12 +6,9 @@ import TheDivArea from "@/components/TheDivArea";
 import { getSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import ProposalSkleton from '@/components/skeleton/ProposalSkleton';
-import { useSelector } from 'react-redux';
-import { getUser } from '@/features';
 
 const proposals = () => {
    const router = useRouter();
-   const user = useSelector(getUser);
    const openModal = () => setIsOpen(true);
    const closeModal = () => setIsOpen(false);
    const [isOpen, setIsOpen] = useState(false);

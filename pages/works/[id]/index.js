@@ -89,7 +89,7 @@ const WorkDetails = ({ jobData, jobId }) => {
                         </Link>
                      }                                          
                      <p className="pb-2">Send a proposal for: 4 Connects</p>
-                     <p className="text-black">Available Connects: {user?.connects}</p>
+                     <p className="text-black">Available Connects: {user?.connects || 0}</p>
                   </div>
                   <div className="aboutClient border-b border-silver p-3 lg:p-6">
                      <h3 className="text-base font-medium pb-3">About the client</h3>
@@ -133,15 +133,16 @@ export default WorkDetails;
 export async function getServerSideProps({ req, query }) {
    const { id } = query;
    const baseUrl = req.headers.host;
-   const singleJob = await fetch(`http://${baseUrl}/api/jobs/${id}`);
-   const data = await singleJob.json();
+   const singleJob = await fetch(`http://${baseUrl}/api/jobs?id=${id}`);
+   const datas = await singleJob.json();
+   const jobResult = datas.filter(data => data._id === id);
    // Get Proposals by the JobId
    const jobId = await fetch(`http://${baseUrl}/api/proposals?jobId=${id}`);
    const result = await jobId.json();
 
    return {
       props: {
-         jobData: data[0],
+         jobData: jobResult[0],
          jobId: result[0]?.jobId || 0,
       },
     };

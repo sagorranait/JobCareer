@@ -2,7 +2,7 @@ import DB, { jobs } from '@/database/connection';
 const { ObjectId } = require('mongodb');
 
 export default async function jobIdHandler(req, res) {
-   const jobId = new ObjectId(req.query.id);
+   const { id } = req.query;
    const userId = req.query.userId;
 
    try {
@@ -12,10 +12,11 @@ export default async function jobIdHandler(req, res) {
      if (userId) {
        const getJob = await jobs.find({ userId: userId }).toArray();
        res.status(200).json(getJob);      
-     }else{
-       const getJob = await jobs.find({ _id: jobId }).toArray();
-       res.status(200).json(getJob);
      }
+
+      const getJob = await jobs.find({ _id: new ObjectId(id) }).toArray();
+      res.status(200).json(getJob);
+     
    } catch (error) {
      res.status(500).json({ error: 'Connection Failed...!' });
    }

@@ -1,22 +1,36 @@
-import { useRef, useState } from "react";
+import axios from "axios";
 import Head from "next/head";
-import TheDivArea from "@/components/TheDivArea";
+import { getUser } from "@/features";
+import { useRouter } from "next/router";
+import { toast } from "react-hot-toast";
+import { useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import { getSession } from "next-auth/react";
+import TheDivArea from "@/components/TheDivArea";
 
 const newjob = () => {
+   const router = useRouter();
    const skillRef = useRef(null);
+   const user = useSelector(getUser);
    const [skills, setSkills] = useState([]);
-   const [inputLength, setInputLength] = useState({title: '', description: '', skill: 0});
+   const [loading, setLoading] = useState(false);
+   const { register, formState: { errors }, handleSubmit } = useForm();
+   const [inputLength, setInputLength] = useState({
+      title: '', 
+      description: '', 
+      skills: 0
+   });
 
    const skillsHandler = (event) => {
       if (event.key === 'Tab') {
          event.preventDefault();
-         if (inputLength.skill > 4) return;
+         if (inputLength.skills > 4) return;
 
          const newSkill = event.target.value.trim();
          if (newSkill !== '') {
             setSkills(prevSkills => [...prevSkills, newSkill]);
-            setInputLength({ ...inputLength, skill: skills.length+1 });
+            setInputLength({ ...inputLength, skills: skills.length+1 });
          }
          event.target.value = '';
          skillRef.current;
@@ -36,7 +50,44 @@ const newjob = () => {
    const removeSkillHandler = (skill) => {
       const fillterSkills = skills.filter(item => item !== skill);
       setSkills(fillterSkills);
-      setInputLength({ ...inputLength, skill: fillterSkills.length });
+      setInputLength({ ...inputLength, skills: fillterSkills.length });
+   }
+
+   function getCurrentDate() {
+      const currentDate = new Date();
+      const day = String(currentDate.getDate()).padStart(2, '0');
+      const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+      const year = currentDate.getFullYear();
+    
+      return `${day}-${month}-${year}`;
+    }
+    
+
+   const onNewWork = async (data) => {
+      setLoading(true);
+      if (skills.length === 0) {
+         toast.error("Add at least 5 skills.");
+         return;
+      }
+
+      const submittedData = {
+         ...data,
+         skills,
+         date: getCurrentDate(),
+         userId: user?.id
+      };
+
+      await axios.post('/api/jobs/create', submittedData)
+      .then( async (res) => {
+         if (res.statusText === "OK") { 
+            toast.success('New job created successfully.');
+            setLoading(false);
+            router.push('/jobs');
+         }
+      })
+      .catch(error => {
+       console.log(error);
+      });
    }
 
   return (
@@ -49,29 +100,31 @@ const newjob = () => {
             <div className="w-11/12 p-3 lg:w-3/5 xl:w-1/2 lg:p-8 lg:pt-6 border border-silver rounded-xl text-center mt-28 lg:mt-[68px]  xl:mt-14">
                <h2 className="text-2xl lg:text-3xl font-bold leading-relaxed">Provide a New Job</h2>
                <p className="hidden md:block">Fill out all the fields with your dream project.</p>
-               <form className="pt-6">
+               <form onSubmit={handleSubmit(onNewWork)} className="pt-6">
                   <div className="text-left">
                      <label htmlFor="title" className="pl-1 mb-2 flex items-center justify-between">
                         <span>Job Title *</span>
                         <span className="pr-2 text-sm text-axolotl font-medium">{inputLength.title.length}/50</span>
                      </label>
                      <input 
-                        className="w-full border border-silver px-3 py-2 lg:p-3 rounded-lg focus:ring-0 outline-none"
+                        className={`w-full border border-silver ${errors.title?.type !== 'required' ? 'focus:border-silver' : 'focus:border-red'} px-3 py-2 lg:p-3 rounded-lg focus:ring-0 outline-none`}
                         type="text" 
                         id="title" 
                         name="title" 
-                        placeholder="Enter your job title." 
+                        placeholder={errors.title?.type !== 'required' ? 'Enter your job title.' : 'Title is required !'}
+                        {...register("title", { required: true })}
                         onChange={titleHandler}
                         maxLength={50}
                      />
                   </div>
                   <div className="flex items-center gap-5 mt-5">
                      <div className="text-left w-1/2 relative">
-                        <label htmlFor="btype" className="pl-1 mb-2 block">Budget Type *</label>
+                        <label htmlFor="budgetType" className="pl-1 mb-2 block">Budget Type *</label>
                         <select 
-                           className="w-full border border-silver px-3 py-2 lg:p-3 rounded-lg focus:ring-0 outline-none appearance-none" 
-                           name="btype" 
-                           id="btype"
+                           className={`w-full border border-silver ${errors.budgetType?.type !== 'required' ? 'focus:border-silver' : 'focus:border-red'} px-3 py-2 lg:p-3 rounded-lg focus:ring-0 outline-none appearance-none`}
+                           name="budgetType" 
+                           id="budgetType"
+                           {...register("budgetType", { required: true })}
                         >
                            <option value="fixed" defaultChecked>Fixed Price</option>
                            <option value="hourly">Hourly Price</option>
@@ -90,11 +143,12 @@ const newjob = () => {
                      <div className="text-left w-1/2">
                         <label htmlFor="budget" className="pl-1 mb-2 block">Budget *</label>
                         <input 
-                           className="w-full border border-silver px-3 py-2 lg:p-3 rounded-lg focus:ring-0 outline-none"
+                           className={`w-full border border-silver ${errors.budget?.type !== 'required' ? 'focus:border-silver' : 'focus:border-red'} px-3 py-2 lg:p-3 rounded-lg focus:ring-0 outline-none`}
                            type="number" 
                            id="budget" 
-                           name="budget" 
-                           placeholder="$0 - $1000 or more" 
+                           name="budget"
+                           placeholder={errors.budget?.type !== 'required' ? '$0 - $1000 or more' : 'Budget is required !'}
+                           {...register("budget", { required: true })}
                         />
                      </div>
                   </div>
@@ -104,20 +158,23 @@ const newjob = () => {
                         <span className="pr-2 text-sm text-axolotl font-medium">{inputLength.description.length}/500</span>
                      </label>
                      <textarea 
-                        className="w-full border border-silver px-3 py-2 lg:p-3 rounded-lg focus:ring-0 outline-none" 
+                        className={`w-full border border-silver ${errors.description?.type !== 'required' ? 'focus:border-silver' : 'focus:border-red'} px-3 py-2 lg:p-3 rounded-lg focus:ring-0 outline-none`} 
                         name="description" 
                         id="description" 
                         rows="4"
+                        placeholder={errors.description?.type !== 'required' ? 'Work Description' : 'Description is required !'}
+                        {...register("description", { required: true })}
                         onChange={descriptionHandler}
                         maxLength={500}
                      ></textarea>
                   </div>
                   <div className="text-left relative mt-3">
-                        <label htmlFor="ptype" className="pl-1 mb-2 block">Project Type *</label>
+                        <label htmlFor="projectType" className="pl-1 mb-2 block">Project Type *</label>
                         <select 
-                           className="w-full border border-silver px-3 py-2 lg:p-3 rounded-lg focus:ring-0 outline-none appearance-none" 
-                           name="ptype" 
-                           id="ptype"
+                           className={`w-full border border-silver ${errors.projectType?.type !== 'required' ? 'focus:border-silver' : 'focus:border-red'} px-3 py-2 lg:p-3 rounded-lg focus:ring-0 outline-none appearance-none`} 
+                           name="projectType" 
+                           id="projectType"
+                           {...register("projectType", { required: true })}
                         >
                            <option value="complex">Complex</option>
                            <option value="intermediate">Intermediate</option>
@@ -137,9 +194,9 @@ const newjob = () => {
                   <div className="text-left mt-5">
                      <label htmlFor="description" className="pl-1 mb-2 flex items-center justify-between">
                         <span>Skills and Expertise *</span>
-                        <span className="pr-2 text-sm text-axolotl font-medium">{inputLength.skill}/5</span>
+                        <span className="pr-2 text-sm text-axolotl font-medium">{inputLength.skills}/5</span>
                      </label>
-                     <div className="w-full border border-silver px-3 py-2 lg:p-3 rounded-lg flex items-center gap-2 flex-wrap">
+                     <div className={`w-full border border-silver ${skills.length === 0 ? 'focus:border-silver' : 'focus:border-red'} px-3 py-2 lg:p-3 rounded-lg flex items-center gap-2 flex-wrap`}>
                         <ul className="flex items-center gap-2 flex-wrap">
                            {skills.map((skill, index) => <li 
                               key={index} 
@@ -166,7 +223,7 @@ const newjob = () => {
                               type="text" 
                               id="skills" 
                               name="skills" 
-                              placeholder="Press 'Tab' to add a skill." 
+                              placeholder= "Press 'Tab' to add a skill."
                               onKeyDown={skillsHandler}
                               ref={skillRef}
                            />
@@ -178,7 +235,7 @@ const newjob = () => {
                         data-modal-hide="popup-modal" 
                         type="submit" 
                         className="text-white bg-primary focus:ring-0 focus:outline-none font-medium rounded-full text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
-                        Submit
+                        {loading ? 'Creating...' : 'Create'}
                      </button>
                      <button 
                         data-modal-hide="popup-modal" 

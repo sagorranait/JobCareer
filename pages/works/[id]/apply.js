@@ -175,12 +175,13 @@ export default withAuth(Applied);
 export async function getServerSideProps({ req, query }) {
    const { id } = query;
    const baseUrl = req.headers.host;
-   const singleJob = await fetch(`http://${baseUrl}/api/jobs/${id}`);
-   const data = await singleJob.json();
+   const singleJob = await fetch(`http://${baseUrl}/api/jobs?id=${id}`);
+   const datas = await singleJob.json();
+   const jobResult = datas.filter(data => data._id === id);
 
    return {
       props: {
-         jobBudget: data[0].budget
+         jobBudget: jobResult[0]?.budget
       },
     };
 }
