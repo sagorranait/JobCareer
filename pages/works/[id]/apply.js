@@ -179,6 +179,13 @@ export async function getServerSideProps({ req, query }) {
    const datas = await singleJob.json();
    const jobResult = datas.filter(data => data._id === id);
 
+   // If no job data found, return 404 page
+   if (!jobResult || jobResult.length === 0) {
+      return {
+       notFound: true,
+      };
+   }
+
    return {
       props: {
          jobBudget: jobResult[0]?.budget

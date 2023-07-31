@@ -140,6 +140,13 @@ export async function getServerSideProps({ req, query }) {
    const jobId = await fetch(`http://${baseUrl}/api/proposals?jobId=${id}`);
    const result = await jobId.json();
 
+   // If no job data found, return 404 page
+   if (!jobResult || jobResult.length === 0) {
+      return {
+       notFound: true,
+      };
+   }
+
    return {
       props: {
          jobData: jobResult[0],
