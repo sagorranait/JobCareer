@@ -250,10 +250,12 @@ const TheMenu = () => {
          {/* Responsive Menu */}
          <Menu as="div" className="relative inline-block text-left lg:hidden">
             <div className='flex items-center gap-1'>
+               { user?.type !== 'client' && 
                <div className='coins bg-primary flex items-center w-16 p-1 rounded-full gap-2'>
                   <Image src={Coins} alt='Coins' className='w-5' />
                   <span className='text-white font-bold text-base'>{user?.connects}</span>
                </div>
+               }
                <Menu.Button className="inline-flex w-8 justify-center py-2 focus:outline-none focus-visible:ring-0 focus-visible:ring-white focus-visible:ring-opacity-75">
                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />

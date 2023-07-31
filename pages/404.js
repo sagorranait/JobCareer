@@ -17,7 +17,7 @@ const NotFoundPage = () => {
       </Head>
       <main>
         <TheDivArea>
-          <div>
+          <div className='h-screen flex flex-col items-center justify-center'>
             <Image src={notFoundimage} alt='notFoundimage' width='60%' />
             <div className='flex items-center justify-center gap-5 mt-5'>
               <Link href={prevPage} className="bg-primary text-white font-medium px-4 lg:px-6 py-2 rounded-full">Previous Page</Link>
