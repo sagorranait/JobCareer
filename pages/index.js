@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from "gsap";
 import Head from 'next/head';
 import Image from 'next/image';
@@ -6,10 +6,13 @@ import { BiSearchAlt } from "react-icons/bi";
 import HomeCard from '@/components/HomeCard';
 import HomeTag from '@/components/HomeTag';
 import hero1 from "../assets/hero-01.png";
+import { useRouter } from 'next/router';
 
 const Home = () => {
   const el = useRef();
   const tl2 = useRef();
+  const router = useRouter();
+  const [search, setSearch] = useState('')
   
   useEffect(() => {
     let cards = gsap.utils.toArray(".statCard");
@@ -51,6 +54,15 @@ const Home = () => {
     };
   }, []);  
 
+  const searchHandler = (event) => {
+    event.preventDefault();
+    router.push({
+      pathname: '/works/search',
+      query: { searched: search },
+    });
+    setSearch('')
+  }
+
   return (
     <>
       <Head>
@@ -68,19 +80,20 @@ const Home = () => {
                   Find the perfect <br /> job for you.
                 </h1>
                 <p id='hero-subtitle' className='mt-5 text-lg md:m-auto md:mt-5 xl:m-0 xl:mt-5'>Search your career opportunity through 12,800 jobs.</p>
-                <div id='search-container' className='bg-white rounded-full p-3 flex w-full max-w-xl overflow-hidden mt-5 shadow-lg'>
+                <form onSubmit={searchHandler} id='search-container' className='bg-white rounded-full p-3 flex w-full max-w-xl overflow-hidden mt-5 shadow-lg'>
                   <input
                     className='flex-auto text-lg p-2 border-none outline-none focus:ring-0 w-full xl:w-auto'
                     type='text'
                     name='search'
                     id='search'
-                    placeholder='Job title or Keyword'
-                    onChange={()=>{}}
+                    placeholder='Enter Job title or Keyword'
+                    value={search}
+                    onChange={(e)=>setSearch(e.target.value)}
                   />
-                  <button id='search-button' className='p-2 rounded-full bg-primary h-12 xl:h-14 w-14 grid place-items-center'>
+                  <button type='submit' id='search-button' className='p-2 rounded-full bg-primary h-12 xl:h-14 w-14 grid place-items-center'>
                     <BiSearchAlt size='23' color='white' />
                   </button>
-                </div>
+                </form>
                 <HomeTag/>
               </div>
               <div className='flex flex-col justify-between w-full items-center py-10 gap-8 md:w-3/4 md:m-auto lg:w-[36%] lg:gap-8 lg:py-0 lg:items-end xl:pr-20 xl:w-2/4'>

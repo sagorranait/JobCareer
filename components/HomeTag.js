@@ -8,9 +8,9 @@ const HomeTag = () => {
       <h2 className='badge-container'>Popular Search</h2>
       <div className='mt-3 max-w-xl flex flex-wrap gap-3 justify-center xl:justify-start'>
          {keywords.map((item) => (
-         <Badge key={item} className='badge cursor-pointer'>
-            {item}
-         </Badge>
+            <Badge key={item} className='badge cursor-pointer'>
+               {item}
+            </Badge>
          ))}
       </div>
    </div>
