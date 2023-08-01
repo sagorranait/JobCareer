@@ -7,24 +7,12 @@ import { useSelector } from "react-redux";
 import TheDivArea from "@/components/TheDivArea";
 import { useRouter } from "next/router";
 
-const Work = ({ jobData, perPage, totalPages }) => {
-  const route = useRouter();
+const Work = () => {
+  const router = useRouter();
   const user = useSelector(getUser);
-  const [workData, setWorkData] = useState(jobData);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-
-  const handleLoadMore = async () => {
-    const newPageNumber = currentPage + 1;
-    setLoading(true);
-    const res = await fetch(`http://localhost:3000/api/jobs`);
-    const data = await res.json();
-    const newData = data.slice((newPageNumber - 1) * perPage, newPageNumber * perPage);
-    
-    setLoading(false);
-    setWorkData([...workData, ...newData]);
-    setCurrentPage(newPageNumber);
-  };
+  
+  const { searched } = router.query;
+  const searchData = searched ? JSON.parse(searched) : [];
 
   const truncateText = (text, maxLength, ending) => {
     if (maxLength == null) { maxLength = 100; }
@@ -37,8 +25,6 @@ const Work = ({ jobData, perPage, totalPages }) => {
     }
   }
 
-  const isLoadMoreDisabled = currentPage >= totalPages;
-
   return (
     <>
       <Head>
@@ -48,57 +34,47 @@ const Work = ({ jobData, perPage, totalPages }) => {
         <TheDivArea>
           <div className="work-area mt-20 w-11/12 lg:w-11/12 xl:mt-28 xl:h-[780px] xl:w-auto xl:overflow-auto xl:p-4 2xl:p-4 2xl:mt-8 2xl:h-[780px] 2xl:overflow-auto">   
             <div className="w-full">
-              <p className="text-lg text-center mb-3">You have searched <span className="text-primary font-bold">{route.query?.searched}</span>, and the search results are shown below.</p>
-              <div className="works grid grid-cols-1 gap-3 md:grid-cols-2 lg:gap-4">
-                {workData.map(({
-                  _id,
-                  title, 
-                  skills,
-                  budget, 
-                  budgetType, 
-                  description, 
-                  projectType, 
-                }) => (
-                  <div key={_id} className="work border border-silver p-5 rounded-xl">
-                    <div className="title flex items-start justify-between pb-3 lg:pb-5 flex-col xl:flex-row">
-                      <div className="text flex-1">
-                        <h3 className="text-xl font-medium ">{title}</h3>
-                        <p className="text-axolotl text-xs lg:text-sm pt-3 capitalize">
-                          <b>{budgetType} Price</b> - {projectType} - Budget: ${budget}.00
-                        </p>
-                      </div>
-                      <div className="action flex items-center flex-row xl:flex-col gap-2 mt-3 xl:mt-0">
-                        { user?.connects === '0' ? 
-                          <button onClick={()=>toast.error("You don't have enough coins to apply.")} className="bg-primary text-white font-medium px-4 lg:px-6 py-2 rounded-full">
-                            Apply Now
-                          </button> : 
-                          <Link 
-                            href={`/works/${_id}/apply`} 
-                            className="bg-primary text-white font-medium px-4 lg:px-6 py-2 rounded-full"
-                          >
-                            Apply Now
+              <p className="text-lg text-center mb-3">The search results are shown below : </p>
+                {searchData.length !== 0 ? 
+                  searchData.map(({ _id, title, skills, budget, budgetType, description, projectType }) => (
+                  <div className="works grid grid-cols-1 gap-3 md:grid-cols-2 lg:gap-4">
+                    <div key={_id} className="work border border-silver p-5 rounded-xl">
+                      <div className="title flex items-start justify-between pb-3 lg:pb-5 flex-col xl:flex-row">
+                        <div className="text flex-1">
+                          <h3 className="text-xl font-medium ">{title}</h3>
+                          <p className="text-axolotl text-xs lg:text-sm pt-3 capitalize">
+                            <b>{budgetType} Price</b> - {projectType} - Budget: ${budget}.00
+                          </p>
+                        </div>
+                        <div className="action flex items-center flex-row xl:flex-col gap-2 mt-3 xl:mt-0">
+                          { user?.connects === '0' ? 
+                            <button onClick={()=>toast.error("You don't have enough coins to apply.")} className="bg-primary text-white font-medium px-4 lg:px-6 py-2 rounded-full">
+                              Apply Now
+                            </button> : 
+                            <Link 
+                              href={`/works/${_id}/apply`} 
+                              className="bg-primary text-white font-medium px-4 lg:px-6 py-2 rounded-full"
+                            >
+                              Apply Now
+                            </Link>
+                          }
+                          <Link href={`/works/${_id}`} className="bg-primary text-white font-medium px-4 lg:px-6 py-2 rounded-full">
+                            See More
                           </Link>
-                        }
-                        <Link href={`/works/${_id}`} className="bg-primary text-white font-medium px-4 lg:px-6 py-2 rounded-full">
-                          See More
-                        </Link>
+                        </div>
                       </div>
+                      <p className="text-sm text-justify lg:text-base xl:text-left">{truncateText(description, 150)}</p>
+                      <ul className="flex items-center gap-3 py-5 flex-wrap">
+                        {skills.map((skill, index) => 
+                          <li key={index} className="bg-[#f2f7f2] text-[#001e00] px-3 py-1 text-sm lg:text-base">{skill}</li>
+                        )}
+                      </ul>
+                      <p className="text-axolotl text-sm">Proposals: <strong>Less than 5</strong></p>
                     </div>
-                    <p className="text-sm text-justify lg:text-base xl:text-left">{truncateText(description, 175)}</p>
-                    <ul className="flex items-center gap-3 py-5 flex-wrap">
-                      {skills.map((skill, index) => 
-                        <li key={index} className="bg-[#f2f7f2] text-[#001e00] px-3 py-1 text-sm lg:text-base">{skill}</li>
-                      )}
-                    </ul>
-                    <p className="text-axolotl text-sm">Proposals: <strong>Less than 5</strong></p>
                   </div>
-                ))}
-              </div>
-              <div className="text-center mb-5">
-                <button onClick={handleLoadMore} disabled={isLoadMoreDisabled} className="bg-primary text-white disabled:opacity-60 font-medium px-6 py-2 rounded-full my-5 lg:mb-0 lg:mt-12 xl:mb-5 2xl:mb-0">
-                  {loading ? 'Loading...' : 'Load More Jobs'}
-                </button>
-              </div>
+                  )) : 
+                  <p className="mt-20 text-2xl text-silver">No data is available on your search.</p>
+                }
             </div>
           </div>
         </TheDivArea>
@@ -106,23 +82,5 @@ const Work = ({ jobData, perPage, totalPages }) => {
     </>
   )
 }
-
-export async function getServerSideProps({ req }) {
-  const perPage = 4;
-  const baseUrl = req.headers.host;
-  const jobRes = await fetch(`http://${baseUrl}/api/jobs`);
-  const data = await jobRes.json();
-
-  const totalPages = Math.ceil(data.length / perPage);
-
-  return {
-    props: {
-      jobData: data.slice(0, perPage),
-      perPage,
-      totalPages
-    },
-  };
-}
-
 
 export default Work;

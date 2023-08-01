@@ -1,7 +1,7 @@
 import Badge from "./Badge";
 
 const HomeTag = () => {
-  const keywords = [ "Web Developer", "Web Designer", "Writer", "Fullstack", "Senior", "Team Lead", "Administration", "SQA", "Tester" ];
+  const keywords = [ "Web Developer", "Web Designer", "JavaScript", "Design", "HTML", "SCSS", "Administration", "SQA", "Tester" ];
 
   return (
    <div className='mt-8 xl:mt-12'>

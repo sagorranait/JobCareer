@@ -7,12 +7,14 @@ import HomeCard from '@/components/HomeCard';
 import HomeTag from '@/components/HomeTag';
 import hero1 from "../assets/hero-01.png";
 import { useRouter } from 'next/router';
+import axios from 'axios';
 
 const Home = () => {
   const el = useRef();
   const tl2 = useRef();
   const router = useRouter();
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(false);
   
   useEffect(() => {
     let cards = gsap.utils.toArray(".statCard");
@@ -54,13 +56,28 @@ const Home = () => {
     };
   }, []);  
 
-  const searchHandler = (event) => {
+  const capitalizeSkill = (skill) => {
+    return skill
+      .split(' ')
+      .map((word) => word.charAt(0).toLowerCase() + word.slice(1))
+      .join(' ');
+  };
+
+  const searchHandler = async (event) => {
     event.preventDefault();
-    router.push({
-      pathname: '/works/search',
-      query: { searched: search },
-    });
-    setSearch('')
+    setLoading(true);
+    const capitalizedSkill = capitalizeSkill(search);
+    await axios.get(`/api/jobs/search?skill=${capitalizedSkill}`)
+    .then(res => {
+      const serializedData = JSON.stringify(res.data);
+      router.push({
+        pathname: '/works/search',
+        query: { searched: serializedData },
+      });
+      setLoading(false);
+      setSearch('');
+    })
+    .catch(error => console.error(error));
   }
 
   return (
@@ -91,7 +108,12 @@ const Home = () => {
                     onChange={(e)=>setSearch(e.target.value)}
                   />
                   <button type='submit' id='search-button' className='p-2 rounded-full bg-primary h-12 xl:h-14 w-14 grid place-items-center'>
-                    <BiSearchAlt size='23' color='white' />
+                    {!loading ? 
+                    <BiSearchAlt size='23' color='white' /> :
+                    <svg className="motion-reduce:hidden animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg> }
                   </button>
                 </form>
                 <HomeTag/>
