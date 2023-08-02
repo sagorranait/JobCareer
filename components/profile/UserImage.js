@@ -2,6 +2,8 @@ import { useState, Fragment } from 'react';
 import Image from "next/image";
 import { Dialog, Transition } from '@headlessui/react';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
 function UserImage({ id, name, url, available, edited }) {
    const [photo, setPhoto] = useState(null);
@@ -10,58 +12,49 @@ function UserImage({ id, name, url, available, edited }) {
    const { register, handleSubmit } = useForm();
 
    const getUserPhoto = (event) => {
-      const selectedFile = event.target.files[0];
-      setPhoto(selectedFile);
+      const file = event.target.files[0];
+      console.log(file);
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+         setPhoto(reader.result); 
+      };
+
+      if (file) {
+         reader.readAsDataURL(file);
+      }
    }
 
-   const updatePhotoHandler = async () => {
-      let formData = new FormData();
-      formData.append('image', photo);
-      console.log(formData, photo);
-      // setLoading(true);
+   const updatePhotoHandler = async (data) => {
+      setLoading(true);
+      const uploadedImage = data.userPhoto[0];
+      const formData = new FormData();
+      formData.append("image", uploadedImage);
 
-      // await fetch(`https://api.imgbb.com/1/upload?key=8bc71f5c88870561f133c9caf6282517`, {
-      //    method: 'POST',
-      //    body: formData
-      // })
-      // .then(res => res.json())
-      // .then(data => {
-      //    console.log(data);
-      // })
-      // const imgbbData = await imgbbResponse.json();
-      // console.log(imgbbData);
-      // const imgUrl = imgbbData.data?.url;
+      await fetch(`https://api.imgbb.com/1/upload?key=8bc71f5c88870561f133c9caf6282517`, {
+         method: 'POST',
+         body: formData
+      })
+      .then(res => res.json())
+      .then( async (result) => {
+         axios.patch(`/api/user/update?userId=${id}`, { imgURL: result.data?.url })
+         .then(res => {
+            console.log(res, id);
+            if (res.statusText === "OK") {
+               toast.success("Photo Updated Successfully.");
+               setLoading(false)
+            }
+         })
+         .catch(error => {
+            console.error(error);
+            toast.error(`Server Error: ${error}`);
+         })
+      })
+      .catch(error => {
+         console.error(error);
+         toast.error(`Image Server Error: ${console.error(error)}`);
+      });
 
-
-    
-      // try {
-      //   const imgbbResponse = await fetch(`https://api.imgbb.com/1/upload?key=d5c8e8f3eec3f693976a3381572c9846`, {
-      //     method: 'POST',
-      //     body: formData
-      //   });
-      //   const imgbbData = await imgbbResponse.json();
-      //   const imgUrl = imgbbData.data?.url;
-    
-      //   const response = await fetch(`/api/user/update?id=${id}`, {
-      //     method: 'PATCH',
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //     },
-      //     body: JSON.stringify({
-      //       imgURL: imgUrl,
-      //     }),
-      //   });
-    
-      //   if (response.status === 200) {
-      //     // handle success
-      //     setLoading(false);
-      //   } else {
-      //     // handle error
-      //   }
-      // } catch (error) {
-      //   console.log(error);
-      // }
-    
       setIsOpen(false);
       setPhoto(null);
     }
@@ -153,7 +146,7 @@ function UserImage({ id, name, url, available, edited }) {
                      <div className="shrink-0">
                         <Image
                            alt={name}
-                           src={photo ? URL.createObjectURL(photo) : url}
+                           src={photo ? photo : url}
                            width={112}
                            height={112}
                            className="h-28 rounded-full object-cover object-top border border-primary"
@@ -174,10 +167,9 @@ function UserImage({ id, name, url, available, edited }) {
                      </label>
                      </div>
                      <div className='mt-3'>
-                        <button 
-                           onClick={updatePhotoHandler}
+                        <button
                            data-modal-hide="popup-modal" 
-                           type="button" 
+                           type="submit" 
                            className="text-white bg-primary focus:ring-0 focus:outline-none font-medium rounded-full text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                            {loading ? 'Updating...' : 'Update Photo'}
                         </button>
