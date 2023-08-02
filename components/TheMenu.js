@@ -100,7 +100,7 @@ const TheMenu = () => {
                               alt={user?.username}
                               width={38}
                               height={38}
-                              className='border-[2px] border-primary rounded-full'
+                              className='border-[2px] w-[38px] h-[38px] object-cover object-top border-primary rounded-full'
                            /> : 
                            <div className='w-[38px] h-[38px] bg-silver border-[1px] border-primary rounded-full flex items-center justify-center text-lg font-semibold'>
                               {user?.username[0]}

@@ -10,6 +10,7 @@ function UserImage({ id, name, url, available, edited }) {
    const [isOpen, setIsOpen] = useState(false);
    const [loading, setLoading] = useState(false);
    const { register, handleSubmit } = useForm();
+   const [uploadedImage, setUploadedImage] = useState(null);
 
    const getUserPhoto = (event) => {
       const file = event.target.files[0];
@@ -37,12 +38,13 @@ function UserImage({ id, name, url, available, edited }) {
       })
       .then(res => res.json())
       .then( async (result) => {
+         setUploadedImage(result.data?.url);
          axios.patch(`/api/user/update?userId=${id}`, { imgURL: result.data?.url })
          .then(res => {
-            console.log(res, id);
             if (res.statusText === "OK") {
                toast.success("Photo Updated Successfully.");
-               setLoading(false)
+               setLoading(false);
+               setIsOpen(false);
             }
          })
          .catch(error => {
@@ -55,7 +57,6 @@ function UserImage({ id, name, url, available, edited }) {
          toast.error(`Image Server Error: ${console.error(error)}`);
       });
 
-      setIsOpen(false);
       setPhoto(null);
     }
     
@@ -71,10 +72,10 @@ function UserImage({ id, name, url, available, edited }) {
             </div> : 
                <Image
                   alt={name}
-                  src={url}
+                  src={uploadedImage || url}
                   width={112}
                   height={112}
-                  className="rounded-full object-cover object-top border-[1px] border-primary"
+                  className="rounded-full w-[112px] h-[112px] object-cover object-top border-[1px] border-primary"
                />
             }
             {available === 'false' ? 
