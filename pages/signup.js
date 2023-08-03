@@ -3,12 +3,15 @@ import TheLoginDiv from '@/components/TheLoginDiv';
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { getSession } from "next-auth/react";
+import { useState } from "react";
 
 const signup = () => {
    const router = useRouter();
+   const [loading, setLoading] = useState(false);
    const { register, formState: { errors }, handleSubmit } = useForm();
 
    const onSignup = async (data) => {
+      setLoading(true);
       const options = {
          method: "POST",
          headers : { 'Content-Type': 'application/json'},
@@ -18,7 +21,10 @@ const signup = () => {
      await fetch('/api/auth/signup', options)
       .then(res => res.json())
       .then((result) => {
-            if(result) router.push('/signin')
+            if(result) {
+               setLoading(false);
+               router.push('/signin');
+            }
       });
    }
 
@@ -95,7 +101,9 @@ const signup = () => {
                   {...register("password", { required: true })}
                />
             </div>
-            <button type="submit" className="text-white bg-primary font-medium rounded-lg text-base w-full px-5 py-2.5 text-center">Sign Up</button>
+            <button type="submit" className="text-white bg-primary font-medium rounded-lg text-base w-full px-5 py-2.5 text-center">
+               {loading ? 'Signing...' : 'Sign Up'}
+            </button>
             </form>
          </TheLoginDiv>
       </main>
