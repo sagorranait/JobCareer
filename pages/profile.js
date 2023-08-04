@@ -184,8 +184,6 @@ export async function getServerSideProps({ req }){
    let loading = false;
    const session = await getSession({ req })
    const email = session?.user?.email;
-
-   console.log(session);
  
    if(!session) {
      return { redirect : { destination: '/signin', permanent: false } }
