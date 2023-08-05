@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { getSession } from "next-auth/react";
 import TheDivArea from "@/components/TheDivArea";
+import LoadingIcon from "@/components/LoadingIcon";
 
 const newjob = () => {
    const router = useRouter();
@@ -78,12 +79,10 @@ const newjob = () => {
       };
 
       await axios.post('/api/jobs/create', submittedData)
-      .then( async (res) => {
-         if (res.statusText === "OK") { 
-            toast.success('New job created successfully.');
-            setLoading(false);
-            router.push('/jobs');
-         }
+      .then( async (_) => {
+         toast.success('New job created successfully.');
+         setLoading(false);
+         router.push('/jobs');
       })
       .catch(error => {
        console.log(error);
@@ -235,7 +234,7 @@ const newjob = () => {
                         data-modal-hide="popup-modal" 
                         type="submit" 
                         className="text-white bg-primary focus:ring-0 focus:outline-none font-medium rounded-full text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
-                        {loading ? 'Creating...' : 'Create'}
+                        {loading ? <LoadingIcon title="Creating..."/> : 'Create'}
                      </button>
                      <button 
                         data-modal-hide="popup-modal" 

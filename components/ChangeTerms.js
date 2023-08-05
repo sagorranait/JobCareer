@@ -3,6 +3,7 @@ import { useState, Fragment, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
+import LoadingIcon from './LoadingIcon';
 
 const ChangeTerms = ({ data, matchedJob, updatedProposal }) => {
    const {
@@ -34,23 +35,21 @@ const ChangeTerms = ({ data, matchedJob, updatedProposal }) => {
       setLoading(true);
       axios.patch(`/api/proposals/update?id=${_id}`, data)
       .then(res => {
-         if (res.statusText === "OK") {
-            updatedProposal((preProposal)=> {
-               const proposalIndex = preProposal.findIndex((proposal) => proposal._id === _id);
-               console.log(preProposal);
-               if (proposalIndex === -1) {
-                  console.log('Error: Proposal not found.');
-                  return preProposal;
-               }
-               
-               const updatedProposals = [...preProposal];
-               updatedProposals[proposalIndex] = {_id, jobId: matchedJob, ...data};
-               return updatedProposals;
-            });
-            setLoading(false);
-            setIsOpen(false);
-            toast.success('Successfully changed the terms.')
-         }
+         updatedProposal((preProposal)=> {
+            const proposalIndex = preProposal.findIndex((proposal) => proposal._id === _id);
+            console.log(preProposal);
+            if (proposalIndex === -1) {
+               console.log('Error: Proposal not found.');
+               return preProposal;
+            }
+            
+            const updatedProposals = [...preProposal];
+            updatedProposals[proposalIndex] = {_id, jobId: matchedJob, ...data};
+            return updatedProposals;
+         });
+         setLoading(false);
+         setIsOpen(false);
+         toast.success('Successfully changed the terms.')
       })
       .catch(error => {
          console.error(error);
@@ -212,7 +211,7 @@ const ChangeTerms = ({ data, matchedJob, updatedProposal }) => {
                            type="submit" 
                            data-modal-hide="popup-modal" 
                            className="text-white bg-primary focus:ring-0 focus:outline-none font-medium rounded-full text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
-                           { loading ? 'Changing...' : "Yes, I'm sure" }
+                           { loading ? <LoadingIcon title="Changing..."/> : "Yes, I'm sure" }
                         </button>
                         <button 
                            data-modal-hide="popup-modal" 

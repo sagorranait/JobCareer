@@ -4,6 +4,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import LoadingIcon from '../LoadingIcon';
 
 function UserImage({ id, name, url, available, edited }) {
    const [photo, setPhoto] = useState(null);
@@ -40,12 +41,10 @@ function UserImage({ id, name, url, available, edited }) {
       .then( async (result) => {
          setUploadedImage(result.data?.url);
          axios.patch(`/api/user/update?userId=${id}`, { imgURL: result.data?.url })
-         .then(res => {
-            if (res.statusText === "OK") {
-               toast.success("Photo Updated Successfully.");
-               setLoading(false);
-               setIsOpen(false);
-            }
+         .then((_) => {
+            toast.success("Photo Updated Successfully.");
+            setLoading(false);
+            setIsOpen(false);
          })
          .catch(error => {
             console.error(error);
@@ -172,7 +171,7 @@ function UserImage({ id, name, url, available, edited }) {
                            data-modal-hide="popup-modal" 
                            type="submit" 
                            className="text-white bg-primary focus:ring-0 focus:outline-none font-medium rounded-full text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
-                           {loading ? 'Updating...' : 'Update Photo'}
+                           {loading ? <LoadingIcon title="Updating..."/> : 'Update Photo'}
                         </button>
                         <button 
                            data-modal-hide="popup-modal" 

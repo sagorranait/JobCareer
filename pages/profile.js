@@ -17,21 +17,19 @@ const profile = ({ data, plength, loading, jobLenght }) => {
 
   const profileUpdateHandler = async (data) => {  
    axios.patch(`/api/user/update?userId=${userData?._id}`, data)
-   .then(res => {
-      if (res.statusText === "OK") {
-         setUserData(preData =>{
-            return { 
-               ...preData, 
-               about: data.about,
-               hourly: data.hourly,
-               address: data.address,
-               available: data.available,
-               designation: data.designation,
-            }
-         });
-         toast.success('Successfully Updated!');
-         setIsShow(!isShow);
-      }
+   .then(_ => {
+      setUserData(preData =>{
+         return { 
+            ...preData, 
+            about: data.about,
+            hourly: data.hourly,
+            address: data.address,
+            available: data.available,
+            designation: data.designation,
+         }
+      });
+      toast.success('Successfully Updated!');
+      setIsShow(!isShow);
    })
    .catch(error => {
       console.log(error);

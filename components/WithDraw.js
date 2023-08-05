@@ -4,21 +4,19 @@ import { Dialog, Transition } from '@headlessui/react'
 import { toast } from 'react-hot-toast';
 
 const WithDraw = ({ proposalId, updatedProposal }) => {
-   const openModal = () => setIsOpen(true);
-   const closeModal = () => setIsOpen(false);
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   
   const withdrawHandler = async () => { 
      setLoading(true);    
      await axios.delete(`/api/proposals/delete?id=${proposalId}`)
-     .then((res) => {
-      if (res.statusText === "OK") {
+     .then((_) => {
          toast.success('Successfully Withdrew!');
          updatedProposal((preProposals)=> preProposals.filter(proposal => proposal._id !== proposalId));
          setLoading(false);
          closeModal();
-      }
      })
      .catch(error => {
          console.error(error);
@@ -100,7 +98,7 @@ const WithDraw = ({ proposalId, updatedProposal }) => {
                         data-modal-hide="popup-modal" 
                         type="button" 
                         className="text-white bg-[#FF0000] focus:ring-0 focus:outline-none font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
-                        { loading ? 'Withdrawing...' : "Yes, I'm sure" } 
+                        { loading ? <LoadingIcon title="Withdrawing..."/> : "Yes, I'm sure" } 
                      </button>
                      <button 
                         data-modal-hide="popup-modal" 

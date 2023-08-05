@@ -2,7 +2,7 @@ import React from 'react'
 
 const LoadingIcon = ({ title }) => {
   return (
-    <span className='flex items-center justify-center gap-3'>
+    <span className={`flex items-center justify-center ${title ? 'gap-3' : 'gap-0'}`}>
       <svg 
         className="motion-reduce:hidden animate-spin h-5 w-5 text-white" 
         xmlns="http://www.w3.org/2000/svg" 

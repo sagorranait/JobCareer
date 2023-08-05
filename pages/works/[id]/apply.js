@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import TheDivArea from "@/components/TheDivArea";
 import { getUser, storeNewConnect } from "@/features";
 import { useDispatch, useSelector } from "react-redux";
+import LoadingIcon from "@/components/LoadingIcon";
 
 const Applied = ({ jobBudget }) => {
    const router = useRouter();
@@ -40,18 +41,16 @@ const Applied = ({ jobBudget }) => {
       }
 
       await axios.post('/api/proposals/apply', proposalData)
-      .then( async (res) => {
-         if (res.statusText === "OK") { 
-            await axios.put(`/api/user/update?userId=${user?.id}`, { connects: `${proposalConnect}` })
-            .then((_)=>{
-               dispatch(storeNewConnect({ connects: proposalConnect }));
-               router.push('/proposals');
-               setLoading(false);
-            })
-            .catch(error => {
-               console.log(error);
-            });  
-         }
+      .then( async (_) => {
+         await axios.put(`/api/user/update?userId=${user?.id}`, { connects: `${proposalConnect}` })
+         .then((_)=>{
+            dispatch(storeNewConnect({ connects: proposalConnect }));
+            router.push('/proposals');
+            setLoading(false);
+         })
+         .catch(error => {
+            console.log(error);
+         });
       })
       .catch(error => {
        console.log(error);
@@ -159,7 +158,7 @@ const Applied = ({ jobBudget }) => {
             </div>
             <div className="pt-3 mb-5 lg:mb-0">
                <button type="submit" className="bg-primary text-white font-medium px-6 py-2 rounded-full" >
-                  {loading ? 'Sending Proposal...' : 'Send for 4 Connects'}
+                  {loading ? <LoadingIcon title="Sending..."/> : 'Send for 4 Connects'}
                </button>
                <Link href='/works' className="text-primary font-medium pl-5 hover:underline">Cancel</Link>
             </div>

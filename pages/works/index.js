@@ -45,7 +45,7 @@ const Work = ({ jobData, perPage, totalPages }) => {
       </Head>
       <main>
         <TheDivArea>
-          <div className="work-area mt-20 w-11/12 lg:w-11/12 xl:mt-40 xl:h-[780px] xl:w-auto xl:overflow-auto xl:p-4 2xl:p-4 2xl:mt-20 2xl:h-[780px] 2xl:overflow-auto">   
+          <div className="work-area mt-20 w-11/12 lg:w-11/12 xl:mt-40 xl:h-[800px] xl:w-auto xl:overflow-auto xl:p-4 2xl:p-4 2xl:mt-20 2xl:h-[800px] 2xl:overflow-auto">   
             <div className="w-full">
               <div className="works grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-6">
                 {workData.map(({
