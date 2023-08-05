@@ -46,11 +46,11 @@ const Applied = ({ jobBudget }) => {
          .then((_)=>{
             dispatch(storeNewConnect({ connects: proposalConnect }));
             router.push('/proposals');
-            setLoading(false);
          })
          .catch(error => {
             console.log(error);
          });
+         setLoading(false);
       })
       .catch(error => {
        console.log(error);

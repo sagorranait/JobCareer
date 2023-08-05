@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState, Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { toast } from 'react-hot-toast';
+import LoadingIcon from './LoadingIcon';
 
 const WithDraw = ({ proposalId, updatedProposal }) => {
   const openModal = () => setIsOpen(true);
