@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { getSession } from "next-auth/react";
 import { useState } from "react";
+import LoadingIcon from "@/components/LoadingIcon";
 
 const signup = () => {
    const router = useRouter();
@@ -102,7 +103,7 @@ const signup = () => {
                />
             </div>
             <button type="submit" className="text-white bg-primary font-medium rounded-lg text-base w-full px-5 py-2.5 text-center">
-               {loading ? 'Signing...' : 'Sign Up'}
+               {loading ? <LoadingIcon title="Signing..." /> : 'Sign Up'}
             </button>
             </form>
          </TheLoginDiv>

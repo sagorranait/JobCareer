@@ -5,6 +5,7 @@ import { getUser } from "@/features";
 import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import TheDivArea from "@/components/TheDivArea";
+import LoadingIcon from "@/components/LoadingIcon";
 
 const Work = ({ jobData, perPage, totalPages }) => {
   const user = useSelector(getUser);
@@ -66,7 +67,10 @@ const Work = ({ jobData, perPage, totalPages }) => {
                       </div>
                       <div className="action flex items-center flex-row xl:flex-col gap-2 mt-3 xl:mt-0">
                         { user?.connects === '0' ? 
-                          <button onClick={()=>toast.error("You don't have enough coins to apply.")} className="bg-primary text-white font-medium px-4 lg:px-6 py-2 rounded-full">
+                          <button 
+                            onClick={()=>toast.error("You don't have enough coins to apply.")} 
+                            className="bg-primary text-white font-medium px-4 lg:px-6 py-2 rounded-full"
+                          >
                             Apply Now
                           </button> : 
                           <Link 
@@ -93,7 +97,7 @@ const Work = ({ jobData, perPage, totalPages }) => {
               </div>
               <div className="text-center mb-5">
                 <button onClick={handleLoadMore} disabled={isLoadMoreDisabled} className="bg-primary text-white disabled:opacity-60 font-medium px-6 py-2 rounded-full my-5 lg:mb-0 lg:mt-12 xl:mb-5 2xl:mb-0">
-                  {loading ? 'Loading...' : 'Load More Jobs'}
+                  {loading ? <LoadingIcon title="Loading..." /> : 'Load More Jobs'}
                 </button>
               </div>
             </div>
