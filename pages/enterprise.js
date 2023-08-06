@@ -5,6 +5,7 @@ import Image from "next/image";
 import TheDivArea from "@/components/TheDivArea";
 import expert from '../assets/expert.jpg';
 import { useRef } from "react";
+import { toast } from "react-hot-toast";
 
 const enterprise = () => {
   const ep = useRef();
@@ -39,7 +40,13 @@ const enterprise = () => {
                   <p id="en-subtitle" className="pt-2 pb-5">
                     Access the top 1% of talent on a full-service Enterprise platform, customized to meet your needs. This is how Flexibility works now.
                   </p>
-                  <button id="en-button" className="bg-primary text-white font-medium px-6 py-2 rounded-full">Talk to an expert</button>
+                  <button 
+                    id="en-button" 
+                    className="bg-primary text-white font-medium px-6 py-2 rounded-full"
+                    onClick={toast.success("Coming Soon ...")}
+                  >
+                    Talk to an expert
+                  </button>
                 </div>
                 <div className="w-11/12 xl:w-1/2 flex items-center justify-center lg:justify-end xl:justify-end">
                     <Image 

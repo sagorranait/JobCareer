@@ -4,17 +4,16 @@ JobCareer website is the place where passion meets profession, and dreams become
 
 <p align="center"><img src="https://i.imgur.com/FJV6rI6.png" alt="project-image"></p>
 <div style="display: flex;flex-wrap: wrap;justify-content: center;align-items: center;">
-  <img src="https://i.imgur.com/v90vMEb.png" alt="project-screenshot" width="198">
-  <img src="https://i.imgur.com/Yx6bXum.png" alt="project-screenshot" width="198">
-  <img src="https://i.imgur.com/y8DlGRK.png" alt="project-screenshot" width="198">
-  <img src="https://i.imgur.com/UqV1Zn7.png" alt="project-screenshot" width="198">
-  <img src="https://i.imgur.com/xP7MQdI.png" alt="project-screenshot" width="198">
-  <img src="https://i.imgur.com/xP7MQdI.png" alt="project-screenshot" width="198">
-  <img src="https://i.imgur.com/R16CR7T.png" alt="project-screenshot" width="198">
-  <img src="https://i.imgur.com/6C2yuJa.png" alt="project-screenshot" width="198">
-  <img src="https://i.imgur.com/ZkNvqPV.png" alt="project-screenshot" width="198">
-  <img src="https://i.imgur.com/4r5TpLF.png" alt="project-screenshot" width="198">
-  
+  <img src="https://i.imgur.com/v90vMEb.png" alt="project-screenshot" width="210">
+  <img src="https://i.imgur.com/Yx6bXum.png" alt="project-screenshot" width="210">
+  <img src="https://i.imgur.com/y8DlGRK.png" alt="project-screenshot" width="210">
+  <img src="https://i.imgur.com/UqV1Zn7.png" alt="project-screenshot" width="210">
+  <img src="https://i.imgur.com/xP7MQdI.png" alt="project-screenshot" width="210">
+  <img src="https://i.imgur.com/xP7MQdI.png" alt="project-screenshot" width="210">
+  <img src="https://i.imgur.com/R16CR7T.png" alt="project-screenshot" width="210">
+  <img src="https://i.imgur.com/6C2yuJa.png" alt="project-screenshot" width="210">
+  <img src="https://i.imgur.com/ZkNvqPV.png" alt="project-screenshot" width="210">
+  <img src="https://i.imgur.com/4r5TpLF.png" alt="project-screenshot" width="210">
 </div>
 
 ```bash
