@@ -2,12 +2,25 @@
 
 JobCareer website is the place where passion meets profession, and dreams become reality. Join us today and let your career story shine on the canvas of success.
 
+<p align="center"><img src="https://i.imgur.com/FJV6rI6.png" alt="project-image"></p>
+<div style="display: flex;flex-wrap: wrap;justify-content: center;align-items: center;">
+  <img src="https://i.imgur.com/v90vMEb.png" alt="project-screenshot" width="198">
+  <img src="https://i.imgur.com/Yx6bXum.png" alt="project-screenshot" width="198">
+  <img src="https://i.imgur.com/y8DlGRK.png" alt="project-screenshot" width="198">
+  <img src="https://i.imgur.com/UqV1Zn7.png" alt="project-screenshot" width="198">
+  <img src="https://i.imgur.com/xP7MQdI.png" alt="project-screenshot" width="198">
+  <img src="https://i.imgur.com/xP7MQdI.png" alt="project-screenshot" width="198">
+  <img src="https://i.imgur.com/R16CR7T.png" alt="project-screenshot" width="198">
+  <img src="https://i.imgur.com/6C2yuJa.png" alt="project-screenshot" width="198">
+  <img src="https://i.imgur.com/ZkNvqPV.png" alt="project-screenshot" width="198">
+  <img src="https://i.imgur.com/4r5TpLF.png" alt="project-screenshot" width="198">
+  
+</div>
+
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
