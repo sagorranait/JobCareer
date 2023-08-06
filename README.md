@@ -1,8 +1,6 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## JobCareer
 
-## Getting Started
-
-First, run the development server:
+JobCareer website is the place where passion meets profession, and dreams become reality. Join us today and let your career story shine on the canvas of success.
 
 ```bash
 npm run dev
