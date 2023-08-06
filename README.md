@@ -1,7 +1,11 @@
 ## JobCareer
 
-JobCareer website is the place where passion meets profession, and dreams become reality. Join us today and let your career story shine on the canvas of success.
-
+Where passion meets profession, and dreams become reality. Join us today and let your career story shine on the canvas of success.
+<p>
+  <a target='_blank' href="https://jobcareer.vercel.app/">
+    <img src="https://i.ibb.co/s15x7kH/Asset-1.png" alt="Asset-1" border="0" width="110">
+  </a>
+</p>
 <p align="center"><img src="https://i.imgur.com/FJV6rI6.png" alt="project-image"></p>
 <div style="display: flex;flex-wrap: wrap;justify-content: center;align-items: center;">
   <img src="https://i.imgur.com/v90vMEb.png" alt="project-screenshot" width="200">
@@ -16,14 +20,11 @@ JobCareer website is the place where passion meets profession, and dreams become
 <p></p>
 
 ```bash
-  ⚠️ Note: I will continue to update this site. So, Sometimes this site could be broken or works slowly. Sorry in advance.
+  ⚠️ Note: I will continue to update this site. So, Sometimes this site could be broken or works
+           slowly. Sorry in advance.
 ```
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
