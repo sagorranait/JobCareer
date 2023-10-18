@@ -1,23 +1,46 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { getUser } from "@/features";
 import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import TheDivArea from "@/components/TheDivArea";
 import LoadingIcon from "@/components/LoadingIcon";
 
-const Work = ({ jobData, perPage, totalPages }) => {
+const Work = () => {
   const user = useSelector(getUser);
-  const [workData, setWorkData] = useState(jobData);
+  const [workData, setWorkData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [totalPages, setTotalPages] = useState(1);
+
+  const perPage = 4;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(`/api/jobs`);
+        const data = response.data;
+        setTotalPages(Math.ceil(data.length / perPage));
+        const newData = data.slice(0, perPage);
+        setWorkData(newData);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleLoadMore = async () => {
     const newPageNumber = currentPage + 1;
     setLoading(true);
-    const res = await fetch(`http://localhost:3000/api/jobs`);
-    const data = await res.json();
+    const response = await axios.get(`/api/jobs`);
+    const data = response.data;
     const newData = data.slice((newPageNumber - 1) * perPage, newPageNumber * perPage);
     
     setLoading(false);
@@ -107,23 +130,5 @@ const Work = ({ jobData, perPage, totalPages }) => {
     </>
   )
 }
-
-export async function getServerSideProps({ req }) {
-  const perPage = 4;
-  const baseUrl = req.headers.host;
-  const jobRes = await fetch(`http://${baseUrl}/api/jobs`);
-  const data = await jobRes.json();
-
-  const totalPages = Math.ceil(data.length / perPage);
-
-  return {
-    props: {
-      jobData: data.slice(0, perPage),
-      perPage,
-      totalPages
-    },
-  };
-}
-
 
 export default Work
